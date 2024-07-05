@@ -1,81 +1,93 @@
-import { Trans } from '@lingui/macro'
-import { AxisBottom } from '@visx/axis'
-import { localPoint } from '@visx/event'
-import { EventType } from '@visx/event/lib/types'
-import { GlyphCircle } from '@visx/glyph'
-import { Line } from '@visx/shape'
-import AnimatedInLineChart from 'components/Charts/AnimatedInLineChart'
-import FadedInLineChart from 'components/Charts/FadeInLineChart'
-import { buildChartModel, ChartErrorType, ChartModel, ErroredChartModel } from 'components/Charts/PriceChart/ChartModel'
-import { getTimestampFormatter, TimestampFormatterType } from 'components/Charts/PriceChart/format'
-import { getNearestPricePoint, getTicks } from 'components/Charts/PriceChart/utils'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { curveCardinal } from 'd3'
-import { PricePoint, TimePeriod } from 'graphql/data/util'
-import { useActiveLocale } from 'hooks/useActiveLocale'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { Info } from 'react-feather'
-import styled, { useTheme } from 'styled-components'
-import { ThemedText } from 'theme/components'
-import { textFadeIn } from 'theme/styles'
-import { useFormatter } from 'utils/formatNumbers'
+import { Trans } from "@lingui/macro";
+import { AxisBottom } from "@visx/axis";
+import { localPoint } from "@visx/event";
+import { EventType } from "@visx/event/lib/types";
+import { GlyphCircle } from "@visx/glyph";
+import { Line } from "@visx/shape";
+import AnimatedInLineChart from "components/Charts/AnimatedInLineChart";
+import FadedInLineChart from "components/Charts/FadeInLineChart";
+import {
+  buildChartModel,
+  ChartErrorType,
+  ChartModel,
+  ErroredChartModel,
+} from "components/Charts/PriceChart/ChartModel";
+import {
+  getTimestampFormatter,
+  TimestampFormatterType,
+} from "components/Charts/PriceChart/format";
+import {
+  getNearestPricePoint,
+  getTicks,
+} from "components/Charts/PriceChart/utils";
+import { MouseoverTooltip } from "components/Tooltip";
+import { curveCardinal } from "d3";
+import { PricePoint, TimePeriod } from "graphql/data/util";
+import { useActiveLocale } from "hooks/useActiveLocale";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { Info } from "react-feather";
+import styled, { useTheme } from "styled-components";
+import { ThemedText } from "theme/components";
+import { textFadeIn } from "theme/styles";
+import { useFormatter } from "utils/formatNumbers";
 
-import { calculateDelta, DeltaArrow } from '../../Tokens/TokenDetails/Delta'
+import { calculateDelta, DeltaArrow } from "../../Tokens/TokenDetails/Delta";
 
-const CHART_MARGIN = { top: 100, bottom: 48, crosshair: 72 }
+const CHART_MARGIN = { top: 100, bottom: 48, crosshair: 72 };
 
 const ChartHeaderWrapper = styled.div<{ stale?: boolean }>`
   position: absolute;
   ${textFadeIn};
   animation-duration: ${({ theme }) => theme.transition.duration.medium};
   ${({ theme, stale }) => stale && `color: ${theme.neutral2}`};
-`
+`;
 const PriceContainer = styled.div`
   display: flex;
   gap: 6px;
   font-size: 24px;
   line-height: 44px;
-`
+`;
 const DeltaContainer = styled.div`
   height: 16px;
   display: flex;
   align-items: center;
   margin-top: 4px;
   color: ${({ theme }) => theme.neutral2};
-`
+`;
 
 interface ChartDeltaProps {
-  startingPrice: PricePoint
-  endingPrice: PricePoint
-  noColor?: boolean
+  startingPrice: PricePoint;
+  endingPrice: PricePoint;
+  noColor?: boolean;
 }
 
 function ChartDelta({ startingPrice, endingPrice, noColor }: ChartDeltaProps) {
-  const delta = calculateDelta(startingPrice.value, endingPrice.value)
-  const { formatPercent } = useFormatter()
+  const delta = calculateDelta(startingPrice.value, endingPrice.value);
+  const { formatPercent } = useFormatter();
 
   return (
     <DeltaContainer>
       {formatPercent(delta)}
       <DeltaArrow delta={delta} noColor={noColor} />
     </DeltaContainer>
-  )
+  );
 }
 
 interface ChartHeaderProps {
-  crosshairPrice?: PricePoint
-  chart: ChartModel
+  crosshairPrice?: PricePoint;
+  chart: ChartModel;
 }
 
 function ChartHeader({ crosshairPrice, chart }: ChartHeaderProps) {
-  const { formatFiatPrice } = useFormatter()
+  const { formatFiatPrice } = useFormatter();
 
-  const { startingPrice, endingPrice, lastValidPrice } = chart
+  const { startingPrice, endingPrice, lastValidPrice } = chart;
 
-  const priceOutdated = lastValidPrice !== endingPrice
-  const displayPrice = crosshairPrice ?? (priceOutdated ? lastValidPrice : endingPrice)
+  const priceOutdated = lastValidPrice !== endingPrice;
+  const displayPrice =
+    crosshairPrice ?? (priceOutdated ? lastValidPrice : endingPrice);
 
-  const displayIsStale = priceOutdated && !crosshairPrice
+  const displayIsStale = priceOutdated && !crosshairPrice;
   return (
     <ChartHeaderWrapper data-cy="chart-header" stale={displayIsStale}>
       <PriceContainer>
@@ -83,69 +95,126 @@ function ChartHeader({ crosshairPrice, chart }: ChartHeaderProps) {
           {formatFiatPrice({ price: displayPrice.value })}
         </ThemedText.HeadlineLarge>
         {displayIsStale && (
-          <MouseoverTooltip text={<Trans>This price may not be up-to-date due to low trading volume.</Trans>}>
+          <MouseoverTooltip
+            text={
+              <Trans>
+                This price may not be up-to-date due to low trading volume.
+              </Trans>
+            }
+          >
             <Info size={16} data-testid="chart-stale-icon" />
           </MouseoverTooltip>
         )}
       </PriceContainer>
-      <ChartDelta startingPrice={startingPrice} endingPrice={displayPrice} noColor={priceOutdated} />
+      <ChartDelta
+        startingPrice={startingPrice}
+        endingPrice={displayPrice}
+        noColor={priceOutdated}
+      />
     </ChartHeaderWrapper>
-  )
+  );
 }
 
-function ChartBody({ chart, timePeriod }: { chart: ChartModel; timePeriod: TimePeriod }) {
-  const locale = useActiveLocale()
+function ChartBody({
+  chart,
+  timePeriod,
+}: {
+  chart: ChartModel;
+  timePeriod: TimePeriod;
+}) {
+  const locale = useActiveLocale();
 
-  const { prices, blanks, timeScale, priceScale, dimensions } = chart
+  const { prices, blanks, timeScale, priceScale, dimensions } = chart;
 
-  const { ticks, tickTimestampFormatter, crosshairTimestampFormatter } = useMemo(() => {
-    // Limits the number of ticks based on graph width
-    const maxTicks = Math.floor(dimensions.width / 100)
+  const { ticks, tickTimestampFormatter, crosshairTimestampFormatter } =
+    useMemo(() => {
+      // Limits the number of ticks based on graph width
+      const maxTicks = Math.floor(dimensions.width / 100);
 
-    const ticks = getTicks(chart.startingPrice.timestamp, chart.endingPrice.timestamp, timePeriod, maxTicks)
-    const tickTimestampFormatter = getTimestampFormatter(timePeriod, locale, TimestampFormatterType.TICK)
-    const crosshairTimestampFormatter = getTimestampFormatter(timePeriod, locale, TimestampFormatterType.CROSSHAIR)
+      const ticks = getTicks(
+        chart.startingPrice.timestamp,
+        chart.endingPrice.timestamp,
+        timePeriod,
+        maxTicks
+      );
+      const tickTimestampFormatter = getTimestampFormatter(
+        timePeriod,
+        locale,
+        TimestampFormatterType.TICK
+      );
+      const crosshairTimestampFormatter = getTimestampFormatter(
+        timePeriod,
+        locale,
+        TimestampFormatterType.CROSSHAIR
+      );
 
-    return { ticks, tickTimestampFormatter, crosshairTimestampFormatter }
-  }, [dimensions.width, chart.startingPrice.timestamp, chart.endingPrice.timestamp, timePeriod, locale])
+      return { ticks, tickTimestampFormatter, crosshairTimestampFormatter };
+    }, [
+      dimensions.width,
+      chart.startingPrice.timestamp,
+      chart.endingPrice.timestamp,
+      timePeriod,
+      locale,
+    ]);
 
-  const theme = useTheme()
-  const [crosshair, setCrosshair] = useState<{ x: number; y: number; price: PricePoint }>()
-  const resetCrosshair = useCallback(() => setCrosshair(undefined), [setCrosshair])
+  const theme = useTheme();
+  const [crosshair, setCrosshair] = useState<{
+    x: number;
+    y: number;
+    price: PricePoint;
+  }>();
+  const resetCrosshair = useCallback(
+    () => setCrosshair(undefined),
+    [setCrosshair]
+  );
 
   const setCrosshairOnHover = useCallback(
     (event: Element | EventType) => {
-      const { x } = localPoint(event) || { x: 0 }
-      const price = getNearestPricePoint(x, prices, timeScale)
+      const { x } = localPoint(event) || { x: 0 };
+      const price = getNearestPricePoint(x, prices, timeScale);
 
       if (price) {
-        const x = timeScale(price.timestamp)
-        const y = priceScale(price.value)
-        setCrosshair({ x, y, price })
+        const x = timeScale(price.timestamp);
+        const y = priceScale(price.value);
+        setCrosshair({ x, y, price });
       }
     },
     [priceScale, timeScale, prices]
-  )
+  );
 
   // Resets the crosshair when the time period is changed, to avoid stale UI
-  useEffect(() => resetCrosshair(), [resetCrosshair, timePeriod])
+  useEffect(() => resetCrosshair(), [resetCrosshair, timePeriod]);
 
-  const crosshairEdgeMax = dimensions.width * 0.85
-  const crosshairAtEdge = !!crosshair && crosshair.x > crosshairEdgeMax
+  const crosshairEdgeMax = dimensions.width * 0.85;
+  const crosshairAtEdge = !!crosshair && crosshair.x > crosshairEdgeMax;
 
   // Default curve doesn't look good for the HOUR chart.
   // Higher values make the curve more rigid, lower values smooth the curve but make it less "sticky" to real data points,
   // making it unacceptable for shorter durations / smaller variances.
-  const curveTension = timePeriod === TimePeriod.HOUR ? 1 : 0.9
+  const curveTension = timePeriod === TimePeriod.HOUR ? 1 : 0.9;
 
-  const getX = useCallback((p: PricePoint) => timeScale(p.timestamp), [timeScale])
-  const getY = useCallback((p: PricePoint) => priceScale(p.value), [priceScale])
-  const curve = useMemo(() => curveCardinal.tension(curveTension), [curveTension])
+  const getX = useCallback(
+    (p: PricePoint) => timeScale(p.timestamp),
+    [timeScale]
+  );
+  const getY = useCallback(
+    (p: PricePoint) => priceScale(p.value),
+    [priceScale]
+  );
+  const curve = useMemo(
+    () => curveCardinal.tension(curveTension),
+    [curveTension]
+  );
 
   return (
     <>
       <ChartHeader chart={chart} crosshairPrice={crosshair?.price} />
-      <svg data-cy="price-chart" width={dimensions.width} height={dimensions.height} style={{ minWidth: '100%' }}>
+      <svg
+        data-cy="price-chart"
+        width={dimensions.width}
+        height={dimensions.height}
+        style={{ minWidth: "100%" }}
+      >
         <AnimatedInLineChart
           data={prices}
           getX={getX}
@@ -179,14 +248,14 @@ function ChartBody({ chart, timePeriod }: { chart: ChartModel; timePeriod: TimeP
               tickLabelProps={() => ({
                 fill: theme.neutral2,
                 fontSize: 12,
-                textAnchor: 'middle',
-                transform: 'translate(0 -29)',
+                textAnchor: "middle",
+                transform: "translate(0 -29)",
               })}
             />
             <text
               x={crosshair.x + (crosshairAtEdge ? -4 : 4)}
               y={CHART_MARGIN.crosshair + 10}
-              textAnchor={crosshairAtEdge ? 'end' : 'start'}
+              textAnchor={crosshairAtEdge ? "end" : "start"}
               fontSize={12}
               fill={theme.neutral2}
             >
@@ -244,18 +313,22 @@ function ChartBody({ chart, timePeriod }: { chart: ChartModel; timePeriod: TimeP
         />
       </svg>
     </>
-  )
+  );
 }
 
 const CHART_ERROR_MESSAGES: Record<ChartErrorType, ReactNode> = {
   [ChartErrorType.NO_DATA_AVAILABLE]: <Trans>Missing chart data</Trans>,
-  [ChartErrorType.NO_RECENT_VOLUME]: <Trans>Missing price data due to recently low trading volume on Uniswap v3</Trans>,
+  [ChartErrorType.NO_RECENT_VOLUME]: (
+    <Trans>
+      Missing price data due to recently low trading volume on Uniswap v3
+    </Trans>
+  ),
   [ChartErrorType.INVALID_CHART]: <Trans>Invalid chart</Trans>,
-}
+};
 
 function MissingPriceChart({ chart }: { chart: ErroredChartModel }) {
-  const theme = useTheme()
-  const midPoint = chart.dimensions.height / 2 + 45
+  const theme = useTheme();
+  const midPoint = chart.dimensions.height / 2 + 45;
 
   return (
     <>
@@ -263,46 +336,62 @@ function MissingPriceChart({ chart }: { chart: ErroredChartModel }) {
         <ThemedText.HeadlineLarge fontSize={24} color="neutral3">
           Price unavailable
         </ThemedText.HeadlineLarge>
-        <ThemedText.BodySmall color="neutral3">{CHART_ERROR_MESSAGES[chart.error]}</ThemedText.BodySmall>
+        <ThemedText.BodySmall color="neutral3">
+          {CHART_ERROR_MESSAGES[chart.error]}
+        </ThemedText.BodySmall>
       </ChartHeaderWrapper>
       <svg
         data-cy="missing-chart"
         width={chart.dimensions.width}
         height={chart.dimensions.height}
-        style={{ minWidth: '100%' }}
+        style={{ minWidth: "100%" }}
       >
         <path
-          d={`M 0 ${midPoint} Q 104 ${midPoint - 70}, 208 ${midPoint} T 416 ${midPoint}
-          M 416 ${midPoint} Q 520 ${midPoint - 70}, 624 ${midPoint} T 832 ${midPoint}`}
+          d={`M 0 ${midPoint} Q 104 ${
+            midPoint - 70
+          }, 208 ${midPoint} T 416 ${midPoint}
+          M 416 ${midPoint} Q 520 ${
+            midPoint - 70
+          }, 624 ${midPoint} T 832 ${midPoint}`}
           stroke={theme.surface3}
           fill="transparent"
           strokeWidth="2"
         />
       </svg>
     </>
-  )
+  );
 }
 
 interface PriceChartProps {
-  width: number
-  height: number
-  prices?: PricePoint[]
-  timePeriod: TimePeriod
+  width: number;
+  height: number;
+  prices?: PricePoint[];
+  timePeriod: TimePeriod;
 }
 
-export function PriceChart({ width, height, prices, timePeriod }: PriceChartProps) {
+export function PriceChart({
+  width,
+  height,
+  prices,
+  timePeriod,
+}: PriceChartProps) {
   const chart = useMemo(
     () =>
       buildChartModel({
-        dimensions: { width, height, marginBottom: CHART_MARGIN.bottom, marginTop: CHART_MARGIN.top },
+        dimensions: {
+          width,
+          height,
+          marginBottom: CHART_MARGIN.bottom,
+          marginTop: CHART_MARGIN.top,
+        },
         prices,
       }),
     [width, height, prices]
-  )
+  );
 
   if (chart.error !== undefined) {
-    return <MissingPriceChart chart={chart} />
+    return <MissingPriceChart chart={chart} />;
   }
 
-  return <ChartBody chart={chart} timePeriod={timePeriod} />
+  return <ChartBody chart={chart} timePeriod={timePeriod} />;
 }

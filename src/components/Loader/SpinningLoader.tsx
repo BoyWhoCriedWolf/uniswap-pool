@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from "styled-components";
 
 const StyledPollingDot = styled.div`
   width: 8px;
@@ -9,7 +9,7 @@ const StyledPollingDot = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.surface3};
   transition: 250ms ease background-color;
-`
+`;
 
 const StyledPolling = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const StyledPolling = styled.div`
   ${({ theme }) => theme.deprecated_mediaWidth.deprecated_upToMedium`
     display: none;
   `}
-`
+`;
 
 const rotate360 = keyframes`
   from {
@@ -32,7 +32,7 @@ const rotate360 = keyframes`
   to {
     transform: rotate(360deg);
   }
-`
+`;
 
 const Spinner = styled.div`
   animation: ${rotate360} 1s cubic-bezier(0.83, 0, 0.17, 1) infinite;
@@ -49,7 +49,7 @@ const Spinner = styled.div`
   transition: 250ms ease border-color;
   left: -3px;
   top: -3px;
-`
+`;
 
 export default function SpinningLoader() {
   return (
@@ -58,5 +58,5 @@ export default function SpinningLoader() {
         <Spinner />
       </StyledPollingDot>
     </StyledPolling>
-  )
+  );
 }

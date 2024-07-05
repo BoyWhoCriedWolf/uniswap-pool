@@ -1,8 +1,8 @@
-import Column from 'components/Column'
-import { ScrollBarStyles } from 'components/Common'
-import { ArrowLeft } from 'react-feather'
-import styled from 'styled-components'
-import { ClickableStyle, ThemedText } from 'theme/components'
+import Column from "components/Column";
+import { ScrollBarStyles } from "components/Common";
+import { ArrowLeft } from "react-feather";
+import styled from "styled-components";
+import { ClickableStyle, ThemedText } from "theme/components";
 
 const Menu = styled(Column)`
   width: 100%;
@@ -13,18 +13,18 @@ const Menu = styled(Column)`
   ::-webkit-scrollbar-track {
     margin-top: 40px;
   }
-`
+`;
 
 const Title = styled.span`
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-`
+`;
 
 const StyledArrow = styled(ArrowLeft)`
   ${ClickableStyle}
-`
+`;
 
 const Header = styled.div`
   color: ${({ theme }) => theme.neutral1};
@@ -34,17 +34,17 @@ const Header = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 20px;
-`
+`;
 
 export const SlideOutMenu = ({
   children,
   onClose,
   title,
 }: {
-  onClose: () => void
-  title: React.ReactNode
-  children: React.ReactNode
-  onClear?: () => void
+  onClose: () => void;
+  title: React.ReactNode;
+  children: React.ReactNode;
+  onClear?: () => void;
 }) => (
   <Menu>
     <Header>
@@ -56,4 +56,4 @@ export const SlideOutMenu = ({
 
     {children}
   </Menu>
-)
+);

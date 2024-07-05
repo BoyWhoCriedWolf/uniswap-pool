@@ -1,34 +1,34 @@
-import { Trans } from '@lingui/macro'
-import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
-import Column, { AutoColumn } from 'components/Column'
-import { useUSDPrice } from 'hooks/useUSDPrice'
-import { InterfaceTrade } from 'state/routing/types'
-import { isPreviewTrade } from 'state/routing/utils'
-import { Field } from 'state/swap/actions'
-import styled from 'styled-components'
-import { Divider, ThemedText } from 'theme/components'
+import { Trans } from "@lingui/macro";
+import { Currency, Percent, TradeType } from "@uniswap/sdk-core";
+import Column, { AutoColumn } from "components/Column";
+import { useUSDPrice } from "hooks/useUSDPrice";
+import { InterfaceTrade } from "state/routing/types";
+import { isPreviewTrade } from "state/routing/utils";
+import { Field } from "state/swap/actions";
+import styled from "styled-components";
+import { Divider, ThemedText } from "theme/components";
 
-import { SwapModalHeaderAmount } from './SwapModalHeaderAmount'
+import { SwapModalHeaderAmount } from "./SwapModalHeaderAmount";
 
 const Rule = styled(Divider)`
   margin: 16px 2px 24px 2px;
-`
+`;
 
 const HeaderContainer = styled(AutoColumn)`
   margin-top: 16px;
-`
+`;
 
 export default function SwapModalHeader({
   trade,
   inputCurrency,
   allowedSlippage,
 }: {
-  trade: InterfaceTrade
-  inputCurrency?: Currency
-  allowedSlippage: Percent
+  trade: InterfaceTrade;
+  inputCurrency?: Currency;
+  allowedSlippage: Percent;
 }) {
-  const fiatValueInput = useUSDPrice(trade.inputAmount)
-  const fiatValueOutput = useUSDPrice(trade.postTaxOutputAmount)
+  const fiatValueInput = useUSDPrice(trade.inputAmount);
+  const fiatValueOutput = useUSDPrice(trade.postTaxOutputAmount);
 
   return (
     <HeaderContainer gap="sm">
@@ -39,7 +39,9 @@ export default function SwapModalHeader({
           amount={trade.inputAmount}
           currency={inputCurrency ?? trade.inputAmount.currency}
           usdAmount={fiatValueInput.data}
-          isLoading={isPreviewTrade(trade) && trade.tradeType === TradeType.EXACT_OUTPUT}
+          isLoading={
+            isPreviewTrade(trade) && trade.tradeType === TradeType.EXACT_OUTPUT
+          }
         />
         <SwapModalHeaderAmount
           field={Field.OUTPUT}
@@ -47,25 +49,29 @@ export default function SwapModalHeader({
           amount={trade.postTaxOutputAmount}
           currency={trade.outputAmount.currency}
           usdAmount={fiatValueOutput.data}
-          isLoading={isPreviewTrade(trade) && trade.tradeType === TradeType.EXACT_INPUT}
+          isLoading={
+            isPreviewTrade(trade) && trade.tradeType === TradeType.EXACT_INPUT
+          }
           tooltipText={
             trade.tradeType === TradeType.EXACT_INPUT ? (
               <ThemedText.BodySmall>
                 <Trans>
-                  Output is estimated. You will receive at least{' '}
+                  Output is estimated. You will receive at least{" "}
                   <b>
-                    {trade.minimumAmountOut(allowedSlippage).toSignificant(6)} {trade.outputAmount.currency.symbol}
-                  </b>{' '}
+                    {trade.minimumAmountOut(allowedSlippage).toSignificant(6)}{" "}
+                    {trade.outputAmount.currency.symbol}
+                  </b>{" "}
                   or the transaction will revert.
                 </Trans>
               </ThemedText.BodySmall>
             ) : (
               <ThemedText.BodySmall>
                 <Trans>
-                  Input is estimated. You will sell at most{' '}
+                  Input is estimated. You will sell at most{" "}
                   <b>
-                    {trade.maximumAmountIn(allowedSlippage).toSignificant(6)} {trade.inputAmount.currency.symbol}
-                  </b>{' '}
+                    {trade.maximumAmountIn(allowedSlippage).toSignificant(6)}{" "}
+                    {trade.inputAmount.currency.symbol}
+                  </b>{" "}
                   or the transaction will revert.
                 </Trans>
               </ThemedText.BodySmall>
@@ -75,5 +81,5 @@ export default function SwapModalHeader({
       </Column>
       <Rule />
     </HeaderContainer>
-  )
+  );
 }

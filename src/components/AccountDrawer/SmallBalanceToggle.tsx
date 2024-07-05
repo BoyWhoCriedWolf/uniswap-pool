@@ -1,13 +1,18 @@
-import { t } from '@lingui/macro'
-import { useAtom } from 'jotai'
-import { atomWithStorage } from 'jotai/utils'
+import { t } from "@lingui/macro";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-import { SettingsToggle } from './SettingsToggle'
+import { SettingsToggle } from "./SettingsToggle";
 
-export const hideSmallBalancesAtom = atomWithStorage<boolean>('hideSmallBalances', true)
+export const hideSmallBalancesAtom = atomWithStorage<boolean>(
+  "hideSmallBalances",
+  true
+);
 
 export function SmallBalanceToggle() {
-  const [hideSmallBalances, updateHideSmallBalances] = useAtom(hideSmallBalancesAtom)
+  const [hideSmallBalances, updateHideSmallBalances] = useAtom(
+    hideSmallBalancesAtom
+  );
 
   return (
     <SettingsToggle
@@ -15,5 +20,5 @@ export function SmallBalanceToggle() {
       isActive={hideSmallBalances}
       toggle={() => void updateHideSmallBalances((value) => !value)}
     />
-  )
+  );
 }

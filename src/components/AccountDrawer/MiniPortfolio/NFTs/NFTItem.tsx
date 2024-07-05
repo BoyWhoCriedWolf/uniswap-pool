@@ -1,17 +1,20 @@
-import { InterfaceElementName, SharedEventName } from '@uniswap/analytics-events'
-import { sendAnalyticsEvent, useTrace } from 'analytics'
-import { useToggleAccountDrawer } from 'components/AccountDrawer'
-import Column from 'components/Column'
-import Row from 'components/Row'
-import { Box } from 'nft/components/Box'
-import { NftCard } from 'nft/components/card'
-import { detailsHref } from 'nft/components/card/utils'
-import { VerifiedIcon } from 'nft/components/icons'
-import { WalletAsset } from 'nft/types'
-import { floorFormatter } from 'nft/utils'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { ThemedText } from 'theme/components'
+import {
+  InterfaceElementName,
+  SharedEventName,
+} from "@uniswap/analytics-events";
+import { sendAnalyticsEvent, useTrace } from "analytics";
+import { useToggleAccountDrawer } from "components/AccountDrawer";
+import Column from "components/Column";
+import Row from "components/Row";
+import { Box } from "nft/components/Box";
+import { NftCard } from "nft/components/card";
+import { detailsHref } from "nft/components/card/utils";
+import { VerifiedIcon } from "nft/components/icons";
+import { WalletAsset } from "nft/types";
+import { floorFormatter } from "nft/utils";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { ThemedText } from "theme/components";
 
 const FloorPrice = styled(Row)`
   opacity: 0;
@@ -19,7 +22,7 @@ const FloorPrice = styled(Row)`
   // prevent empty whitespace from collapsing line height to maintain
   // consistent spacing below rows
   white-space: pre;
-`
+`;
 
 const NFTContainer = styled(Column)`
   gap: 8px;
@@ -30,30 +33,30 @@ const NFTContainer = styled(Column)`
       opacity: 1;
     }
   }
-`
+`;
 const NFTCollectionName = styled(ThemedText.BodySmall)`
   white-space: pre;
   text-overflow: ellipsis;
   overflow: hidden;
-`
+`;
 
 export function NFT({
   asset,
   mediaShouldBePlaying,
   setCurrentTokenPlayingMedia,
 }: {
-  asset: WalletAsset
-  mediaShouldBePlaying: boolean
-  setCurrentTokenPlayingMedia: (tokenId: string | undefined) => void
+  asset: WalletAsset;
+  mediaShouldBePlaying: boolean;
+  setCurrentTokenPlayingMedia: (tokenId: string | undefined) => void;
 }) {
-  const toggleWalletDrawer = useToggleAccountDrawer()
-  const navigate = useNavigate()
-  const trace = useTrace()
+  const toggleWalletDrawer = useToggleAccountDrawer();
+  const navigate = useNavigate();
+  const trace = useTrace();
 
   const navigateToNFTDetails = () => {
-    toggleWalletDrawer()
-    navigate(detailsHref(asset))
-  }
+    toggleWalletDrawer();
+    navigate(detailsHref(asset));
+  };
 
   return (
     <NFTContainer>
@@ -79,7 +82,7 @@ export function NFT({
       />
       <NFTDetails asset={asset} />
     </NFTContainer>
-  )
+  );
 }
 
 function NFTDetails({ asset }: { asset: WalletAsset }) {
@@ -91,18 +94,18 @@ function NFTDetails({ asset }: { asset: WalletAsset }) {
       </Row>
       <FloorPrice>
         <ThemedText.BodySmall color="neutral2">
-          {asset.floorPrice ? `${floorFormatter(asset.floorPrice)} ETH` : ' '}
+          {asset.floorPrice ? `${floorFormatter(asset.floorPrice)} ETH` : " "}
         </ThemedText.BodySmall>
       </FloorPrice>
     </Box>
-  )
+  );
 }
 
-const BADGE_SIZE = '18px'
+const BADGE_SIZE = "18px";
 function Verified() {
   return (
     <Row width="unset" flexShrink="0">
       <VerifiedIcon height={BADGE_SIZE} width={BADGE_SIZE} />
     </Row>
-  )
+  );
 }

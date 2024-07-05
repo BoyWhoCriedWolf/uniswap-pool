@@ -1,28 +1,36 @@
-import Column from 'components/Column'
-import Row from 'components/Row'
-import Toggle from 'components/Toggle'
-import styled from 'styled-components'
-import { ThemedText } from 'theme/components'
+import Column from "components/Column";
+import Row from "components/Row";
+import Toggle from "components/Toggle";
+import styled from "styled-components";
+import { ThemedText } from "theme/components";
 
 const StyledColumn = styled(Column)`
   width: 100%;
   margin-right: 10px;
-`
+`;
 
 interface SettingsToggleProps {
-  title: string
-  description?: string
-  dataid?: string
-  isActive: boolean
-  toggle: () => void
+  title: string;
+  description?: string;
+  dataid?: string;
+  isActive: boolean;
+  toggle: () => void;
 }
 
-export function SettingsToggle({ title, description, dataid, isActive, toggle }: SettingsToggleProps) {
+export function SettingsToggle({
+  title,
+  description,
+  dataid,
+  isActive,
+  toggle,
+}: SettingsToggleProps) {
   return (
     <Row align="center">
       <StyledColumn>
         <Row>
-          <ThemedText.SubHeaderSmall color="neutral1">{title}</ThemedText.SubHeaderSmall>
+          <ThemedText.SubHeaderSmall color="neutral1">
+            {title}
+          </ThemedText.SubHeaderSmall>
         </Row>
         {description && (
           <Row>
@@ -34,5 +42,5 @@ export function SettingsToggle({ title, description, dataid, isActive, toggle }:
       </StyledColumn>
       <Toggle id={dataid} isActive={isActive} toggle={toggle} />
     </Row>
-  )
+  );
 }

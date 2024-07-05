@@ -1,17 +1,17 @@
-import walletBannerPhoneImageSrc from 'assets/images/wallet_banner_phone_image.png'
-import { BaseButton } from 'components/Button'
-import { OpacityHoverState } from 'components/Common'
-import Row from 'components/Row'
-import { X } from 'react-feather'
-import styled from 'styled-components'
-import { Z_INDEX } from 'theme/zIndex'
+import walletBannerPhoneImageSrc from "assets/images/wallet_banner_phone_image.png";
+import { BaseButton } from "components/Button";
+import { OpacityHoverState } from "components/Common";
+import Row from "components/Row";
+import { X } from "react-feather";
+import styled from "styled-components";
+import { Z_INDEX } from "theme/zIndex";
 
 export const PopupContainer = styled.div<{ show: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  ${({ show }) => !show && 'display: none'};
+  ${({ show }) => !show && "display: none"};
 
   background: url(${walletBannerPhoneImageSrc});
   background-repeat: no-repeat;
@@ -41,11 +41,13 @@ export const PopupContainer = styled.div<{ show: boolean }>`
 
   box-shadow: ${({ theme }) => theme.deprecated_deepShadow};
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.md}px`}) {
     bottom: 62px;
   }
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.sm}px`}) {
     background-position: top 32px right -10px;
     width: unset;
     right: 10px;
@@ -54,7 +56,7 @@ export const PopupContainer = styled.div<{ show: boolean }>`
   }
 
   user-select: none;
-`
+`;
 
 export const BaseBackgroundImage = styled.img`
   position: absolute;
@@ -62,10 +64,10 @@ export const BaseBackgroundImage = styled.img`
   left: 0;
   height: 138px;
   width: 138px;
-`
+`;
 export const ButtonRow = styled(Row)`
   gap: 16px;
-`
+`;
 export const StyledXButton = styled(X)`
   cursor: pointer;
   position: absolute;
@@ -74,11 +76,11 @@ export const StyledXButton = styled(X)`
 
   color: ${({ theme }) => theme.white};
   ${OpacityHoverState};
-`
+`;
 
 export const BannerButton = styled(BaseButton)`
   height: 40px;
   border-radius: 16px;
   padding: 10px;
   ${OpacityHoverState};
-`
+`;

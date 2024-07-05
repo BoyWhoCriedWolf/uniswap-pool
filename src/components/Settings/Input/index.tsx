@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-import Row from '../../Row'
+import Row from "../../Row";
 
 export const Input = styled.input`
   width: 100%;
@@ -18,7 +18,7 @@ export const Input = styled.input`
   ::placeholder {
     color: ${({ theme }) => theme.neutral3};
   }
-`
+`;
 
 export const InputContainer = styled(Row)<{ error?: boolean }>`
   padding: 8px 16px;
@@ -29,7 +29,8 @@ export const InputContainer = styled(Row)<{ error?: boolean }>`
   input {
     color: ${({ theme, error }) => (error ? theme.critical : theme.neutral1)};
   }
-  border: 1px solid ${({ theme, error }) => (error ? theme.critical : theme.surface2)};
+  border: 1px solid
+    ${({ theme, error }) => (error ? theme.critical : theme.surface2)};
   ${({ theme, error }) =>
     error
       ? `
@@ -44,4 +45,4 @@ export const InputContainer = styled(Row)<{ error?: boolean }>`
           border-color: ${theme.accent2};
         }
       `}
-`
+`;

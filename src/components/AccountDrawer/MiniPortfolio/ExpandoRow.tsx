@@ -1,16 +1,17 @@
-import { t } from '@lingui/macro'
-import Column from 'components/Column'
-import Row from 'components/Row'
-import { PropsWithChildren } from 'react'
-import { ChevronDown } from 'react-feather'
-import styled from 'styled-components'
-import { ThemedText } from 'theme/components'
+import { t } from "@lingui/macro";
+import Column from "components/Column";
+import Row from "components/Row";
+import { PropsWithChildren } from "react";
+import { ChevronDown } from "react-feather";
+import styled from "styled-components";
+import { ThemedText } from "theme/components";
 
 const ExpandIcon = styled(ChevronDown)<{ $expanded: boolean }>`
   color: ${({ theme }) => theme.neutral2};
-  transform: ${({ $expanded }) => ($expanded ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform: ${({ $expanded }) =>
+    $expanded ? "rotate(180deg)" : "rotate(0deg)"};
   transition: transform ${({ theme }) => theme.transition.duration.medium};
-`
+`;
 
 const ToggleButton = styled(Row)`
   background-color: ${({ theme }) => theme.surface3};
@@ -22,18 +23,31 @@ const ToggleButton = styled(Row)`
   :hover {
     opacity: 0.8;
   }
-`
+`;
 
 const Wrapper = styled(Column)<{ numItems: number; isExpanded: boolean }>`
-  height: ${({ numItems, isExpanded }) => (isExpanded ? numItems * 68 + 'px' : 0)};
-  transition: ${({ theme }) => `height ${theme.transition.duration.medium} ease-in-out`};
+  height: ${({ numItems, isExpanded }) =>
+    isExpanded ? numItems * 68 + "px" : 0};
+  transition: ${({ theme }) =>
+    `height ${theme.transition.duration.medium} ease-in-out`};
   overflow: hidden;
-`
+`;
 
 // TODO(WEB-1982): Replace this component to use `components/Expand` under the hood
-type ExpandoRowProps = PropsWithChildren<{ title?: string; numItems: number; isExpanded: boolean; toggle: () => void }>
-export function ExpandoRow({ title = t`Hidden`, numItems, isExpanded, toggle, children }: ExpandoRowProps) {
-  if (numItems === 0) return null
+type ExpandoRowProps = PropsWithChildren<{
+  title?: string;
+  numItems: number;
+  isExpanded: boolean;
+  toggle: () => void;
+}>;
+export function ExpandoRow({
+  title = t`Hidden`,
+  numItems,
+  isExpanded,
+  toggle,
+  children,
+}: ExpandoRowProps) {
+  if (numItems === 0) return null;
   return (
     <>
       <Row align="center" justify="space-between" padding="16px">
@@ -51,5 +65,5 @@ export function ExpandoRow({ title = t`Hidden`, numItems, isExpanded, toggle, ch
         {children}
       </Wrapper>
     </>
-  )
+  );
 }

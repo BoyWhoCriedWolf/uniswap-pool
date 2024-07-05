@@ -1,13 +1,13 @@
-import { Trans } from '@lingui/macro'
-import { ButtonPrimary } from 'components/Button'
-import { ColumnCenter } from 'components/Column'
-import QuestionHelper from 'components/QuestionHelper'
-import Row from 'components/Row'
-import { AlertTriangle } from 'react-feather'
-import { useTheme } from 'styled-components'
-import { ThemedText } from 'theme/components'
+import { Trans } from "@lingui/macro";
+import { ButtonPrimary } from "components/Button";
+import { ColumnCenter } from "components/Column";
+import QuestionHelper from "components/QuestionHelper";
+import Row from "components/Row";
+import { AlertTriangle } from "react-feather";
+import { useTheme } from "styled-components";
+import { ThemedText } from "theme/components";
 
-import { PendingModalContainer } from '.'
+import { PendingModalContainer } from ".";
 
 export enum PendingModalError {
   TOKEN_APPROVAL_ERROR,
@@ -17,8 +17,8 @@ export enum PendingModalError {
 }
 
 interface ErrorModalContentProps {
-  errorType: PendingModalError
-  onRetry: () => void
+  errorType: PendingModalError;
+  onRetry: () => void;
 }
 
 function getErrorContent(errorType: PendingModalError) {
@@ -29,42 +29,57 @@ function getErrorContent(errorType: PendingModalError) {
         label: <Trans>Why are approvals required?</Trans>,
         tooltipText: (
           <Trans>
-            This provides the Uniswap protocol access to your token for trading. For security, this will expire after 30
-            days.
+            This provides the Uniswap protocol access to your token for trading.
+            For security, this will expire after 30 days.
           </Trans>
         ),
-      }
+      };
     case PendingModalError.PERMIT_ERROR:
       return {
         title: <Trans>Permit approval failed</Trans>,
         label: <Trans>Why are permits required?</Trans>,
         tooltipText: (
-          <Trans>Permit2 allows token approvals to be shared and managed across different applications.</Trans>
+          <Trans>
+            Permit2 allows token approvals to be shared and managed across
+            different applications.
+          </Trans>
         ),
-      }
+      };
     case PendingModalError.CONFIRMATION_ERROR:
       return {
         title: <Trans>Swap failed</Trans>,
-      }
+      };
     case PendingModalError.WRAP_ERROR:
       return {
         title: <Trans>Wrap failed</Trans>,
-      }
+      };
   }
 }
 
-export function ErrorModalContent({ errorType, onRetry }: ErrorModalContentProps) {
-  const theme = useTheme()
+export function ErrorModalContent({
+  errorType,
+  onRetry,
+}: ErrorModalContentProps) {
+  const theme = useTheme();
 
-  const { title, label, tooltipText } = getErrorContent(errorType)
+  const { title, label, tooltipText } = getErrorContent(errorType);
 
   return (
     <PendingModalContainer gap="lg">
-      <AlertTriangle data-testid="pending-modal-failure-icon" strokeWidth={1} color={theme.critical} size="48px" />
+      <AlertTriangle
+        data-testid="pending-modal-failure-icon"
+        strokeWidth={1}
+        color={theme.critical}
+        size="48px"
+      />
       <ColumnCenter gap="md">
         <ThemedText.HeadlineSmall>{title}</ThemedText.HeadlineSmall>
         <Row justify="center">
-          {label && <ThemedText.BodySmall color="neutral2">{label}</ThemedText.BodySmall>}
+          {label && (
+            <ThemedText.BodySmall color="neutral2">
+              {label}
+            </ThemedText.BodySmall>
+          )}
           {tooltipText && <QuestionHelper text={tooltipText} />}
         </Row>
       </ColumnCenter>
@@ -74,5 +89,5 @@ export function ErrorModalContent({ errorType, onRetry }: ErrorModalContentProps
         </ButtonPrimary>
       </Row>
     </PendingModalContainer>
-  )
+  );
 }

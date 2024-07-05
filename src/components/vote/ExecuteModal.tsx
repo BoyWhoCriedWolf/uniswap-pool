@@ -1,77 +1,81 @@
-import { Trans } from '@lingui/macro'
-import { useWeb3React } from '@web3-react/core'
-import { useState } from 'react'
-import { ArrowUpCircle, X } from 'react-feather'
-import styled, { useTheme } from 'styled-components'
-import { CustomLightSpinner, ThemedText } from 'theme/components'
-import { ExternalLink } from 'theme/components'
+import { Trans } from "@lingui/macro";
+import { useWeb3React } from "@web3-react/core";
+import { useState } from "react";
+import { ArrowUpCircle, X } from "react-feather";
+import styled, { useTheme } from "styled-components";
+import { CustomLightSpinner, ThemedText } from "theme/components";
+import { ExternalLink } from "theme/components";
 
-import Circle from '../../assets/images/blue-loader.svg'
-import { useExecuteCallback } from '../../state/governance/hooks'
-import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
-import { ButtonPrimary } from '../Button'
-import { AutoColumn, ColumnCenter } from '../Column'
-import Modal from '../Modal'
-import { RowBetween } from '../Row'
+import Circle from "../../assets/images/blue-loader.svg";
+import { useExecuteCallback } from "../../state/governance/hooks";
+import { ExplorerDataType, getExplorerLink } from "../../utils/getExplorerLink";
+import { ButtonPrimary } from "../Button";
+import { AutoColumn, ColumnCenter } from "../Column";
+import Modal from "../Modal";
+import { RowBetween } from "../Row";
 
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
   padding: 24px;
-`
+`;
 
 const StyledClosed = styled(X)`
   :hover {
     cursor: pointer;
   }
-`
+`;
 
 const ConfirmOrLoadingWrapper = styled.div`
   width: 100%;
   padding: 24px;
-`
+`;
 
 const ConfirmedIcon = styled(ColumnCenter)`
   padding: 60px 0;
-`
+`;
 
 interface ExecuteModalProps {
-  isOpen: boolean
-  onDismiss: () => void
-  proposalId?: string // id for the proposal to execute
+  isOpen: boolean;
+  onDismiss: () => void;
+  proposalId?: string; // id for the proposal to execute
 }
 
-export default function ExecuteModal({ isOpen, onDismiss, proposalId }: ExecuteModalProps) {
-  const { chainId } = useWeb3React()
-  const executeCallback = useExecuteCallback()
+export default function ExecuteModal({
+  isOpen,
+  onDismiss,
+  proposalId,
+}: ExecuteModalProps) {
+  const { chainId } = useWeb3React();
+  const executeCallback = useExecuteCallback();
 
   // monitor call to help UI loading state
-  const [hash, setHash] = useState<string | undefined>()
-  const [attempting, setAttempting] = useState<boolean>(false)
+  const [hash, setHash] = useState<string | undefined>();
+  const [attempting, setAttempting] = useState<boolean>(false);
 
   // get theme for colors
-  const theme = useTheme()
+  const theme = useTheme();
 
   // wrapper to reset state on modal close
   function wrappedOnDismiss() {
-    setHash(undefined)
-    setAttempting(false)
-    onDismiss()
+    setHash(undefined);
+    setAttempting(false);
+    onDismiss();
   }
 
   async function onExecute() {
-    setAttempting(true)
+    setAttempting(true);
 
     // if callback not returned properly ignore
-    if (!executeCallback) return
+    if (!executeCallback) return;
 
     // try delegation and store hash
     const hash = await executeCallback(proposalId)?.catch((error) => {
-      setAttempting(false)
-      console.log(error)
-    })
+      setAttempting(false);
+      console.log(error);
+    });
 
     if (hash) {
-      setHash(hash)
+      setHash(hash);
     }
   }
 
@@ -88,7 +92,9 @@ export default function ExecuteModal({ isOpen, onDismiss, proposalId }: ExecuteM
             </RowBetween>
             <RowBetween>
               <ThemedText.DeprecatedBody>
-                <Trans>Executing this proposal will enact the calldata on-chain.</Trans>
+                <Trans>
+                  Executing this proposal will enact the calldata on-chain.
+                </Trans>
               </ThemedText.DeprecatedBody>
             </RowBetween>
             <ButtonPrimary onClick={onExecute}>
@@ -137,8 +143,12 @@ export default function ExecuteModal({ isOpen, onDismiss, proposalId }: ExecuteM
             </AutoColumn>
             {chainId && (
               <ExternalLink
-                href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}
-                style={{ marginLeft: '4px' }}
+                href={getExplorerLink(
+                  chainId,
+                  hash,
+                  ExplorerDataType.TRANSACTION
+                )}
+                style={{ marginLeft: "4px" }}
               >
                 <ThemedText.DeprecatedSubHeader>
                   <Trans>View transaction on Explorer</Trans>
@@ -149,5 +159,5 @@ export default function ExecuteModal({ isOpen, onDismiss, proposalId }: ExecuteM
         </ConfirmOrLoadingWrapper>
       )}
     </Modal>
-  )
+  );
 }

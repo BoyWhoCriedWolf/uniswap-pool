@@ -1,18 +1,20 @@
-import { NATIVE_CHAIN_ID } from 'constants/tokens'
-import { TokenStandard } from 'graphql/data/__generated__/types-and-hooks'
-import { SearchToken } from 'graphql/data/SearchTokens'
-import { TokenQueryData } from 'graphql/data/Token'
-import { TopToken } from 'graphql/data/TopTokens'
-import { supportedChainIdFromGQLChain } from 'graphql/data/util'
+import { NATIVE_CHAIN_ID } from "constants/tokens";
+import { TokenStandard } from "graphql/data/__generated__/types-and-hooks";
+import { SearchToken } from "graphql/data/SearchTokens";
+import { TokenQueryData } from "graphql/data/Token";
+import { TopToken } from "graphql/data/TopTokens";
+import { supportedChainIdFromGQLChain } from "graphql/data/util";
 
-import AssetLogo, { AssetLogoBaseProps } from './AssetLogo'
+import AssetLogo, { AssetLogoBaseProps } from "./AssetLogo";
 
 export default function QueryTokenLogo(
   props: AssetLogoBaseProps & {
-    token?: TopToken | TokenQueryData | SearchToken
+    token?: TopToken | TokenQueryData | SearchToken;
   }
 ) {
-  const chainId = props.token?.chain ? supportedChainIdFromGQLChain(props.token?.chain) : undefined
+  const chainId = props.token?.chain
+    ? supportedChainIdFromGQLChain(props.token?.chain)
+    : undefined;
 
   return (
     <AssetLogo
@@ -28,5 +30,5 @@ export default function QueryTokenLogo(
       backupImg={props.token?.project?.logoUrl}
       {...props}
     />
-  )
+  );
 }

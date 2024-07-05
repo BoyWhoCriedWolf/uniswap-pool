@@ -1,49 +1,74 @@
-import { Trans } from '@lingui/macro'
-import { BrowserEvent, InterfaceElementName, InterfaceEventName, SharedEventName } from '@uniswap/analytics-events'
-import { CurrencyAmount, Token } from '@uniswap/sdk-core'
-import { useWeb3React } from '@web3-react/core'
-import { sendAnalyticsEvent, TraceEvent } from 'analytics'
-import { ButtonEmphasis, ButtonSize, LoadingButtonSpinner, ThemeButton } from 'components/Button'
-import Column from 'components/Column'
-import { Power } from 'components/Icons/Power'
-import { Settings } from 'components/Icons/Settings'
-import { AutoRow } from 'components/Row'
-import { LoadingBubble } from 'components/Tokens/loading'
-import { DeltaArrow } from 'components/Tokens/TokenDetails/Delta'
-import Tooltip from 'components/Tooltip'
-import { getConnection } from 'connection'
-import { useDisableNFTRoutes } from 'hooks/useDisableNFTRoutes'
-import useENSName from 'hooks/useENSName'
-import { useIsNotOriginCountry } from 'hooks/useIsNotOriginCountry'
-import { useProfilePageState, useSellAsset, useWalletCollections } from 'nft/hooks'
-import { useIsNftClaimAvailable } from 'nft/hooks/useIsNftClaimAvailable'
-import { ProfilePageStateType } from 'nft/types'
-import { useCallback, useState } from 'react'
-import { CreditCard, Info } from 'react-feather'
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from 'state/hooks'
-import { updateSelectedWallet } from 'state/user/reducer'
-import styled from 'styled-components'
-import { CopyHelper, ExternalLink, ThemedText } from 'theme/components'
-import { shortenAddress } from 'utils'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { Trans } from "@lingui/macro";
+import {
+  BrowserEvent,
+  InterfaceElementName,
+  InterfaceEventName,
+  SharedEventName,
+} from "@uniswap/analytics-events";
+import { CurrencyAmount, Token } from "@uniswap/sdk-core";
+import { useWeb3React } from "@web3-react/core";
+import { sendAnalyticsEvent, TraceEvent } from "analytics";
+import {
+  ButtonEmphasis,
+  ButtonSize,
+  LoadingButtonSpinner,
+  ThemeButton,
+} from "components/Button";
+import Column from "components/Column";
+import { Power } from "components/Icons/Power";
+import { Settings } from "components/Icons/Settings";
+import { AutoRow } from "components/Row";
+import { LoadingBubble } from "components/Tokens/loading";
+import { DeltaArrow } from "components/Tokens/TokenDetails/Delta";
+import Tooltip from "components/Tooltip";
+import { getConnection } from "connection";
+import { useDisableNFTRoutes } from "hooks/useDisableNFTRoutes";
+import useENSName from "hooks/useENSName";
+import { useIsNotOriginCountry } from "hooks/useIsNotOriginCountry";
+import {
+  useProfilePageState,
+  useSellAsset,
+  useWalletCollections,
+} from "nft/hooks";
+import { useIsNftClaimAvailable } from "nft/hooks/useIsNftClaimAvailable";
+import { ProfilePageStateType } from "nft/types";
+import { useCallback, useState } from "react";
+import { CreditCard, Info } from "react-feather";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "state/hooks";
+import { updateSelectedWallet } from "state/user/reducer";
+import styled from "styled-components";
+import { CopyHelper, ExternalLink, ThemedText } from "theme/components";
+import { shortenAddress } from "utils";
+import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { useCloseModal, useFiatOnrampAvailability, useOpenModal, useToggleModal } from '../../state/application/hooks'
-import { ApplicationModal } from '../../state/application/reducer'
-import { useUserHasAvailableClaim, useUserUnclaimedAmount } from '../../state/claim/hooks'
-import StatusIcon from '../Identicon/StatusIcon'
-import { useCachedPortfolioBalancesQuery } from '../PrefetchBalancesWrapper/PrefetchBalancesWrapper'
-import { useToggleAccountDrawer } from '.'
-import IconButton, { IconHoverText, IconWithConfirmTextButton } from './IconButton'
-import MiniPortfolio from './MiniPortfolio'
-import { portfolioFadeInAnimation } from './MiniPortfolio/PortfolioRow'
+import {
+  useCloseModal,
+  useFiatOnrampAvailability,
+  useOpenModal,
+  useToggleModal,
+} from "../../state/application/hooks";
+import { ApplicationModal } from "../../state/application/reducer";
+import {
+  useUserHasAvailableClaim,
+  useUserUnclaimedAmount,
+} from "../../state/claim/hooks";
+import StatusIcon from "../Identicon/StatusIcon";
+import { useCachedPortfolioBalancesQuery } from "../PrefetchBalancesWrapper/PrefetchBalancesWrapper";
+import { useToggleAccountDrawer } from ".";
+import IconButton, {
+  IconHoverText,
+  IconWithConfirmTextButton,
+} from "./IconButton";
+import MiniPortfolio from "./MiniPortfolio";
+import { portfolioFadeInAnimation } from "./MiniPortfolio/PortfolioRow";
 
 const AuthenticatedHeaderWrapper = styled.div`
   padding: 20px 16px;
   display: flex;
   flex-direction: column;
   flex: 1;
-`
+`;
 
 const HeaderButton = styled(ThemeButton)`
   border-color: transparent;
@@ -52,7 +77,7 @@ const HeaderButton = styled(ThemeButton)`
   border-width: 1px;
   height: 40px;
   margin-top: 8px;
-`
+`;
 
 const WalletButton = styled(ThemeButton)`
   border-radius: 12px;
@@ -61,7 +86,7 @@ const WalletButton = styled(ThemeButton)`
   margin-top: 4px;
   color: white;
   border: none;
-`
+`;
 
 const UNIButton = styled(WalletButton)`
   border-radius: 12px;
@@ -71,7 +96,7 @@ const UNIButton = styled(WalletButton)`
   color: white;
   border: none;
   background: linear-gradient(to right, #9139b0 0%, #4261d6 100%);
-`
+`;
 
 const IconContainer = styled.div`
   display: flex;
@@ -87,13 +112,13 @@ const IconContainer = styled.div`
       left: 0px;
     }
   }
-`
+`;
 const FiatOnrampNotAvailableText = styled(ThemedText.BodySmall)`
   align-items: center;
   color: ${({ theme }) => theme.neutral2};
   display: flex;
   justify-content: center;
-`
+`;
 const FiatOnrampAvailabilityExternalLink = styled(ExternalLink)`
   align-items: center;
   display: flex;
@@ -101,7 +126,7 @@ const FiatOnrampAvailabilityExternalLink = styled(ExternalLink)`
   justify-content: center;
   margin-left: 6px;
   width: 14px;
-`
+`;
 
 const StatusWrapper = styled.div`
   display: inline-block;
@@ -109,7 +134,7 @@ const StatusWrapper = styled.div`
   max-width: 70%;
   padding-right: 8px;
   display: inline-flex;
-`
+`;
 
 const AccountNamesWrapper = styled.div`
   overflow: hidden;
@@ -119,111 +144,149 @@ const AccountNamesWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-left: 8px;
-`
+`;
 
 const StyledInfoIcon = styled(Info)`
   height: 12px;
   width: 12px;
   flex: 1 1 auto;
-`
+`;
 const StyledLoadingButtonSpinner = styled(LoadingButtonSpinner)`
   fill: ${({ theme }) => theme.accent1};
-`
+`;
 
 const HeaderWrapper = styled.div`
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-`
+`;
 
 const CopyText = styled(CopyHelper).attrs({
   iconSize: 14,
-  iconPosition: 'right',
-})``
+  iconPosition: "right",
+})``;
 
 const FadeInColumn = styled(Column)`
   ${portfolioFadeInAnimation}
-`
+`;
 
 const PortfolioDrawerContainer = styled(Column)`
   flex: 1;
-`
+`;
 
-export default function AuthenticatedHeader({ account, openSettings }: { account: string; openSettings: () => void }) {
-  const { connector } = useWeb3React()
-  const { ENSName } = useENSName(account)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const closeModal = useCloseModal()
-  const setSellPageState = useProfilePageState((state) => state.setProfilePageState)
-  const resetSellAssets = useSellAsset((state) => state.reset)
-  const clearCollectionFilters = useWalletCollections((state) => state.clearCollectionFilters)
-  const isClaimAvailable = useIsNftClaimAvailable((state) => state.isClaimAvailable)
-  const shouldShowBuyFiatButton = useIsNotOriginCountry('GB')
-  const { formatNumber, formatPercent } = useFormatter()
+export default function AuthenticatedHeader({
+  account,
+  openSettings,
+}: {
+  account: string;
+  openSettings: () => void;
+}) {
+  const { connector } = useWeb3React();
+  const { ENSName } = useENSName(account);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const closeModal = useCloseModal();
+  const setSellPageState = useProfilePageState(
+    (state) => state.setProfilePageState
+  );
+  const resetSellAssets = useSellAsset((state) => state.reset);
+  const clearCollectionFilters = useWalletCollections(
+    (state) => state.clearCollectionFilters
+  );
+  const isClaimAvailable = useIsNftClaimAvailable(
+    (state) => state.isClaimAvailable
+  );
+  const shouldShowBuyFiatButton = useIsNotOriginCountry("GB");
+  const { formatNumber, formatPercent } = useFormatter();
 
-  const shouldDisableNFTRoutes = useDisableNFTRoutes()
+  const shouldDisableNFTRoutes = useDisableNFTRoutes();
 
-  const unclaimedAmount: CurrencyAmount<Token> | undefined = useUserUnclaimedAmount(account)
-  const isUnclaimed = useUserHasAvailableClaim(account)
-  const connection = getConnection(connector)
-  const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM)
-  const openNftModal = useToggleModal(ApplicationModal.UNISWAP_NFT_AIRDROP_CLAIM)
+  const unclaimedAmount: CurrencyAmount<Token> | undefined =
+    useUserUnclaimedAmount(account);
+  const isUnclaimed = useUserHasAvailableClaim(account);
+  const connection = getConnection(connector);
+  const openClaimModal = useToggleModal(ApplicationModal.ADDRESS_CLAIM);
+  const openNftModal = useToggleModal(
+    ApplicationModal.UNISWAP_NFT_AIRDROP_CLAIM
+  );
   const disconnect = useCallback(() => {
     if (connector && connector.deactivate) {
-      connector.deactivate()
+      connector.deactivate();
     }
-    connector.resetState()
-    dispatch(updateSelectedWallet({ wallet: undefined }))
-  }, [connector, dispatch])
+    connector.resetState();
+    dispatch(updateSelectedWallet({ wallet: undefined }));
+  }, [connector, dispatch]);
 
-  const toggleWalletDrawer = useToggleAccountDrawer()
+  const toggleWalletDrawer = useToggleAccountDrawer();
 
   const navigateToProfile = useCallback(() => {
-    toggleWalletDrawer()
-    resetSellAssets()
-    setSellPageState(ProfilePageStateType.VIEWING)
-    clearCollectionFilters()
-    navigate('/nfts/profile')
-    closeModal()
-  }, [clearCollectionFilters, closeModal, navigate, resetSellAssets, setSellPageState, toggleWalletDrawer])
+    toggleWalletDrawer();
+    resetSellAssets();
+    setSellPageState(ProfilePageStateType.VIEWING);
+    clearCollectionFilters();
+    navigate("/nfts/profile");
+    closeModal();
+  }, [
+    clearCollectionFilters,
+    closeModal,
+    navigate,
+    resetSellAssets,
+    setSellPageState,
+    toggleWalletDrawer,
+  ]);
 
-  const openFiatOnrampModal = useOpenModal(ApplicationModal.FIAT_ONRAMP)
+  const openFiatOnrampModal = useOpenModal(ApplicationModal.FIAT_ONRAMP);
   const openFoRModalWithAnalytics = useCallback(() => {
-    toggleWalletDrawer()
-    sendAnalyticsEvent(InterfaceEventName.FIAT_ONRAMP_WIDGET_OPENED)
-    openFiatOnrampModal()
-  }, [openFiatOnrampModal, toggleWalletDrawer])
+    toggleWalletDrawer();
+    sendAnalyticsEvent(InterfaceEventName.FIAT_ONRAMP_WIDGET_OPENED);
+    openFiatOnrampModal();
+  }, [openFiatOnrampModal, toggleWalletDrawer]);
 
-  const [shouldCheck, setShouldCheck] = useState(false)
+  const [shouldCheck, setShouldCheck] = useState(false);
   const {
     available: fiatOnrampAvailable,
     availabilityChecked: fiatOnrampAvailabilityChecked,
     error,
     loading: fiatOnrampAvailabilityLoading,
-  } = useFiatOnrampAvailability(shouldCheck, openFoRModalWithAnalytics)
+  } = useFiatOnrampAvailability(shouldCheck, openFoRModalWithAnalytics);
 
   const handleBuyCryptoClick = useCallback(() => {
     if (!fiatOnrampAvailabilityChecked) {
-      setShouldCheck(true)
+      setShouldCheck(true);
     } else if (fiatOnrampAvailable) {
-      openFoRModalWithAnalytics()
+      openFoRModalWithAnalytics();
     }
-  }, [fiatOnrampAvailabilityChecked, fiatOnrampAvailable, openFoRModalWithAnalytics])
+  }, [
+    fiatOnrampAvailabilityChecked,
+    fiatOnrampAvailable,
+    openFoRModalWithAnalytics,
+  ]);
   const disableBuyCryptoButton = Boolean(
-    error || (!fiatOnrampAvailable && fiatOnrampAvailabilityChecked) || fiatOnrampAvailabilityLoading
-  )
-  const [showFiatOnrampUnavailableTooltip, setShow] = useState<boolean>(false)
-  const openFiatOnrampUnavailableTooltip = useCallback(() => setShow(true), [setShow])
-  const closeFiatOnrampUnavailableTooltip = useCallback(() => setShow(false), [setShow])
+    error ||
+      (!fiatOnrampAvailable && fiatOnrampAvailabilityChecked) ||
+      fiatOnrampAvailabilityLoading
+  );
+  const [showFiatOnrampUnavailableTooltip, setShow] = useState<boolean>(false);
+  const openFiatOnrampUnavailableTooltip = useCallback(
+    () => setShow(true),
+    [setShow]
+  );
+  const closeFiatOnrampUnavailableTooltip = useCallback(
+    () => setShow(false),
+    [setShow]
+  );
 
-  const { data: portfolioBalances } = useCachedPortfolioBalancesQuery({ account })
-  const portfolio = portfolioBalances?.portfolios?.[0]
-  const totalBalance = portfolio?.tokensTotalDenominatedValue?.value
-  const absoluteChange = portfolio?.tokensTotalDenominatedValueChange?.absolute?.value
-  const percentChange = portfolio?.tokensTotalDenominatedValueChange?.percentage?.value
-  const [showDisconnectConfirm, setShowDisconnectConfirm] = useState(false)
+  const { data: portfolioBalances } = useCachedPortfolioBalancesQuery({
+    account,
+  });
+  const portfolio = portfolioBalances?.portfolios?.[0];
+  const totalBalance = portfolio?.tokensTotalDenominatedValue?.value;
+  const absoluteChange =
+    portfolio?.tokensTotalDenominatedValueChange?.absolute?.value;
+  const percentChange =
+    portfolio?.tokensTotalDenominatedValueChange?.percentage?.value;
+  const [showDisconnectConfirm, setShowDisconnectConfirm] = useState(false);
 
   return (
     <AuthenticatedHeaderWrapper>
@@ -233,12 +296,16 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
           {account && (
             <AccountNamesWrapper>
               <ThemedText.SubHeader>
-                <CopyText toCopy={ENSName ?? account}>{ENSName ?? shortenAddress(account)}</CopyText>
+                <CopyText toCopy={ENSName ?? account}>
+                  {ENSName ?? shortenAddress(account)}
+                </CopyText>
               </ThemedText.SubHeader>
               {/* Displays smaller view of account if ENS name was rendered above */}
               {ENSName && (
                 <ThemedText.BodySmall color="neutral2">
-                  <CopyText toCopy={account}>{shortenAddress(account)}</CopyText>
+                  <CopyText toCopy={account}>
+                    {shortenAddress(account)}
+                  </CopyText>
                 </ThemedText.BodySmall>
               )}
             </AccountNamesWrapper>
@@ -270,7 +337,10 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
       <PortfolioDrawerContainer>
         {totalBalance !== undefined ? (
           <FadeInColumn gap="xs">
-            <ThemedText.HeadlineLarge fontWeight={535} data-testid="portfolio-total-balance">
+            <ThemedText.HeadlineLarge
+              fontWeight={535}
+              data-testid="portfolio-total-balance"
+            >
               {formatNumber({
                 input: totalBalance,
                 type: NumberType.PortfolioBalance,
@@ -322,7 +392,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
                   <StyledLoadingButtonSpinner />
                 ) : (
                   <CreditCard height="20px" width="20px" />
-                )}{' '}
+                )}{" "}
                 <Trans>Buy crypto</Trans>
               </>
             )}
@@ -333,12 +403,16 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
             <Trans>Not available in your region</Trans>
             <Tooltip
               show={showFiatOnrampUnavailableTooltip}
-              text={<Trans>Moonpay is not available in some regions. Click to learn more.</Trans>}
+              text={
+                <Trans>
+                  Moonpay is not available in some regions. Click to learn more.
+                </Trans>
+              }
             >
               <FiatOnrampAvailabilityExternalLink
                 onMouseEnter={openFiatOnrampUnavailableTooltip}
                 onMouseLeave={closeFiatOnrampUnavailableTooltip}
-                style={{ color: 'inherit' }}
+                style={{ color: "inherit" }}
                 href="https://support.uniswap.org/hc/en-us/articles/11306664890381-Why-isn-t-MoonPay-available-in-my-region-"
               >
                 <StyledInfoIcon />
@@ -348,16 +422,26 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
         )}
         <MiniPortfolio account={account} />
         {isUnclaimed && (
-          <UNIButton onClick={openClaimModal} size={ButtonSize.medium} emphasis={ButtonEmphasis.medium}>
-            <Trans>Claim</Trans> {unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} <Trans>reward</Trans>
+          <UNIButton
+            onClick={openClaimModal}
+            size={ButtonSize.medium}
+            emphasis={ButtonEmphasis.medium}
+          >
+            <Trans>Claim</Trans>{" "}
+            {unclaimedAmount?.toFixed(0, { groupSeparator: "," } ?? "-")}{" "}
+            <Trans>reward</Trans>
           </UNIButton>
         )}
         {isClaimAvailable && (
-          <UNIButton size={ButtonSize.medium} emphasis={ButtonEmphasis.medium} onClick={openNftModal}>
+          <UNIButton
+            size={ButtonSize.medium}
+            emphasis={ButtonEmphasis.medium}
+            onClick={openNftModal}
+          >
             <Trans>Claim Uniswap NFT Airdrop</Trans>
           </UNIButton>
         )}
       </PortfolioDrawerContainer>
     </AuthenticatedHeaderWrapper>
-  )
+  );
 }

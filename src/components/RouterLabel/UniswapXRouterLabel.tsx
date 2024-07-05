@@ -1,32 +1,44 @@
-import Row from 'components/Row'
-import { useRef } from 'react'
-import styled from 'styled-components'
-import { v4 as uuid } from 'uuid'
+import Row from "components/Row";
+import { useRef } from "react";
+import styled from "styled-components";
+import { v4 as uuid } from "uuid";
 
-import { BoxProps } from '../../nft/components/Box'
+import { BoxProps } from "../../nft/components/Box";
 
 // Gradient with a fallback to solid color.
 const Gradient = styled.div`
   color: #4673fa;
 
-  @supports (-webkit-background-clip: text) and (-webkit-text-fill-color: transparent) {
-    background-image: linear-gradient(91.39deg, #4673fa -101.76%, #9646fa 101.76%);
+  @supports (-webkit-background-clip: text) and
+    (-webkit-text-fill-color: transparent) {
+    background-image: linear-gradient(
+      91.39deg,
+      #4673fa -101.76%,
+      #9646fa 101.76%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-`
+`;
 
-export { Gradient as UniswapXGradient }
+export { Gradient as UniswapXGradient };
 
 // Uniswap X SVG icon with gradient, copied from Figma.
 // In order for gradient to work, we must give its definition a unique ID that does not collide
 // with other occurences of this component on the page.
 export const UniswapXRouterIcon = ({ testId }: { testId?: string }) => {
-  const componentIdRef = useRef(uuid())
-  const componentId = `AutoRouterIconGradient${componentIdRef.current}`
+  const componentIdRef = useRef(uuid());
+  const componentId = `AutoRouterIconGradient${componentIdRef.current}`;
 
   return (
-    <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" data-testid={testId}>
+    <svg
+      width="10"
+      height="14"
+      viewBox="0 0 10 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      data-testid={testId}
+    >
       <defs>
         <linearGradient
           id={componentId}
@@ -45,13 +57,13 @@ export const UniswapXRouterIcon = ({ testId }: { testId?: string }) => {
         fill={`url(#${componentId})`}
       />
     </svg>
-  )
-}
+  );
+};
 
 export type UnswapXRouterLabelProps = BoxProps & {
-  disableTextGradient?: boolean
-  testId?: string
-}
+  disableTextGradient?: boolean;
+  testId?: string;
+};
 
 export default function UniswapXRouterLabel({
   children,
@@ -60,9 +72,14 @@ export default function UniswapXRouterLabel({
   ...rest
 }: UnswapXRouterLabelProps) {
   return (
-    <Row gap="xs" width="auto" {...rest} style={{ display: 'inline-flex', ...rest.style }}>
+    <Row
+      gap="xs"
+      width="auto"
+      {...rest}
+      style={{ display: "inline-flex", ...rest.style }}
+    >
       <UniswapXRouterIcon testId={testId} />
       {disableTextGradient ? children : <Gradient>{children}</Gradient>}
     </Row>
-  )
+  );
 }

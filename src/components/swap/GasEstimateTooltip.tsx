@@ -1,19 +1,19 @@
-import { InterfaceElementName, SwapEventName } from '@uniswap/analytics-events'
-import { useWeb3React } from '@web3-react/core'
-import { sendAnalyticsEvent } from 'analytics'
-import { Gas } from 'components/Icons/Gas'
-import { LoadingOpacityContainer } from 'components/Loader/styled'
-import { UniswapXRouterIcon } from 'components/RouterLabel/UniswapXRouterLabel'
-import Row, { RowFixed } from 'components/Row'
-import { MouseoverTooltip, TooltipSize } from 'components/Tooltip'
-import { SUPPORTED_GAS_ESTIMATE_CHAIN_IDS } from 'constants/chains'
-import { SubmittableTrade } from 'state/routing/types'
-import { isUniswapXTrade } from 'state/routing/utils'
-import styled from 'styled-components'
-import { ThemedText } from 'theme/components'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { InterfaceElementName, SwapEventName } from "@uniswap/analytics-events";
+import { useWeb3React } from "@web3-react/core";
+import { sendAnalyticsEvent } from "analytics";
+import { Gas } from "components/Icons/Gas";
+import { LoadingOpacityContainer } from "components/Loader/styled";
+import { UniswapXRouterIcon } from "components/RouterLabel/UniswapXRouterLabel";
+import Row, { RowFixed } from "components/Row";
+import { MouseoverTooltip, TooltipSize } from "components/Tooltip";
+import { SUPPORTED_GAS_ESTIMATE_CHAIN_IDS } from "constants/chains";
+import { SubmittableTrade } from "state/routing/types";
+import { isUniswapXTrade } from "state/routing/utils";
+import styled from "styled-components";
+import { ThemedText } from "theme/components";
+import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { GasBreakdownTooltip } from './GasBreakdownTooltip'
+import { GasBreakdownTooltip } from "./GasBreakdownTooltip";
 
 const StyledGasIcon = styled(Gas)`
   height: 16px;
@@ -22,14 +22,24 @@ const StyledGasIcon = styled(Gas)`
   & > * {
     fill: ${({ theme }) => theme.neutral2};
   }
-`
+`;
 
-export default function GasEstimateTooltip({ trade, loading }: { trade?: SubmittableTrade; loading: boolean }) {
-  const { chainId } = useWeb3React()
-  const { formatNumber } = useFormatter()
+export default function GasEstimateTooltip({
+  trade,
+  loading,
+}: {
+  trade?: SubmittableTrade;
+  loading: boolean;
+}) {
+  const { chainId } = useWeb3React();
+  const { formatNumber } = useFormatter();
 
-  if (!trade || !chainId || !SUPPORTED_GAS_ESTIMATE_CHAIN_IDS.includes(chainId)) {
-    return null
+  if (
+    !trade ||
+    !chainId ||
+    !SUPPORTED_GAS_ESTIMATE_CHAIN_IDS.includes(chainId)
+  ) {
+    return null;
   }
 
   return (
@@ -37,15 +47,22 @@ export default function GasEstimateTooltip({ trade, loading }: { trade?: Submitt
       size={TooltipSize.Small}
       text={<GasBreakdownTooltip trade={trade} />}
       onOpen={() => {
-        sendAnalyticsEvent(SwapEventName.SWAP_AUTOROUTER_VISUALIZATION_EXPANDED, {
-          element: InterfaceElementName.AUTOROUTER_VISUALIZATION_ROW,
-        })
+        sendAnalyticsEvent(
+          SwapEventName.SWAP_AUTOROUTER_VISUALIZATION_EXPANDED,
+          {
+            element: InterfaceElementName.AUTOROUTER_VISUALIZATION_ROW,
+          }
+        );
       }}
       placement="right"
     >
       <LoadingOpacityContainer $loading={loading}>
         <RowFixed gap="xs">
-          {isUniswapXTrade(trade) ? <UniswapXRouterIcon testId="gas-estimate-uniswapx-icon" /> : <StyledGasIcon />}
+          {isUniswapXTrade(trade) ? (
+            <UniswapXRouterIcon testId="gas-estimate-uniswapx-icon" />
+          ) : (
+            <StyledGasIcon />
+          )}
           <ThemedText.BodySmall color="neutral2">
             <Row gap="xs">
               <div>
@@ -69,5 +86,5 @@ export default function GasEstimateTooltip({ trade, loading }: { trade?: Submitt
         </RowFixed>
       </LoadingOpacityContainer>
     </MouseoverTooltip>
-  )
+  );
 }

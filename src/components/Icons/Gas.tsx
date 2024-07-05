@@ -1,7 +1,14 @@
-import { ComponentProps } from 'react'
+import { ComponentProps } from "react";
 
-export const Gas = (props: ComponentProps<'svg'>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
+export const Gas = (props: ComponentProps<"svg">) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    {...props}
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -9,4 +16,4 @@ export const Gas = (props: ComponentProps<'svg'>) => (
       fill="currentColor"
     />
   </svg>
-)
+);

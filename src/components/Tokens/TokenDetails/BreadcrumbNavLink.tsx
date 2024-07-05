@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const BreadcrumbNavLink = styled(Link)`
   display: flex;
@@ -16,4 +16,4 @@ export const BreadcrumbNavLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.neutral3};
   }
-`
+`;

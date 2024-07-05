@@ -1,16 +1,16 @@
-import { Trans } from '@lingui/macro'
-import { ChainId } from '@uniswap/sdk-core'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { getChainInfo } from 'constants/chainInfo'
-import { ReactNode } from 'react'
-import styled from 'styled-components'
-import { ExternalLink, ThemedText } from 'theme/components'
-import { textFadeIn } from 'theme/styles'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { Trans } from "@lingui/macro";
+import { ChainId } from "@uniswap/sdk-core";
+import { MouseoverTooltip } from "components/Tooltip";
+import { getChainInfo } from "constants/chainInfo";
+import { ReactNode } from "react";
+import styled from "styled-components";
+import { ExternalLink, ThemedText } from "theme/components";
+import { textFadeIn } from "theme/styles";
+import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { UNSUPPORTED_METADATA_CHAINS } from '../constants'
-import { TokenSortMethod } from '../state'
-import { HEADER_DESCRIPTIONS } from '../TokenTable/TokenRow'
+import { UNSUPPORTED_METADATA_CHAINS } from "../constants";
+import { TokenSortMethod } from "../state";
+import { HEADER_DESCRIPTIONS } from "../TokenTable/TokenRow";
 
 export const StatWrapper = styled.div`
   color: ${({ theme }) => theme.neutral2};
@@ -18,35 +18,35 @@ export const StatWrapper = styled.div`
   min-width: 168px;
   flex: 1;
   padding: 24px 0px;
-`
+`;
 const TokenStatsSection = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 export const StatPair = styled.div`
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-`
+`;
 
 const Header = styled(ThemedText.MediumHeader)`
   font-size: 28px !important;
-`
+`;
 
 const StatPrice = styled.div`
   margin-top: 4px;
   font-size: 28px;
   color: ${({ theme }) => theme.neutral1};
-`
+`;
 const NoData = styled.div`
   color: ${({ theme }) => theme.neutral3};
-`
+`;
 export const StatsWrapper = styled.div`
   gap: 16px;
   ${textFadeIn}
-`
+`;
 
-type NumericStat = number | undefined | null
+type NumericStat = number | undefined | null;
 
 function Stat({
   dataCy,
@@ -54,12 +54,12 @@ function Stat({
   title,
   description,
 }: {
-  dataCy: string
-  value: NumericStat
-  title: ReactNode
-  description?: ReactNode
+  dataCy: string;
+  value: NumericStat;
+  title: ReactNode;
+  description?: ReactNode;
 }) {
-  const { formatNumber } = useFormatter()
+  const { formatNumber } = useFormatter();
 
   return (
     <StatWrapper data-cy={`${dataCy}`}>
@@ -71,20 +71,20 @@ function Stat({
         })}
       </StatPrice>
     </StatWrapper>
-  )
+  );
 }
 
 type StatsSectionProps = {
-  chainId: ChainId
-  address: string
-  priceLow52W?: NumericStat
-  priceHigh52W?: NumericStat
-  TVL?: NumericStat
-  volume24H?: NumericStat
-}
+  chainId: ChainId;
+  address: string;
+  priceLow52W?: NumericStat;
+  priceHigh52W?: NumericStat;
+  TVL?: NumericStat;
+  volume24H?: NumericStat;
+};
 export default function StatsSection(props: StatsSectionProps) {
-  const { chainId, address, priceLow52W, priceHigh52W, TVL, volume24H } = props
-  const { label, infoLink } = getChainInfo(chainId)
+  const { chainId, address, priceLow52W, priceHigh52W, TVL, volume24H } = props;
+  const { label, infoLink } = getChainInfo(chainId);
 
   if (TVL || volume24H || priceLow52W || priceHigh52W) {
     return (
@@ -97,7 +97,9 @@ export default function StatsSection(props: StatsSectionProps) {
             <Stat
               dataCy="tvl"
               value={TVL}
-              description={HEADER_DESCRIPTIONS[TokenSortMethod.TOTAL_VALUE_LOCKED]}
+              description={
+                HEADER_DESCRIPTIONS[TokenSortMethod.TOTAL_VALUE_LOCKED]
+              }
               title={<Trans>TVL</Trans>}
             />
             <Stat
@@ -105,19 +107,28 @@ export default function StatsSection(props: StatsSectionProps) {
               value={volume24H}
               description={
                 <Trans>
-                  24H volume is the amount of the asset that has been traded on Uniswap v3 during the past 24 hours.
+                  24H volume is the amount of the asset that has been traded on
+                  Uniswap v3 during the past 24 hours.
                 </Trans>
               }
               title={<Trans>24H volume</Trans>}
             />
           </StatPair>
           <StatPair>
-            <Stat dataCy="52w-low" value={priceLow52W} title={<Trans>52W low</Trans>} />
-            <Stat dataCy="52w-high" value={priceHigh52W} title={<Trans>52W high</Trans>} />
+            <Stat
+              dataCy="52w-low"
+              value={priceLow52W}
+              title={<Trans>52W low</Trans>}
+            />
+            <Stat
+              dataCy="52w-high"
+              value={priceHigh52W}
+              title={<Trans>52W high</Trans>}
+            />
           </StatPair>
         </TokenStatsSection>
       </StatsWrapper>
-    )
+    );
   } else {
     return UNSUPPORTED_METADATA_CHAINS.includes(chainId) ? (
       <>
@@ -126,8 +137,11 @@ export default function StatsSection(props: StatsSectionProps) {
         </Header>
         <ThemedText.BodySecondary paddingTop="12px">
           <Trans>
-            Token stats and charts for {label} are available on{' '}
-            <ExternalLink color="currentColor" href={`${infoLink}tokens/${address}`}>
+            Token stats and charts for {label} are available on{" "}
+            <ExternalLink
+              color="currentColor"
+              href={`${infoLink}tokens/${address}`}
+            >
               info.uniswap.org
             </ExternalLink>
           </Trans>
@@ -135,6 +149,6 @@ export default function StatsSection(props: StatsSectionProps) {
       </>
     ) : (
       <NoData>No stats available</NoData>
-    )
+    );
   }
 }

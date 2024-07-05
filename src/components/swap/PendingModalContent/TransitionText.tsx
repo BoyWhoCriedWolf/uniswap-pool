@@ -1,45 +1,49 @@
-import { Trans } from '@lingui/macro'
-import { useUnmountingAnimation } from 'hooks/useUnmountingAnimation'
-import { ReactNode, useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import { Trans } from "@lingui/macro";
+import { useUnmountingAnimation } from "hooks/useUnmountingAnimation";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
-import { slideInAnimation, slideOutAnimation } from './animations'
-import { AnimationType } from './Logos'
+import { slideInAnimation, slideOutAnimation } from "./animations";
+import { AnimationType } from "./Logos";
 
 interface TransitionTextProps {
-  initialText: ReactNode
-  transitionText: ReactNode
-  transitionTimeMs?: number
-  onTransition?: () => void
+  initialText: ReactNode;
+  transitionText: ReactNode;
+  transitionTimeMs?: number;
+  onTransition?: () => void;
 }
 
 const Container = styled.div`
   position: relative;
   width: 100%;
   min-height: 30px;
-`
+`;
 
 const InitialTextContainer = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  transition: display ${({ theme }) => `${theme.transition.duration.fast} ${theme.transition.timing.inOut}`};
+  transition: display
+    ${({ theme }) =>
+      `${theme.transition.duration.fast} ${theme.transition.timing.inOut}`};
   ${slideInAnimation}
   &.${AnimationType.EXITING} {
     ${slideOutAnimation}
   }
-`
+`;
 
 const TransitionTextContainer = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  transition: display ${({ theme }) => `${theme.transition.duration.fast} ${theme.transition.timing.inOut}`};
+  transition: display
+    ${({ theme }) =>
+      `${theme.transition.duration.fast} ${theme.transition.timing.inOut}`};
   ${slideInAnimation}
   &.${AnimationType.EXITING} {
     ${slideOutAnimation}
   }
-`
+`;
 
 export function TransitionText({
   initialText,
@@ -47,22 +51,22 @@ export function TransitionText({
   transitionTimeMs = 1500,
   onTransition,
 }: TransitionTextProps) {
-  const [transitioned, setTransitioned] = useState(false)
+  const [transitioned, setTransitioned] = useState(false);
 
   useEffect(() => {
     // Transition from initial text to transition text.
     const timeout = setTimeout(() => {
       if (!transitioned) {
-        setTransitioned(true)
-        onTransition?.()
+        setTransitioned(true);
+        onTransition?.();
       }
-    }, transitionTimeMs)
+    }, transitionTimeMs);
 
-    return () => clearTimeout(timeout)
-  }, [onTransition, transitionTimeMs, transitioned])
+    return () => clearTimeout(timeout);
+  }, [onTransition, transitionTimeMs, transitioned]);
 
-  const initialTextRef = useRef<HTMLDivElement>(null)
-  useUnmountingAnimation(initialTextRef, () => AnimationType.EXITING)
+  const initialTextRef = useRef<HTMLDivElement>(null);
+  useUnmountingAnimation(initialTextRef, () => AnimationType.EXITING);
 
   return (
     <Container>
@@ -77,5 +81,5 @@ export function TransitionText({
         </TransitionTextContainer>
       )}
     </Container>
-  )
+  );
 }

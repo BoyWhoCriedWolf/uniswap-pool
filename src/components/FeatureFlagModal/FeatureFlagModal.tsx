@@ -1,26 +1,41 @@
-import Column from 'components/Column'
-import { BaseVariant, FeatureFlag, featureFlagSettings, useUpdateFlag } from 'featureFlags'
-import { useCurrencyConversionFlag } from 'featureFlags/flags/currencyConversion'
-import { useFallbackProviderEnabledFlag } from 'featureFlags/flags/fallbackProvider'
-import { useFotAdjustmentsFlag } from 'featureFlags/flags/fotAdjustments'
-import { useInfoExploreFlag } from 'featureFlags/flags/infoExplore'
-import { useInfoLiveViewsFlag } from 'featureFlags/flags/infoLiveViews'
-import { useInfoPoolPageFlag } from 'featureFlags/flags/infoPoolPage'
-import { useInfoTDPFlag } from 'featureFlags/flags/infoTDP'
-import { useMultichainUXFlag } from 'featureFlags/flags/multichainUx'
-import { useQuickRouteMainnetFlag } from 'featureFlags/flags/quickRouteMainnet'
-import { TraceJsonRpcVariant, useTraceJsonRpcFlag } from 'featureFlags/flags/traceJsonRpc'
-import { useUniswapXDefaultEnabledFlag } from 'featureFlags/flags/uniswapXDefault'
-import { useUniswapXEthOutputFlag } from 'featureFlags/flags/uniswapXEthOutput'
-import { useUniswapXExactOutputFlag } from 'featureFlags/flags/uniswapXExactOutput'
-import { useUniswapXSyntheticQuoteFlag } from 'featureFlags/flags/uniswapXUseSyntheticQuote'
-import { useUpdateAtom } from 'jotai/utils'
-import { Children, PropsWithChildren, ReactElement, ReactNode, useCallback, useState } from 'react'
-import { X } from 'react-feather'
-import { useModalIsOpen, useToggleFeatureFlags } from 'state/application/hooks'
-import { ApplicationModal } from 'state/application/reducer'
-import styled from 'styled-components'
-import { BREAKPOINTS } from 'theme'
+import Column from "components/Column";
+import {
+  BaseVariant,
+  FeatureFlag,
+  featureFlagSettings,
+  useUpdateFlag,
+} from "featureFlags";
+import { useCurrencyConversionFlag } from "featureFlags/flags/currencyConversion";
+import { useFallbackProviderEnabledFlag } from "featureFlags/flags/fallbackProvider";
+import { useFotAdjustmentsFlag } from "featureFlags/flags/fotAdjustments";
+import { useInfoExploreFlag } from "featureFlags/flags/infoExplore";
+import { useInfoLiveViewsFlag } from "featureFlags/flags/infoLiveViews";
+import { useInfoPoolPageFlag } from "featureFlags/flags/infoPoolPage";
+import { useInfoTDPFlag } from "featureFlags/flags/infoTDP";
+import { useMultichainUXFlag } from "featureFlags/flags/multichainUx";
+import { useQuickRouteMainnetFlag } from "featureFlags/flags/quickRouteMainnet";
+import {
+  TraceJsonRpcVariant,
+  useTraceJsonRpcFlag,
+} from "featureFlags/flags/traceJsonRpc";
+import { useUniswapXDefaultEnabledFlag } from "featureFlags/flags/uniswapXDefault";
+import { useUniswapXEthOutputFlag } from "featureFlags/flags/uniswapXEthOutput";
+import { useUniswapXExactOutputFlag } from "featureFlags/flags/uniswapXExactOutput";
+import { useUniswapXSyntheticQuoteFlag } from "featureFlags/flags/uniswapXUseSyntheticQuote";
+import { useUpdateAtom } from "jotai/utils";
+import {
+  Children,
+  PropsWithChildren,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useState,
+} from "react";
+import { X } from "react-feather";
+import { useModalIsOpen, useToggleFeatureFlags } from "state/application/hooks";
+import { ApplicationModal } from "state/application/reducer";
+import styled from "styled-components";
+import { BREAKPOINTS } from "theme";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -44,10 +59,10 @@ const StyledModal = styled.div`
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     max-height: 100vh;
   }
-`
+`;
 
 function Modal({ open, children }: { open: boolean; children: ReactNode }) {
-  return open ? <StyledModal>{children}</StyledModal> : null
+  return open ? <StyledModal>{children}</StyledModal> : null;
 }
 
 const FlagsColumn = styled(Column)`
@@ -58,53 +73,53 @@ const FlagsColumn = styled(Column)`
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     max-height: unset;
   }
-`
+`;
 
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px 0px;
-`
+`;
 
 const CloseButton = styled.button`
   cursor: pointer;
   background: transparent;
   border: none;
   color: ${({ theme }) => theme.neutral1};
-`
+`;
 
 const ToggleButton = styled.button`
   cursor: pointer;
   background: transparent;
   border: none;
   color: ${({ theme }) => theme.neutral1};
-`
+`;
 
 const Header = styled(Row)`
   font-weight: 535;
   font-size: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.surface3};
   margin-bottom: 8px;
-`
+`;
 const FlagName = styled.span`
   font-size: 16px;
   line-height: 20px;
   color: ${({ theme }) => theme.neutral1};
-`
+`;
 const FlagGroupName = styled.span`
   font-size: 20px;
   line-height: 24px;
   color: ${({ theme }) => theme.neutral1};
   font-weight: 535;
-`
+`;
 const FlagDescription = styled.span`
   font-size: 12px;
   line-height: 16px;
   color: ${({ theme }) => theme.neutral2};
   display: flex;
   align-items: center;
-`
+`;
 const FlagVariantSelection = styled.select`
   border-radius: 12px;
   padding: 8px;
@@ -118,13 +133,13 @@ const FlagVariantSelection = styled.select`
   :hover {
     background: ${({ theme }) => theme.surface3};
   }
-`
+`;
 
 const FlagInfo = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 8px;
-`
+`;
 
 const SaveButton = styled.button`
   border-radius: 12px;
@@ -140,34 +155,44 @@ const SaveButton = styled.button`
   :hover {
     background: ${({ theme }) => theme.surface3};
   }
-`
+`;
 
 function Variant({ option }: { option: string }) {
-  return <option value={option}>{option}</option>
+  return <option value={option}>{option}</option>;
 }
 
 interface FeatureFlagProps {
-  variant: Record<string, string>
-  featureFlag: FeatureFlag
-  value: string
-  label: string
+  variant: Record<string, string>;
+  featureFlag: FeatureFlag;
+  value: string;
+  label: string;
 }
 
-function FeatureFlagGroup({ name, children }: PropsWithChildren<{ name: string }>) {
+function FeatureFlagGroup({
+  name,
+  children,
+}: PropsWithChildren<{ name: string }>) {
   // type FeatureFlagOption = { props: FeatureFlagProps }
   const togglableOptions = Children.toArray(children)
     .filter<ReactElement<FeatureFlagProps>>(
       (child): child is ReactElement<FeatureFlagProps> =>
-        child instanceof Object && 'type' in child && child.type === FeatureFlagOption
+        child instanceof Object &&
+        "type" in child &&
+        child.type === FeatureFlagOption
     )
     .map(({ props }) => props)
     .filter(({ variant }) => {
-      const values = Object.values(variant)
-      return values.includes(BaseVariant.Control) && values.includes(BaseVariant.Enabled)
-    })
+      const values = Object.values(variant);
+      return (
+        values.includes(BaseVariant.Control) &&
+        values.includes(BaseVariant.Enabled)
+      );
+    });
 
-  const setFeatureFlags = useUpdateAtom(featureFlagSettings)
-  const allEnabled = togglableOptions.every(({ value }) => value === BaseVariant.Enabled)
+  const setFeatureFlags = useUpdateAtom(featureFlagSettings);
+  const allEnabled = togglableOptions.every(
+    ({ value }) => value === BaseVariant.Enabled
+  );
   const onToggle = useCallback(() => {
     setFeatureFlags((flags) => ({
       ...flags,
@@ -178,23 +203,30 @@ function FeatureFlagGroup({ name, children }: PropsWithChildren<{ name: string }
         }),
         {}
       ),
-    }))
-  }, [allEnabled, setFeatureFlags, togglableOptions])
+    }));
+  }, [allEnabled, setFeatureFlags, togglableOptions]);
 
   return (
     <>
       <Row key={name}>
         <FlagGroupName>{name}</FlagGroupName>
-        <ToggleButton onClick={onToggle}>{allEnabled ? 'Disable' : 'Enable'} group</ToggleButton>
+        <ToggleButton onClick={onToggle}>
+          {allEnabled ? "Disable" : "Enable"} group
+        </ToggleButton>
       </Row>
       {children}
     </>
-  )
+  );
 }
 
-function FeatureFlagOption({ value, variant, featureFlag, label }: FeatureFlagProps) {
-  const updateFlag = useUpdateFlag()
-  const [count, setCount] = useState(0)
+function FeatureFlagOption({
+  value,
+  variant,
+  featureFlag,
+  label,
+}: FeatureFlagProps) {
+  const updateFlag = useUpdateFlag();
+  const [count, setCount] = useState(0);
 
   return (
     <Row key={featureFlag}>
@@ -205,8 +237,8 @@ function FeatureFlagOption({ value, variant, featureFlag, label }: FeatureFlagPr
       <FlagVariantSelection
         id={featureFlag}
         onChange={(e) => {
-          updateFlag(featureFlag, e.target.value)
-          setCount(count + 1)
+          updateFlag(featureFlag, e.target.value);
+          setCount(count + 1);
         }}
         value={value}
       >
@@ -215,12 +247,12 @@ function FeatureFlagOption({ value, variant, featureFlag, label }: FeatureFlagPr
         ))}
       </FlagVariantSelection>
     </Row>
-  )
+  );
 }
 
 export default function FeatureFlagModal() {
-  const open = useModalIsOpen(ApplicationModal.FEATURE_FLAGS)
-  const toggle = useToggleFeatureFlags()
+  const open = useModalIsOpen(ApplicationModal.FEATURE_FLAGS);
+  const toggle = useToggleFeatureFlags();
 
   return (
     <Modal open={open}>
@@ -326,5 +358,5 @@ export default function FeatureFlagModal() {
       </FlagsColumn>
       <SaveButton onClick={() => window.location.reload()}>Reload</SaveButton>
     </Modal>
-  )
+  );
 }

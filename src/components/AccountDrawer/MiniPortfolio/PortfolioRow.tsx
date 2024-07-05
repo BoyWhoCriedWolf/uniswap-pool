@@ -1,41 +1,42 @@
-import Column, { AutoColumn } from 'components/Column'
-import Row from 'components/Row'
-import { LoadingBubble } from 'components/Tokens/loading'
-import styled, { css, keyframes } from 'styled-components'
+import Column, { AutoColumn } from "components/Column";
+import Row from "components/Row";
+import { LoadingBubble } from "components/Tokens/loading";
+import styled, { css, keyframes } from "styled-components";
 
 export const PortfolioRowWrapper = styled(Row)<{ onClick?: any }>`
   gap: 12px;
   height: 68px;
   padding: 0 16px;
 
-  transition: ${({ theme }) => `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`};
+  transition: ${({ theme }) =>
+    `${theme.transition.duration.medium} ${theme.transition.timing.ease} background-color`};
 
-  ${({ onClick }) => onClick && 'cursor: pointer'};
+  ${({ onClick }) => onClick && "cursor: pointer"};
 
   &:hover {
     cursor: pointer;
   }
-`
+`;
 
 const EndColumn = styled(Column)`
   align-items: flex-end;
-`
+`;
 
 export default function PortfolioRow({
-  ['data-testid']: testId,
+  ["data-testid"]: testId,
   left,
   title,
   descriptor,
   right,
   onClick,
 }: {
-  'data-testid'?: string
-  left: React.ReactNode
-  title: React.ReactNode
-  descriptor?: React.ReactNode
-  right?: React.ReactNode
-  setIsHover?: (b: boolean) => void
-  onClick?: () => void
+  "data-testid"?: string;
+  left: React.ReactNode;
+  title: React.ReactNode;
+  descriptor?: React.ReactNode;
+  right?: React.ReactNode;
+  setIsHover?: (b: boolean) => void;
+  onClick?: () => void;
 }) {
   return (
     <PortfolioRowWrapper data-testid={testId} onClick={onClick}>
@@ -46,7 +47,7 @@ export default function PortfolioRow({
       </AutoColumn>
       {right && <EndColumn>{right}</EndColumn>}
     </PortfolioRowWrapper>
-  )
+  );
 }
 
 function PortfolioSkeletonRow({ shrinkRight }: { shrinkRight?: boolean }) {
@@ -68,27 +69,36 @@ function PortfolioSkeletonRow({ shrinkRight }: { shrinkRight?: boolean }) {
         )}
       </EndColumn>
     </PortfolioRowWrapper>
-  )
+  );
 }
 
-export function PortfolioSkeleton({ shrinkRight = false }: { shrinkRight?: boolean }) {
+export function PortfolioSkeleton({
+  shrinkRight = false,
+}: {
+  shrinkRight?: boolean;
+}) {
   return (
     <>
       {Array.from({ length: 5 }).map((_, i) => (
-        <PortfolioSkeletonRow shrinkRight={shrinkRight} key={`portfolio loading row${i}`} />
+        <PortfolioSkeletonRow
+          shrinkRight={shrinkRight}
+          key={`portfolio loading row${i}`}
+        />
       ))}
     </>
-  )
+  );
 }
 
 const fadeIn = keyframes`
   from { opacity: .25 }
   to { opacity: 1 }
-`
+`;
 export const portfolioFadeInAnimation = css`
-  animation: ${fadeIn} ${({ theme }) => `${theme.transition.duration.medium} ${theme.transition.timing.in}`};
-`
+  animation: ${fadeIn}
+    ${({ theme }) =>
+      `${theme.transition.duration.medium} ${theme.transition.timing.in}`};
+`;
 
 export const PortfolioTabWrapper = styled.div`
   ${portfolioFadeInAnimation}
-`
+`;

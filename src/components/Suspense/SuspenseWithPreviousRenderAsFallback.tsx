@@ -1,4 +1,4 @@
-import React, { Suspense, useDeferredValue } from 'react'
+import React, { Suspense, useDeferredValue } from "react";
 
 /**
  * This is useful for keeping the "last rendered" components on-screen while any suspense
@@ -7,8 +7,12 @@ import React, { Suspense, useDeferredValue } from 'react'
  * It stores a reference to the current children, and then returns them as the fallback.
  */
 
-export const SuspenseWithPreviousRenderAsFallback = (props: { children: React.ReactNode }) => {
-  const previousChildren = useDeferredValue(props.children)
+export const SuspenseWithPreviousRenderAsFallback = (props: {
+  children: React.ReactNode;
+}) => {
+  const previousChildren = useDeferredValue(props.children);
 
-  return <Suspense fallback={previousChildren ?? null}>{props.children}</Suspense>
-}
+  return (
+    <Suspense fallback={previousChildren ?? null}>{props.children}</Suspense>
+  );
+};

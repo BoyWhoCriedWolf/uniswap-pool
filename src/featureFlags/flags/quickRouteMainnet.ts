@@ -1,9 +1,9 @@
-import { BaseVariant, FeatureFlag, useBaseFlag } from '../index'
+import { BaseVariant, FeatureFlag, useBaseFlag } from "../index";
 
 export function useQuickRouteMainnetFlag(): BaseVariant {
-  return useBaseFlag(FeatureFlag.quickRouteMainnet)
+  return useBaseFlag(FeatureFlag.quickRouteMainnet);
 }
 
 export function useQuickRouteMainnetEnabled(): boolean {
-  return useQuickRouteMainnetFlag() === BaseVariant.Enabled
+  return useQuickRouteMainnetFlag() === BaseVariant.Enabled;
 }

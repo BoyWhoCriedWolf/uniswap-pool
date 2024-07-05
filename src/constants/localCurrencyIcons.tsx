@@ -1,7 +1,14 @@
-type SVGProps = React.SVGProps<SVGSVGElement>
+type SVGProps = React.SVGProps<SVGSVGElement>;
 
 export const USD_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -14,7 +21,12 @@ export const USD_ICON = (props: SVGProps) => (
       d="M0 3.74133H92.4107V7.48266H0V3.74133ZM0 11.224H92.4107V14.9653H0V11.224ZM0 18.7066H92.4107V22.448H0V18.7066ZM0 26.1893H92.4107V29.9306H0V26.1893ZM0 33.6719H92.4107V37.4133H0V33.6719ZM0 41.1546H92.4107V44.8959H0V41.1546Z"
       fill="white"
     />
-    <path fillRule="evenodd" clipRule="evenodd" d="M0 0H36.9643V26.1893H0V0Z" fill="#192F5D" />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M0 0H36.9643V26.1893H0V0Z"
+      fill="#192F5D"
+    />
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -22,10 +34,17 @@ export const USD_ICON = (props: SVGProps) => (
       fill="white"
     />
   </svg>
-)
+);
 
 export const EUR_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61766)">
       <path d="M0 0H48.5142V48.6368H0V0Z" fill="#003399" />
       <path
@@ -86,14 +105,36 @@ export const EUR_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const RUB_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61784)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H48.6368V48.5142H0V0Z" fill="white" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 16.1746H48.6368V48.5142H0V16.1746Z" fill="#0039A6" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 32.3397H48.6368V48.5143H0V32.3397Z" fill="#D52B1E" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H48.6368V48.5142H0V0Z"
+        fill="white"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 16.1746H48.6368V48.5142H0V16.1746Z"
+        fill="#0039A6"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 32.3397H48.6368V48.5143H0V32.3397Z"
+        fill="#D52B1E"
+      />
     </g>
     <defs>
       <clipPath id="clip0_1942_61784">
@@ -104,10 +145,17 @@ export const RUB_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const INR_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61789)">
       <path d="M0 0H48.5142V16.2154H0V0Z" fill="#FF9933" />
       <path d="M0 16.2155H48.5142V32.4214H0V16.2155Z" fill="white" />
@@ -128,7 +176,10 @@ export const INR_ICON = (props: SVGProps) => (
         d="M29.8308 25.3505C29.9902 25.3715 30.1364 25.2591 30.1574 25.0993C30.1783 24.9395 30.0661 24.7929 29.9068 24.7719C29.7474 24.7508 29.6012 24.8633 29.5802 25.0231C29.5592 25.1829 29.6714 25.3295 29.8308 25.3505Z"
         fill="#000088"
       />
-      <path d="M24.257 29.9926L24.4511 26.588L24.257 24.9668L24.063 26.588L24.257 29.9926Z" fill="#000088" />
+      <path
+        d="M24.257 29.9926L24.4511 26.588L24.257 24.9668L24.063 26.588L24.257 29.9926Z"
+        fill="#000088"
+      />
     </g>
     <defs>
       <clipPath id="clip0_1942_61789">
@@ -139,10 +190,17 @@ export const INR_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const GBP_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61803)">
       <path d="M0 0H48.6368V48.5142H0V0Z" fill="#012169" />
       <path
@@ -153,8 +211,14 @@ export const GBP_ICON = (props: SVGProps) => (
         d="M17.4788 30.7004L18.5238 33.9221L3.98973 48.5142H0V48.23L17.4788 30.7004ZM29.258 29.5634L34.3877 30.3214L48.6368 44.2503V48.5142L29.258 29.5634ZM48.6368 0L30.398 18.5719L30.018 14.4027L44.267 0H48.6368ZM0 0.0947544L18.3338 18.0033L12.7292 17.2453L0 4.64297V0.0947544Z"
         fill="#C8102E"
       />
-      <path d="M16.7189 0V48.5142H31.9179V0H16.7189ZM0 16.6768V31.8375H48.6368V16.6768H0Z" fill="white" />
-      <path d="M0 19.7089V28.8053H48.6368V19.7089H0ZM19.7587 0V48.5142H28.8781V0H19.7587Z" fill="#C8102E" />
+      <path
+        d="M16.7189 0V48.5142H31.9179V0H16.7189ZM0 16.6768V31.8375H48.6368V16.6768H0Z"
+        fill="white"
+      />
+      <path
+        d="M0 19.7089V28.8053H48.6368V19.7089H0ZM19.7587 0V48.5142H28.8781V0H19.7587Z"
+        fill="#C8102E"
+      />
     </g>
     <defs>
       <clipPath id="clip0_1942_61803">
@@ -165,12 +229,24 @@ export const GBP_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const JPY_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61809)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M-12.1284 0H60.6436V48.6395H-12.1284V0Z" fill="white" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M-12.1284 0H60.6436V48.6395H-12.1284V0Z"
+        fill="white"
+      />
       <path
         d="M24.2581 39.4414C32.5865 39.4414 39.338 32.6728 39.338 24.3234C39.338 15.974 32.5865 9.20544 24.2581 9.20544C15.9297 9.20544 9.17822 15.974 9.17822 24.3234C9.17822 32.6728 15.9297 39.4414 24.2581 39.4414Z"
         fill="#D30000"
@@ -185,12 +261,24 @@ export const JPY_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const VND_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61813)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M-12.1592 0H60.7966V48.517H-12.1592V0Z" fill="#EC0015" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M-12.1592 0H60.7966V48.517H-12.1592V0Z"
+        fill="#EC0015"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -207,10 +295,17 @@ export const VND_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const SGD_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61817)">
       <path
         fillRule="evenodd"
@@ -246,12 +341,24 @@ export const SGD_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const BRL_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61823)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H48.6368V48.6368H0V0Z" fill="#229E45" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H48.6368V48.6368H0V0Z"
+        fill="#229E45"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -370,10 +477,17 @@ export const BRL_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const HKD_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61858)">
       <path
         fillRule="evenodd"
@@ -387,7 +501,12 @@ export const HKD_ICON = (props: SVGProps) => (
         d="M23.5066 23.8849C23.5066 23.8849 18.532 21.7425 19.2417 16.1908C19.9315 13.5178 21.1519 11.7004 23.3673 10.7121C24.405 10.4107 25.4726 10.2238 26.551 10.155C26.2592 10.4203 26.0204 10.6922 25.901 11.0305C25.6622 11.6407 25.8347 12.2244 26.1531 12.8081C26.5668 13.5023 26.8121 14.2837 26.8694 15.0898C26.9422 15.7074 26.8505 16.3332 26.6035 16.904C26.3566 17.4747 25.9632 17.9701 25.4632 18.3399C24.8265 18.824 24.0704 18.9965 23.4601 19.5537C22.9615 20.0088 22.6496 20.6328 22.5846 21.3047C22.5647 22.8568 22.9892 23.0757 23.5066 23.8915V23.8849Z"
         fill="white"
       />
-      <path fillRule="evenodd" clipRule="evenodd" d="M22.5581 15.853V15.8326V15.853Z" fill="#BA0000" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22.5581 15.853V15.8326V15.853Z"
+        fill="#BA0000"
+      />
       <path d="M22.5581 15.853V15.8326" stroke="black" strokeWidth="0.265848" />
       <path
         d="M22.8765 23.3078C20.9398 21.5965 21.1056 17.2919 22.5847 15.8525"
@@ -406,8 +525,17 @@ export const HKD_ICON = (props: SVGProps) => (
         d="M23.9309 23.5201C23.9309 23.5201 24.5213 18.1342 30.0331 17.1924C32.7924 17.0664 34.8883 17.7031 36.4869 19.5271C37.0766 20.4307 37.5659 21.396 37.9461 22.4058C37.6078 22.2068 37.2828 22.0609 36.918 22.041C36.268 21.9945 35.7639 22.3328 35.2996 22.8037C34.769 23.3874 34.172 23.8186 33.323 24.1568C32.7543 24.4061 32.13 24.5011 31.5128 24.4324C30.8957 24.3637 30.3076 24.1337 29.8076 23.7655C29.151 23.3012 28.7729 22.6313 28.0566 22.2068C27.4758 21.8626 26.7878 21.7468 26.1264 21.8818C24.634 22.3262 24.5544 22.7905 23.9243 23.5201H23.9309Z"
         fill="white"
       />
-      <path fillRule="evenodd" clipRule="evenodd" d="M31.333 20.2635L31.3534 20.2567L31.333 20.2635Z" fill="#BA0000" />
-      <path d="M31.333 20.2635L31.3534 20.2567" stroke="black" strokeWidth="0.265848" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M31.333 20.2635L31.3534 20.2567L31.333 20.2635Z"
+        fill="#BA0000"
+      />
+      <path
+        d="M31.333 20.2635L31.3534 20.2567"
+        stroke="black"
+        strokeWidth="0.265848"
+      />
       <path
         d="M24.2959 22.7506C25.3638 20.396 29.5358 19.3015 31.3399 20.2832"
         stroke="#BA0000"
@@ -431,7 +559,11 @@ export const HKD_ICON = (props: SVGProps) => (
         d="M29.7417 29.8942L29.7553 29.9146L29.7417 29.8942Z"
         fill="#BA0000"
       />
-      <path d="M29.7417 29.8942L29.7553 29.9146" stroke="black" strokeWidth="0.265848" />
+      <path
+        d="M29.7417 29.8942L29.7553 29.9146"
+        stroke="black"
+        strokeWidth="0.265848"
+      />
       <path
         d="M25.145 24.0109C27.7185 24.2762 30.0865 27.8844 29.7217 29.9074"
         stroke="#BA0000"
@@ -455,7 +587,11 @@ export const HKD_ICON = (props: SVGProps) => (
         d="M19.9647 31.3534L19.9512 31.3737L19.9647 31.3534Z"
         fill="#BA0000"
       />
-      <path d="M19.9647 31.3534L19.9512 31.3737" stroke="black" strokeWidth="0.265848" />
+      <path
+        d="M19.9647 31.3534L19.9512 31.3737"
+        stroke="black"
+        strokeWidth="0.265848"
+      />
       <path
         d="M24.3225 25.2977C24.7868 27.838 21.9944 31.1213 19.9448 31.3402"
         stroke="#BA0000"
@@ -473,7 +609,12 @@ export const HKD_ICON = (props: SVGProps) => (
         d="M23.5926 24.3492C23.5926 24.3492 19.9644 28.3753 14.9368 25.9146C12.6285 24.4023 11.2953 22.6645 11.0698 20.2502C11.0964 19.169 11.3086 18.121 11.5673 17.0664C11.7331 17.4179 11.9056 17.7297 12.1908 17.9552C12.6882 18.3731 13.2984 18.3996 13.9485 18.2868C14.7375 18.1161 15.5556 18.1342 16.3363 18.3399C16.9442 18.4698 17.5071 18.7577 17.9683 19.1746C18.4294 19.5915 18.7725 20.1227 18.9629 20.7145C19.2282 21.4772 19.142 22.24 19.4736 23.0028C19.7443 23.6224 20.2362 24.119 20.8532 24.3957C22.3124 24.9064 22.6573 24.5814 23.5926 24.3492Z"
         fill="white"
       />
-      <path fillRule="evenodd" clipRule="evenodd" d="M15.68 22.6645H15.6597H15.68Z" fill="#BA0000" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M15.68 22.6645H15.6597H15.68Z"
+        fill="#BA0000"
+      />
       <path d="M15.68 22.6645H15.6597" stroke="black" strokeWidth="0.265848" />
       <path
         d="M22.8435 24.767C20.6016 26.0472 16.5755 24.5017 15.6934 22.6445"
@@ -496,12 +637,22 @@ export const HKD_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const CAD_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61881)">
-      <path d="M7.70361 -6.10352e-05H42.1198V48.6367H7.70361V-6.10352e-05Z" fill="white" />
+      <path
+        d="M7.70361 -6.10352e-05H42.1198V48.6367H7.70361V-6.10352e-05Z"
+        fill="white"
+      />
       <path
         d="M-9.49951 -6.10352e-05H7.70384V48.6367H-9.49951V-6.10352e-05ZM42.1201 -6.10352e-05H59.3234V48.6367H42.1201V-6.10352e-05ZM12.8525 23.5014L11.5226 23.9573L17.7352 29.4195C18.2101 30.8254 17.5737 31.2339 17.1652 31.9748L23.9098 31.1199L23.7388 37.9119L25.1447 37.8644L24.8312 31.1294L31.5947 31.9273C31.1768 31.0439 30.8063 30.5784 31.1863 29.1725L37.3989 23.9953L36.3159 23.6059C35.423 22.9124 36.6959 20.3001 36.8859 18.6472C36.8859 18.6472 33.2666 19.8916 33.0292 19.2362L32.0887 17.4788L28.8019 21.0885C28.441 21.1835 28.289 21.0315 28.2035 20.7276L29.7234 13.1566L27.3105 14.515C27.111 14.6005 26.9116 14.515 26.7786 14.287L24.4512 9.6323L22.0574 14.4675C21.8769 14.6385 21.6964 14.6575 21.5444 14.5435L19.2456 13.2516L20.623 20.7751C20.5185 21.06 20.2525 21.155 19.9485 20.9935L16.7852 17.4028C16.3768 18.0677 16.0918 19.1507 15.5503 19.3976C15.0089 19.6161 13.1755 18.9322 11.9501 18.6662C12.368 20.1766 13.6789 22.6844 12.8525 23.5109V23.5014Z"
         fill="#D52B1E"
@@ -516,13 +667,30 @@ export const CAD_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const IDR_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61884)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H48.6368V25.2208H0V0Z" fill="#E70011" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 24.3184H48.6368V48.6367H0V24.3184Z" fill="white" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H48.6368V25.2208H0V0Z"
+        fill="#E70011"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 24.3184H48.6368V48.6367H0V24.3184Z"
+        fill="white"
+      />
     </g>
     <defs>
       <clipPath id="clip0_1942_61884">
@@ -533,12 +701,24 @@ export const IDR_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const TRY_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61888)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H48.5142V48.6368H0V0Z" fill="#E30A17" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H48.5142V48.6368H0V0Z"
+        fill="#E30A17"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -567,12 +747,24 @@ export const TRY_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const NGN_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1942_61894)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0H48.6368V48.6368H0V0Z" fill="white" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H48.6368V48.6368H0V0Z"
+        fill="white"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -589,10 +781,17 @@ export const NGN_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const AUD_ICON = (props: SVGProps) => (
-  <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="49"
+    viewBox="0 0 49 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1969_48727)">
       <path d="M0 0H48.6368V48.6368H0V0Z" fill="#00008B" />
       <path
@@ -603,8 +802,14 @@ export const AUD_ICON = (props: SVGProps) => (
         d="M8.73942 15.389L9.26188 17.0039L1.99487 24.3184H0V24.1759L8.73942 15.389ZM14.629 14.819L17.1939 15.199L24.3184 22.181V24.3184L14.629 14.819ZM24.3184 0L15.199 9.30938L15.009 7.21952L22.1335 0H24.3184ZM0 0.0474968L9.16689 9.0244L6.36458 8.64442L0 2.32734V0.0474968Z"
         fill="#FF0000"
       />
-      <path d="M8.35944 0V24.3184H15.9589V0H8.35944ZM0 8.35944V15.9589H24.3184V8.35944H0Z" fill="white" />
-      <path d="M0 9.87934V14.439H24.3184V9.87934H0ZM9.87934 0V24.3184H14.439V0H9.87934Z" fill="#FF0000" />
+      <path
+        d="M8.35944 0V24.3184H15.9589V0H8.35944ZM0 8.35944V15.9589H24.3184V8.35944H0Z"
+        fill="white"
+      />
+      <path
+        d="M0 9.87934V14.439H24.3184V9.87934H0ZM9.87934 0V24.3184H14.439V0H9.87934Z"
+        fill="#FF0000"
+      />
       <path
         d="M19.1892 38.2634L14.8385 38.7764L15.2755 43.1366L12.1597 40.0588L9.02489 43.1176L9.49036 38.7574L5.13965 38.2064L8.8349 35.8506L6.55505 32.1079L10.6968 33.5328L12.1977 29.41L13.6701 33.5423L17.8213 32.1459L15.513 35.8696L19.1987 38.2539L19.1892 38.2634Z"
         fill="white"
@@ -639,10 +844,17 @@ export const AUD_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const PKR_ICON = (props: SVGProps) => (
-  <svg width="49" height="50" viewBox="0 0 49 50" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="50"
+    viewBox="0 0 49 50"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1969_48716)">
       <path
         fillRule="evenodd"
@@ -678,13 +890,30 @@ export const PKR_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const UAH_ICON = (props: SVGProps) => (
-  <svg width="49" height="50" viewBox="0 0 49 50" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="50"
+    viewBox="0 0 49 50"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1969_48723)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0.870972H48.5142V49.5077H0V0.870972Z" fill="#FFD700" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0.870972H48.5142V25.1894H0V0.870972Z" fill="#0057B8" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0.870972H48.5142V49.5077H0V0.870972Z"
+        fill="#FFD700"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0.870972H48.5142V25.1894H0V0.870972Z"
+        fill="#0057B8"
+      />
     </g>
     <defs>
       <clipPath id="clip0_1969_48723">
@@ -695,13 +924,30 @@ export const UAH_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 
 export const THB_ICON = (props: SVGProps) => (
-  <svg width="49" height="50" viewBox="0 0 49 50" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    width="49"
+    height="50"
+    viewBox="0 0 49 50"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <g clipPath="url(#clip0_1969_48741)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 0.867676H48.6368V49.5044H0V0.867676Z" fill="#F4F5F8" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M0 17.3396H48.6368V33.5455H0V17.3396Z" fill="#2D2A4A" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0.867676H48.6368V49.5044H0V0.867676Z"
+        fill="#F4F5F8"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 17.3396H48.6368V33.5455H0V17.3396Z"
+        fill="#2D2A4A"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -718,4 +964,4 @@ export const THB_ICON = (props: SVGProps) => (
       </clipPath>
     </defs>
   </svg>
-)
+);

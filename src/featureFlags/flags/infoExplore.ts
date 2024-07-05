@@ -1,5 +1,5 @@
-import { BaseVariant, FeatureFlag, useBaseFlag } from '../index'
+import { BaseVariant, FeatureFlag, useBaseFlag } from "../index";
 
 export function useInfoExploreFlag(): BaseVariant {
-  return useBaseFlag(FeatureFlag.infoExplore)
+  return useBaseFlag(FeatureFlag.infoExplore);
 }

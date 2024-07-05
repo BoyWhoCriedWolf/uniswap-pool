@@ -1,9 +1,9 @@
-import { BaseVariant, FeatureFlag, useBaseFlag } from '../index'
+import { BaseVariant, FeatureFlag, useBaseFlag } from "../index";
 
 export function useFotAdjustmentsFlag(): BaseVariant {
-  return useBaseFlag(FeatureFlag.fotAdjustedmentsEnabled)
+  return useBaseFlag(FeatureFlag.fotAdjustedmentsEnabled);
 }
 
 export function useFotAdjustmentsEnabled(): boolean {
-  return useFotAdjustmentsFlag() === BaseVariant.Enabled
+  return useFotAdjustmentsFlag() === BaseVariant.Enabled;
 }

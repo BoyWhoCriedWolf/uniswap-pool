@@ -1,13 +1,20 @@
-import { WatchQueryFetchPolicy } from '@apollo/client'
-import gql from 'graphql-tag'
-import { ActivityEvent } from 'nft/types'
-import { wrapScientificNotation } from 'nft/utils'
-import { useCallback, useMemo } from 'react'
+import { WatchQueryFetchPolicy } from "@apollo/client";
+import gql from "graphql-tag";
+import { ActivityEvent } from "nft/types";
+import { wrapScientificNotation } from "nft/utils";
+import { useCallback, useMemo } from "react";
 
-import { NftActivityFilterInput, useNftActivityQuery } from '../__generated__/types-and-hooks'
+import {
+  NftActivityFilterInput,
+  useNftActivityQuery,
+} from "../__generated__/types-and-hooks";
 
 gql`
-  query NftActivity($filter: NftActivityFilterInput, $after: String, $first: Int) {
+  query NftActivity(
+    $filter: NftActivityFilterInput
+    $after: String
+    $first: Int
+  ) {
     nftActivity(filter: $filter, after: $after, first: $first) {
       edges {
         node {
@@ -68,18 +75,22 @@ gql`
       }
     }
   }
-`
+`;
 
-export function useNftActivity(filter: NftActivityFilterInput, first?: number, fetchPolicy?: WatchQueryFetchPolicy) {
+export function useNftActivity(
+  filter: NftActivityFilterInput,
+  first?: number,
+  fetchPolicy?: WatchQueryFetchPolicy
+) {
   const { data, loading, fetchMore, error } = useNftActivityQuery({
     variables: {
       filter,
       first,
     },
     fetchPolicy,
-  })
+  });
 
-  const hasNext = data?.nftActivity?.pageInfo?.hasNextPage
+  const hasNext = data?.nftActivity?.pageInfo?.hasNextPage;
   const loadMore = useCallback(
     () =>
       fetchMore({
@@ -88,13 +99,13 @@ export function useNftActivity(filter: NftActivityFilterInput, first?: number, f
         },
       }),
     [data, fetchMore]
-  )
+  );
 
   const nftActivity: ActivityEvent[] | undefined = useMemo(
     () =>
       data?.nftActivity?.edges?.map((queryActivity) => {
-        const activity = queryActivity?.node
-        const asset = activity?.asset
+        const activity = queryActivity?.node;
+        const asset = activity?.asset;
         return {
           collectionAddress: activity.address,
           tokenId: activity.tokenId,
@@ -104,12 +115,12 @@ export function useNftActivity(filter: NftActivityFilterInput, first?: number, f
             smallImageUrl: asset?.smallImage?.url,
             metadataUrl: asset?.metadataUrl,
             rarity: {
-              primaryProvider: 'Rarity Sniper', // TODO update when backend adds more providers
+              primaryProvider: "Rarity Sniper", // TODO update when backend adds more providers
               providers: asset?.rarities?.map((rarity) => {
                 return {
                   ...rarity,
-                  provider: 'Rarity Sniper',
-                }
+                  provider: "Rarity Sniper",
+                };
               }),
             },
             suspiciousFlag: asset?.suspiciousFlag,
@@ -126,13 +137,13 @@ export function useNftActivity(filter: NftActivityFilterInput, first?: number, f
           quantity: activity.quantity,
           url: activity.url,
           eventTimestamp: activity.timestamp * 1000,
-        }
+        };
       }),
     [data]
-  )
+  );
 
   return useMemo(
     () => ({ nftActivity, hasNext, loadMore, loading, error }),
     [hasNext, loadMore, loading, nftActivity, error]
-  )
+  );
 }

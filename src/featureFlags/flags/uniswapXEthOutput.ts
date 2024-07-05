@@ -1,9 +1,9 @@
-import { BaseVariant, FeatureFlag, useBaseFlag } from '../index'
+import { BaseVariant, FeatureFlag, useBaseFlag } from "../index";
 
 export function useUniswapXEthOutputFlag(): BaseVariant {
-  return useBaseFlag(FeatureFlag.uniswapXEthOutputEnabled)
+  return useBaseFlag(FeatureFlag.uniswapXEthOutputEnabled);
 }
 
 export function useUniswapXEthOutputEnabled(): boolean {
-  return useUniswapXEthOutputFlag() === BaseVariant.Enabled
+  return useUniswapXEthOutputFlag() === BaseVariant.Enabled;
 }

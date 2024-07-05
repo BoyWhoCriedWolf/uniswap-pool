@@ -1,8 +1,11 @@
-import gql from 'graphql-tag'
-import { TrendingCollection } from 'nft/types'
-import { useMemo } from 'react'
+import gql from "graphql-tag";
+import { TrendingCollection } from "nft/types";
+import { useMemo } from "react";
 
-import { HistoryDuration, useTrendingCollectionsQuery } from '../__generated__/types-and-hooks'
+import {
+  HistoryDuration,
+  useTrendingCollectionsQuery,
+} from "../__generated__/types-and-hooks";
 
 gql`
   query TrendingCollections($size: Int, $timePeriod: HistoryDuration) {
@@ -49,20 +52,23 @@ gql`
       }
     }
   }
-`
+`;
 
-export function useTrendingCollections(size: number, timePeriod: HistoryDuration) {
+export function useTrendingCollections(
+  size: number,
+  timePeriod: HistoryDuration
+) {
   const { data, loading, error } = useTrendingCollectionsQuery({
     variables: {
       size,
       timePeriod,
     },
-  })
+  });
 
   const trendingCollections: TrendingCollection[] | undefined = useMemo(
     () =>
       data?.topCollections?.edges?.map((edge) => {
-        const collection = edge?.node
+        const collection = edge?.node;
         return {
           name: collection.name,
           address: collection.nftContracts?.[0]?.address,
@@ -75,18 +81,19 @@ export function useTrendingCollections(size: number, timePeriod: HistoryDuration
           floorChange: collection.markets?.[0]?.floorPricePercentChange?.value,
           marketCap: collection.markets?.[0]?.totalVolume?.value,
           percentListed:
-            (collection.markets?.[0]?.listings?.value ?? 0) / (collection.nftContracts?.[0]?.totalSupply ?? 1),
+            (collection.markets?.[0]?.listings?.value ?? 0) /
+            (collection.nftContracts?.[0]?.totalSupply ?? 1),
           owners: collection.markets?.[0]?.owners,
           sales: collection.markets?.[0]?.sales?.value,
           totalSupply: collection.nftContracts?.[0]?.totalSupply,
-        }
+        };
       }),
     [data?.topCollections?.edges]
-  )
+  );
 
   return {
     data: trendingCollections,
     loading,
     error,
-  }
+  };
 }

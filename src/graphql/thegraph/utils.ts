@@ -1,5 +1,5 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import ms from 'ms'
+import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import ms from "ms";
 
 // TODO(WEB-2878): See if splitQuery can be replaced with proper Apollo usage
 /**
@@ -18,34 +18,37 @@ export async function splitQuery<Type extends object>(
   values: any[],
   skipCount = 1000
 ) {
-  let fetchedData = {}
-  let allFound = false
-  let skip = 0
+  let fetchedData = {};
+  let allFound = false;
+  let skip = 0;
   try {
     while (!allFound) {
-      let end = values.length
+      let end = values.length;
       if (skip + skipCount < values.length) {
-        end = skip + skipCount
+        end = skip + skipCount;
       }
-      const sliced = values.slice(skip, end)
+      const sliced = values.slice(skip, end);
       const result = await client.query<Type>({
         query: query(...vars, sliced),
-        fetchPolicy: 'network-only',
-      })
+        fetchPolicy: "network-only",
+      });
       fetchedData = {
         ...fetchedData,
         ...result.data,
-      }
-      if (Object.keys(result.data).length < skipCount || skip + skipCount > values.length) {
-        allFound = true
+      };
+      if (
+        Object.keys(result.data).length < skipCount ||
+        skip + skipCount > values.length
+      ) {
+        allFound = true;
       } else {
-        skip += skipCount
+        skip += skipCount;
       }
     }
-    return fetchedData
+    return fetchedData;
   } catch (e) {
-    console.log(e)
-    return undefined
+    console.log(e);
+    return undefined;
   }
 }
 
@@ -54,11 +57,11 @@ export async function splitQuery<Type extends object>(
  * @returns [t24, t48, tWeek]
  */
 export function useDeltaTimestamps(): [number, number, number] {
-  const utcCurrentTime = Date.now()
-  const t24 = Math.floor((utcCurrentTime - ms('1d')) / 1000)
-  const t48 = Math.floor((utcCurrentTime - ms('2d')) / 1000)
-  const tWeek = Math.floor((utcCurrentTime - ms('7d')) / 1000)
-  return [t24, t48, tWeek]
+  const utcCurrentTime = Date.now();
+  const t24 = Math.floor((utcCurrentTime - ms("1d")) / 1000);
+  const t48 = Math.floor((utcCurrentTime - ms("2d")) / 1000);
+  const tWeek = Math.floor((utcCurrentTime - ms("7d")) / 1000);
+  return [t24, t48, tWeek];
 }
 
 /**
@@ -67,13 +70,19 @@ export function useDeltaTimestamps(): [number, number, number] {
  * @param {*} value24HoursAgo
  * @param {*} value48HoursAgo
  */
-export const get2DayChange = (valueNow: string, value24HoursAgo: string, value48HoursAgo: string): [number, number] => {
+export const get2DayChange = (
+  valueNow: string,
+  value24HoursAgo: string,
+  value48HoursAgo: string
+): [number, number] => {
   // get volume info for both 24 hour periods
-  const currentChange = parseFloat(valueNow) - parseFloat(value24HoursAgo)
-  const previousChange = parseFloat(value24HoursAgo) - parseFloat(value48HoursAgo)
-  const adjustedPercentChange = ((currentChange - previousChange) / previousChange) * 100
+  const currentChange = parseFloat(valueNow) - parseFloat(value24HoursAgo);
+  const previousChange =
+    parseFloat(value24HoursAgo) - parseFloat(value48HoursAgo);
+  const adjustedPercentChange =
+    ((currentChange - previousChange) / previousChange) * 100;
   if (isNaN(adjustedPercentChange) || !isFinite(adjustedPercentChange)) {
-    return [currentChange, 0]
+    return [currentChange, 0];
   }
-  return [currentChange, adjustedPercentChange]
-}
+  return [currentChange, adjustedPercentChange];
+};

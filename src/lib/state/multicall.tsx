@@ -1,13 +1,18 @@
-import { createMulticall, ListenerOptions } from '@uniswap/redux-multicall'
-import { ChainId } from '@uniswap/sdk-core'
-import { useWeb3React } from '@web3-react/core'
-import { useInterfaceMulticall, useMainnetInterfaceMulticall } from 'hooks/useContract'
-import useBlockNumber, { useMainnetBlockNumber } from 'lib/hooks/useBlockNumber'
-import { useMemo } from 'react'
+import { createMulticall, ListenerOptions } from "@uniswap/redux-multicall";
+import { ChainId } from "@uniswap/sdk-core";
+import { useWeb3React } from "@web3-react/core";
+import {
+  useInterfaceMulticall,
+  useMainnetInterfaceMulticall,
+} from "hooks/useContract";
+import useBlockNumber, {
+  useMainnetBlockNumber,
+} from "lib/hooks/useBlockNumber";
+import { useMemo } from "react";
 
-const multicall = createMulticall()
+const multicall = createMulticall();
 
-export default multicall
+export default multicall;
 
 /**
  *
@@ -19,35 +24,35 @@ function getBlocksPerFetchForChainId(chainId: number | undefined): number {
   switch (chainId) {
     case ChainId.ARBITRUM_ONE:
     case ChainId.OPTIMISM:
-      return 15
+      return 15;
     case ChainId.AVALANCHE:
     case ChainId.BNB:
     case ChainId.CELO:
     case ChainId.CELO_ALFAJORES:
-      return 5
+      return 5;
     default:
-      return 1
+      return 1;
   }
 }
 
 export function MulticallUpdater() {
-  const { chainId } = useWeb3React()
-  const latestBlockNumber = useBlockNumber()
-  const latestMainnetBlockNumber = useMainnetBlockNumber()
-  const contract = useInterfaceMulticall()
-  const mainnetContract = useMainnetInterfaceMulticall()
+  const { chainId } = useWeb3React();
+  const latestBlockNumber = useBlockNumber();
+  const latestMainnetBlockNumber = useMainnetBlockNumber();
+  const contract = useInterfaceMulticall();
+  const mainnetContract = useMainnetInterfaceMulticall();
   const listenerOptions: ListenerOptions = useMemo(
     () => ({
       blocksPerFetch: getBlocksPerFetchForChainId(chainId),
     }),
     [chainId]
-  )
+  );
   const mainnetListener: ListenerOptions = useMemo(
     () => ({
       blocksPerFetch: getBlocksPerFetchForChainId(ChainId.MAINNET),
     }),
     []
-  )
+  );
 
   return (
     <>
@@ -66,5 +71,5 @@ export function MulticallUpdater() {
         />
       )}
     </>
-  )
+  );
 }

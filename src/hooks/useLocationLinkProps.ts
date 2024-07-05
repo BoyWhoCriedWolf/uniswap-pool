@@ -1,16 +1,16 @@
-import { SupportedLocale } from 'constants/locales'
-import useParsedQueryString from 'hooks/useParsedQueryString'
-import { stringify } from 'qs'
-import { useMemo } from 'react'
-import type { To } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { SupportedLocale } from "constants/locales";
+import useParsedQueryString from "hooks/useParsedQueryString";
+import { stringify } from "qs";
+import { useMemo } from "react";
+import type { To } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export function useLocationLinkProps(locale: SupportedLocale | null): {
-  to?: To
-  onClick?: () => void
+  to?: To;
+  onClick?: () => void;
 } {
-  const location = useLocation()
-  const qs = useParsedQueryString()
+  const location = useLocation();
+  const qs = useParsedQueryString();
 
   return useMemo(
     () =>
@@ -23,5 +23,5 @@ export function useLocationLinkProps(locale: SupportedLocale | null): {
             },
           },
     [location, qs, locale]
-  )
+  );
 }

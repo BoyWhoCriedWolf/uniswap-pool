@@ -5,4 +5,4 @@ export {
   useTokenBalance,
   useTokenBalances,
   useTokenBalancesWithLoadingIndicator,
-} from 'lib/hooks/useCurrencyBalance'
+} from "lib/hooks/useCurrencyBalance";

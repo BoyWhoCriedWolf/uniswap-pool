@@ -1,8 +1,13 @@
-import { createMigrate, MigrationManifest, PersistedState, PersistMigrate } from 'redux-persist'
-import { MigrationConfig } from 'redux-persist/es/createMigrate'
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistedState,
+  PersistMigrate,
+} from "redux-persist";
+import { MigrationConfig } from "redux-persist/es/createMigrate";
 
-import { migration0 } from './migrations/0'
-import { legacyLocalStorageMigration } from './migrations/legacy'
+import { migration0 } from "./migrations/0";
+import { legacyLocalStorageMigration } from "./migrations/legacy";
 
 /**
  * These run once per state re-hydration when a version mismatch is detected.
@@ -15,21 +20,24 @@ import { legacyLocalStorageMigration } from './migrations/legacy'
 // The target version number is the key
 export const migrations: MigrationManifest = {
   0: migration0,
-}
+};
 
 // We use a custom migration function for the initial state, because redux-persist
 // skips migration if there is no initial state, but we want to migrate
 // previous persisted state from redux-localstorage-simple.
-export function customCreateMigrate(migrations: MigrationManifest, options: MigrationConfig): PersistMigrate {
-  const defaultMigrate = createMigrate(migrations, options)
+export function customCreateMigrate(
+  migrations: MigrationManifest,
+  options: MigrationConfig
+): PersistMigrate {
+  const defaultMigrate = createMigrate(migrations, options);
 
   return async (state: PersistedState, currentVersion: number) => {
     if (state === undefined) {
       // If no state exists, run the legacy migration to set initial state
-      state = await legacyLocalStorageMigration()
+      state = await legacyLocalStorageMigration();
     }
 
     // Otherwise, use the default migration process
-    return defaultMigrate(state, currentVersion)
-  }
+    return defaultMigrate(state, currentVersion);
+  };
 }

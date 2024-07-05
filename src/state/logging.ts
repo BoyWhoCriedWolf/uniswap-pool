@@ -1,14 +1,14 @@
-import * as Sentry from '@sentry/react'
-import noop from 'utils/noop'
+import * as Sentry from "@sentry/react";
+import noop from "utils/noop";
 
-import { AppState } from './reducer'
+import { AppState } from "./reducer";
 
 /* Utility type to mark all properties of a type as optional */
 type DeepPartial<T> = T extends object
   ? {
-      [P in keyof T]?: DeepPartial<T[P]>
+      [P in keyof T]?: DeepPartial<T[P]>;
     }
-  : T
+  : T;
 
 /**
  * This enhancer will automatically store the latest state in Sentry's scope, so that it will be available
@@ -25,7 +25,7 @@ export const sentryEnhancer = Sentry.createReduxEnhancer({
    * calls and deep object traversals.
    */
   stateTransformer: (state: AppState): DeepPartial<AppState> => {
-    const { application, user, transactions } = state
+    const { application, user, transactions } = state;
     return {
       application: {
         fiatOnramp: application.fiatOnramp,
@@ -40,12 +40,13 @@ export const sentryEnhancer = Sentry.createReduxEnhancer({
         userRouterPreference: user.userRouterPreference,
         userHideClosedPositions: user.userHideClosedPositions,
         userSlippageTolerance: user.userSlippageTolerance,
-        userSlippageToleranceHasBeenMigratedToAuto: user.userSlippageToleranceHasBeenMigratedToAuto,
+        userSlippageToleranceHasBeenMigratedToAuto:
+          user.userSlippageToleranceHasBeenMigratedToAuto,
         userDeadline: user.userDeadline,
         timestamp: user.timestamp,
         showSurveyPopup: user.showSurveyPopup,
       },
       transactions,
-    }
+    };
   },
-})
+});

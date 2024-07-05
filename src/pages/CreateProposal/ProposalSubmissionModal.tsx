@@ -1,24 +1,24 @@
-import { Trans } from '@lingui/macro'
-import { ButtonPrimary } from 'components/Button'
-import { AutoColumn } from 'components/Column'
-import Modal from 'components/Modal'
-import { LoadingView, SubmittedView } from 'components/ModalViews'
-import { Link } from 'react-router-dom'
-import { Text } from 'rebass'
-import { useTheme } from 'styled-components'
-import { ExternalLink, ThemedText } from 'theme/components'
-import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { Trans } from "@lingui/macro";
+import { ButtonPrimary } from "components/Button";
+import { AutoColumn } from "components/Column";
+import Modal from "components/Modal";
+import { LoadingView, SubmittedView } from "components/ModalViews";
+import { Link } from "react-router-dom";
+import { Text } from "rebass";
+import { useTheme } from "styled-components";
+import { ExternalLink, ThemedText } from "theme/components";
+import { ExplorerDataType, getExplorerLink } from "utils/getExplorerLink";
 
 export const ProposalSubmissionModal = ({
   isOpen,
   hash,
   onDismiss,
 }: {
-  isOpen: boolean
-  hash?: string
-  onDismiss: () => void
+  isOpen: boolean;
+  hash?: string;
+  onDismiss: () => void;
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss}>
@@ -37,13 +37,20 @@ export const ProposalSubmissionModal = ({
               <Trans>Proposal submitted</Trans>
             </Text>
             {hash && (
-              <ExternalLink href={getExplorerLink(1, hash, ExplorerDataType.TRANSACTION)}>
+              <ExternalLink
+                href={getExplorerLink(1, hash, ExplorerDataType.TRANSACTION)}
+              >
                 <Text fontWeight={535} fontSize={14} color={theme.accent1}>
                   <Trans>View on Etherscan</Trans>
                 </Text>
               </ExternalLink>
             )}
-            <ButtonPrimary as={Link} to="/vote" onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+            <ButtonPrimary
+              as={Link}
+              to="/vote"
+              onClick={onDismiss}
+              style={{ margin: "20px 0 0 0" }}
+            >
               <Text fontWeight={535} fontSize={20}>
                 <Trans>Return</Trans>
               </Text>
@@ -52,5 +59,5 @@ export const ProposalSubmissionModal = ({
         </SubmittedView>
       )}
     </Modal>
-  )
-}
+  );
+};

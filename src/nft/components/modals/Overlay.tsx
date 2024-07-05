@@ -1,17 +1,17 @@
-import noop from 'utils/noop'
+import noop from "utils/noop";
 
-import { Box } from '../Box'
-import * as styles from './Overlay.css'
+import { Box } from "../Box";
+import * as styles from "./Overlay.css";
 
 interface OverlayProps {
-  onClick?: () => void
+  onClick?: () => void;
 }
 
 export const stopPropagation = (event: React.SyntheticEvent<HTMLElement>) => {
-  event.stopPropagation()
-  event.nativeEvent.stopImmediatePropagation()
-}
+  event.stopPropagation();
+  event.nativeEvent.stopImmediatePropagation();
+};
 
 export const Overlay = ({ onClick = noop }: OverlayProps) => {
-  return <Box className={styles.overlay} onClick={onClick} />
-}
+  return <Box className={styles.overlay} onClick={onClick} />;
+};

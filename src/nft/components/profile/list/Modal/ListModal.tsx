@@ -1,26 +1,29 @@
-import { Trans } from '@lingui/macro'
-import { InterfaceModalName, NFTEventName } from '@uniswap/analytics-events'
-import { useWeb3React } from '@web3-react/core'
-import { sendAnalyticsEvent, Trace, useTrace } from 'analytics'
-import { useStablecoinValue } from 'hooks/useStablecoinPrice'
-import useNativeCurrency from 'lib/hooks/useNativeCurrency'
-import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
-import { Portal } from 'nft/components/common/Portal'
-import { Overlay } from 'nft/components/modals/Overlay'
-import { getTotalEthValue, signListingRow } from 'nft/components/profile/list/utils'
-import { useNFTList, useSellAsset } from 'nft/hooks'
-import { ListingStatus } from 'nft/types'
-import { useCallback, useEffect, useMemo, useReducer } from 'react'
-import { X } from 'react-feather'
-import styled from 'styled-components'
-import { BREAKPOINTS } from 'theme'
-import { ThemedText } from 'theme/components'
-import { Z_INDEX } from 'theme/zIndex'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { Trans } from "@lingui/macro";
+import { InterfaceModalName, NFTEventName } from "@uniswap/analytics-events";
+import { useWeb3React } from "@web3-react/core";
+import { sendAnalyticsEvent, Trace, useTrace } from "analytics";
+import { useStablecoinValue } from "hooks/useStablecoinPrice";
+import useNativeCurrency from "lib/hooks/useNativeCurrency";
+import tryParseCurrencyAmount from "lib/utils/tryParseCurrencyAmount";
+import { Portal } from "nft/components/common/Portal";
+import { Overlay } from "nft/components/modals/Overlay";
+import {
+  getTotalEthValue,
+  signListingRow,
+} from "nft/components/profile/list/utils";
+import { useNFTList, useSellAsset } from "nft/hooks";
+import { ListingStatus } from "nft/types";
+import { useCallback, useEffect, useMemo, useReducer } from "react";
+import { X } from "react-feather";
+import styled from "styled-components";
+import { BREAKPOINTS } from "theme";
+import { ThemedText } from "theme/components";
+import { Z_INDEX } from "theme/zIndex";
+import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { TitleRow } from '../shared'
-import { ListModalSection, Section } from './ListModalSection'
-import { SuccessScreen } from './SuccessScreen'
+import { TitleRow } from "../shared";
+import { ListModalSection, Section } from "./ListModalSection";
+import { SuccessScreen } from "./SuccessScreen";
 
 const ListModalWrapper = styled.div`
   position: fixed;
@@ -42,86 +45,110 @@ const ListModalWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-`
+`;
 
 export const ListModal = ({ overlayClick }: { overlayClick: () => void }) => {
-  const { provider, chainId } = useWeb3React()
-  const signer = provider?.getSigner()
-  const trace = useTrace({ modal: InterfaceModalName.NFT_LISTING })
-  const { formatCurrencyAmount } = useFormatter()
-  const sellAssets = useSellAsset((state) => state.sellAssets)
-  const { setListingStatusAndCallback, setLooksRareNonce, getLooksRareNonce, collectionsRequiringApproval, listings } =
-    useNFTList(
-      ({
-        setListingStatusAndCallback,
-        setLooksRareNonce,
-        getLooksRareNonce,
-        collectionsRequiringApproval,
-        listings,
-      }) => ({
-        setListingStatusAndCallback,
-        setLooksRareNonce,
-        getLooksRareNonce,
-        collectionsRequiringApproval,
-        listings,
-      })
-    )
+  const { provider, chainId } = useWeb3React();
+  const signer = provider?.getSigner();
+  const trace = useTrace({ modal: InterfaceModalName.NFT_LISTING });
+  const { formatCurrencyAmount } = useFormatter();
+  const sellAssets = useSellAsset((state) => state.sellAssets);
+  const {
+    setListingStatusAndCallback,
+    setLooksRareNonce,
+    getLooksRareNonce,
+    collectionsRequiringApproval,
+    listings,
+  } = useNFTList(
+    ({
+      setListingStatusAndCallback,
+      setLooksRareNonce,
+      getLooksRareNonce,
+      collectionsRequiringApproval,
+      listings,
+    }) => ({
+      setListingStatusAndCallback,
+      setLooksRareNonce,
+      getLooksRareNonce,
+      collectionsRequiringApproval,
+      listings,
+    })
+  );
 
-  const totalEthListingValue = useMemo(() => getTotalEthValue(sellAssets), [sellAssets])
+  const totalEthListingValue = useMemo(
+    () => getTotalEthValue(sellAssets),
+    [sellAssets]
+  );
   const [openSection, toggleOpenSection] = useReducer(
     (s) => (s === Section.APPROVE ? Section.SIGN : Section.APPROVE),
     Section.APPROVE
-  )
-  const nativeCurrency = useNativeCurrency(chainId)
-  const parsedAmount = tryParseCurrencyAmount(totalEthListingValue.toString(), nativeCurrency)
-  const usdcValue = useStablecoinValue(parsedAmount)
+  );
+  const nativeCurrency = useNativeCurrency(chainId);
+  const parsedAmount = tryParseCurrencyAmount(
+    totalEthListingValue.toString(),
+    nativeCurrency
+  );
+  const usdcValue = useStablecoinValue(parsedAmount);
   const usdcAmount = formatCurrencyAmount({
     amount: usdcValue,
     type: NumberType.FiatTokenPrice,
-  })
+  });
 
   const allCollectionsApproved = useMemo(
-    () => collectionsRequiringApproval.every((collection) => collection.status === ListingStatus.APPROVED),
+    () =>
+      collectionsRequiringApproval.every(
+        (collection) => collection.status === ListingStatus.APPROVED
+      ),
     [collectionsRequiringApproval]
-  )
+  );
 
   const allListingsApproved = useMemo(
-    () => listings.every((listing) => listing.status === ListingStatus.APPROVED),
+    () =>
+      listings.every((listing) => listing.status === ListingStatus.APPROVED),
     [listings]
-  )
+  );
 
   const signListings = async () => {
-    if (!signer || !provider) return
+    if (!signer || !provider) return;
     // sign listings
     for (const listing of listings) {
-      await signListingRow(listing, signer, provider, getLooksRareNonce, setLooksRareNonce, setListingStatusAndCallback)
+      await signListingRow(
+        listing,
+        signer,
+        provider,
+        getLooksRareNonce,
+        setLooksRareNonce,
+        setListingStatusAndCallback
+      );
     }
 
     sendAnalyticsEvent(NFTEventName.NFT_LISTING_COMPLETED, {
-      signatures_approved: listings.filter((asset) => asset.status === ListingStatus.APPROVED),
+      signatures_approved: listings.filter(
+        (asset) => asset.status === ListingStatus.APPROVED
+      ),
       list_quantity: listings.length,
       usd_value: usdcAmount,
       ...trace,
-    })
-  }
+    });
+  };
 
   // Once all collections have been approved, go to next section and start signing listings
   useEffect(() => {
     if (allCollectionsApproved) {
-      signListings()
-      openSection === Section.APPROVE && toggleOpenSection()
+      signListings();
+      openSection === Section.APPROVE && toggleOpenSection();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allCollectionsApproved])
+  }, [allCollectionsApproved]);
 
   const closeModalOnClick = useCallback(() => {
-    allListingsApproved ? window.location.reload() : overlayClick()
-  }, [allListingsApproved, overlayClick])
+    allListingsApproved ? window.location.reload() : overlayClick();
+  }, [allListingsApproved, overlayClick]);
 
   // In the case that a user removes all listings via retry logic, close modal
   useEffect(() => {
-    !listings.length && closeModalOnClick()
-  }, [listings, closeModalOnClick])
+    !listings.length && closeModalOnClick();
+  }, [listings, closeModalOnClick]);
 
   return (
     <Portal>
@@ -155,5 +182,5 @@ export const ListModal = ({ overlayClick }: { overlayClick: () => void }) => {
       </Trace>
       <Overlay onClick={closeModalOnClick} />
     </Portal>
-  )
-}
+  );
+};

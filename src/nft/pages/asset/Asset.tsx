@@ -1,11 +1,11 @@
-import { InterfacePageName } from '@uniswap/analytics-events'
-import { Trace } from 'analytics'
-import { useNftAssetDetails } from 'graphql/data/nft/Details'
-import { AssetDetails } from 'nft/components/details/AssetDetails'
-import { AssetDetailsLoading } from 'nft/components/details/AssetDetailsLoading'
-import { AssetPriceDetails } from 'nft/components/details/AssetPriceDetails'
-import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
+import { InterfacePageName } from "@uniswap/analytics-events";
+import { Trace } from "analytics";
+import { useNftAssetDetails } from "graphql/data/nft/Details";
+import { AssetDetails } from "nft/components/details/AssetDetails";
+import { AssetDetailsLoading } from "nft/components/details/AssetDetailsLoading";
+import { AssetPriceDetails } from "nft/components/details/AssetPriceDetails";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 const AssetContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const AssetContainer = styled.div`
   @media (max-width: 420px) {
     padding: 16px 16px 0 16px;
   }
-`
+`;
 
 const AssetPriceDetailsContainer = styled.div`
   min-width: 360px;
@@ -32,15 +32,15 @@ const AssetPriceDetailsContainer = styled.div`
   @media (max-width: 960px) {
     display: none;
   }
-`
+`;
 
 const AssetPage = () => {
-  const { tokenId = '', contractAddress = '' } = useParams()
-  const { data, loading } = useNftAssetDetails(contractAddress, tokenId)
+  const { tokenId = "", contractAddress = "" } = useParams();
+  const { data, loading } = useNftAssetDetails(contractAddress, tokenId);
 
-  const [asset, collection] = data
+  const [asset, collection] = data;
 
-  if (loading) return <AssetDetailsLoading />
+  if (loading) return <AssetDetailsLoading />;
   return (
     <>
       <Trace
@@ -58,7 +58,7 @@ const AssetPage = () => {
         ) : null}
       </Trace>
     </>
-  )
-}
+  );
+};
 
-export default AssetPage
+export default AssetPage;

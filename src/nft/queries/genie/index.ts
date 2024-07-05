@@ -1,1 +1,1 @@
-export { CollectionRewardsFetcher } from './GetAirdorpMerkle'
+export { CollectionRewardsFetcher } from "./GetAirdorpMerkle";

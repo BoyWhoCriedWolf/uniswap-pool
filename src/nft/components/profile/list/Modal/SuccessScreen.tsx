@@ -1,27 +1,30 @@
-import { Trans } from '@lingui/macro'
-import { useWeb3React } from '@web3-react/core'
-import Column from 'components/Column'
-import { ScrollBarStyles } from 'components/Common'
-import Row from 'components/Row'
-import { useStablecoinValue } from 'hooks/useStablecoinPrice'
-import useNativeCurrency from 'lib/hooks/useNativeCurrency'
-import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
-import { getTotalEthValue } from 'nft/components/profile/list/utils'
-import { useSellAsset } from 'nft/hooks'
-import { formatEth, generateTweetForList, pluralize } from 'nft/utils'
-import { useMemo } from 'react'
-import { Twitter, X } from 'react-feather'
-import styled, { css, useTheme } from 'styled-components'
-import { BREAKPOINTS } from 'theme'
-import { ThemedText } from 'theme/components'
-import { NumberType, useFormatter } from 'utils/formatNumbers'
+import { Trans } from "@lingui/macro";
+import { useWeb3React } from "@web3-react/core";
+import Column from "components/Column";
+import { ScrollBarStyles } from "components/Common";
+import Row from "components/Row";
+import { useStablecoinValue } from "hooks/useStablecoinPrice";
+import useNativeCurrency from "lib/hooks/useNativeCurrency";
+import tryParseCurrencyAmount from "lib/utils/tryParseCurrencyAmount";
+import { getTotalEthValue } from "nft/components/profile/list/utils";
+import { useSellAsset } from "nft/hooks";
+import { formatEth, generateTweetForList, pluralize } from "nft/utils";
+import { useMemo } from "react";
+import { Twitter, X } from "react-feather";
+import styled, { css, useTheme } from "styled-components";
+import { BREAKPOINTS } from "theme";
+import { ThemedText } from "theme/components";
+import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { TitleRow } from '../shared'
+import { TitleRow } from "../shared";
 
 const SuccessImage = styled.img<{ numImages: number }>`
-  width: calc(${({ numImages }) => (numImages > 1 ? (numImages > 2 ? '33%' : '50%') : '100%')} - 12px);
+  width: calc(
+    ${({ numImages }) =>
+        numImages > 1 ? (numImages > 2 ? "33%" : "50%") : "100%"} - 12px
+  );
   border-radius: 12px;
-`
+`;
 
 const SuccessImageWrapper = styled(Row)`
   flex-wrap: wrap;
@@ -30,11 +33,11 @@ const SuccessImageWrapper = styled(Row)`
   overflow-y: scroll;
   margin-bottom: 16px;
   ${ScrollBarStyles}
-`
+`;
 
 const ProceedsColumn = styled(Column)`
   text-align: right;
-`
+`;
 
 const buttonStyle = css`
   width: 182px;
@@ -55,42 +58,53 @@ const buttonStyle = css`
     width: 100%;
     margin-bottom: 8px;
   }
-`
+`;
 
 const ReturnButton = styled.button`
   background-color: ${({ theme }) => theme.surface3};
   color: ${({ theme }) => theme.neutral1};
   ${buttonStyle}
-`
+`;
 
 const TweetButton = styled.a`
   background-color: ${({ theme }) => theme.accent1};
   color: ${({ theme }) => theme.deprecated_accentTextLightPrimary};
   text-decoration: none;
   ${buttonStyle}
-`
+`;
 
 const TweetRow = styled(Row)`
   justify-content: center;
   gap: 4px;
-`
+`;
 
-export const SuccessScreen = ({ overlayClick }: { overlayClick: () => void }) => {
-  const theme = useTheme()
-  const sellAssets = useSellAsset((state) => state.sellAssets)
-  const { chainId } = useWeb3React()
-  const nativeCurrency = useNativeCurrency(chainId)
-  const { formatCurrencyAmount } = useFormatter()
+export const SuccessScreen = ({
+  overlayClick,
+}: {
+  overlayClick: () => void;
+}) => {
+  const theme = useTheme();
+  const sellAssets = useSellAsset((state) => state.sellAssets);
+  const { chainId } = useWeb3React();
+  const nativeCurrency = useNativeCurrency(chainId);
+  const { formatCurrencyAmount } = useFormatter();
 
-  const totalEthListingValue = useMemo(() => getTotalEthValue(sellAssets), [sellAssets])
-  const parsedAmount = tryParseCurrencyAmount(totalEthListingValue.toString(), nativeCurrency)
-  const usdcValue = useStablecoinValue(parsedAmount)
+  const totalEthListingValue = useMemo(
+    () => getTotalEthValue(sellAssets),
+    [sellAssets]
+  );
+  const parsedAmount = tryParseCurrencyAmount(
+    totalEthListingValue.toString(),
+    nativeCurrency
+  );
+  const usdcValue = useStablecoinValue(parsedAmount);
 
   return (
     <>
       <TitleRow>
         <ThemedText.HeadlineSmall lineHeight="28px">
-          <Trans>Successfully listed</Trans>&nbsp;{sellAssets.length > 1 ? ` ${sellAssets.length} ` : ''}
+          <Trans>Successfully listed</Trans>&nbsp;
+          {sellAssets.length > 1 ? ` ${sellAssets.length} ` : ""}
           NFT{pluralize(sellAssets.length)}!
         </ThemedText.HeadlineSmall>
         <X size={24} cursor="pointer" onClick={overlayClick} />
@@ -99,7 +113,7 @@ export const SuccessScreen = ({ overlayClick }: { overlayClick: () => void }) =>
         {sellAssets.map((asset) => (
           <SuccessImage
             src={asset.imageUrl}
-            key={asset?.asset_contract?.address ?? '' + asset?.tokenId}
+            key={asset?.asset_contract?.address ?? "" + asset?.tokenId}
             numImages={sellAssets.length}
           />
         ))}
@@ -109,7 +123,9 @@ export const SuccessScreen = ({ overlayClick }: { overlayClick: () => void }) =>
           <Trans>Proceeds if sold</Trans>
         </ThemedText.SubHeader>
         <ProceedsColumn>
-          <ThemedText.SubHeader>{formatEth(totalEthListingValue)} ETH</ThemedText.SubHeader>
+          <ThemedText.SubHeader>
+            {formatEth(totalEthListingValue)} ETH
+          </ThemedText.SubHeader>
           {usdcValue && (
             <ThemedText.BodySmall lineHeight="20px" color="neutral2">
               {formatCurrencyAmount({
@@ -124,7 +140,11 @@ export const SuccessScreen = ({ overlayClick }: { overlayClick: () => void }) =>
         <ReturnButton onClick={() => window.location.reload()}>
           <Trans>Return to My NFTs</Trans>
         </ReturnButton>
-        <TweetButton href={generateTweetForList(sellAssets)} target="_blank" rel="noreferrer">
+        <TweetButton
+          href={generateTweetForList(sellAssets)}
+          target="_blank"
+          rel="noreferrer"
+        >
           <TweetRow>
             <Twitter
               height={20}
@@ -137,5 +157,5 @@ export const SuccessScreen = ({ overlayClick }: { overlayClick: () => void }) =>
         </TweetButton>
       </Row>
     </>
-  )
-}
+  );
+};

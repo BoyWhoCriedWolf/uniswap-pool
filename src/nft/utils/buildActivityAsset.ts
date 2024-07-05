@@ -1,12 +1,18 @@
-import { parseEther } from 'ethers/lib/utils'
-import { ActivityEvent, GenieAsset } from 'nft/types'
+import { parseEther } from "ethers/lib/utils";
+import { ActivityEvent, GenieAsset } from "nft/types";
 
-import { formatEth } from './currency'
+import { formatEth } from "./currency";
 
-export const buildActivityAsset = (event: ActivityEvent, collectionName: string, ethPriceInUSD: number): GenieAsset => {
-  const assetUsdPrice = event.price ? formatEth(parseFloat(event.price) * ethPriceInUSD) : '0'
+export const buildActivityAsset = (
+  event: ActivityEvent,
+  collectionName: string,
+  ethPriceInUSD: number
+): GenieAsset => {
+  const assetUsdPrice = event.price
+    ? formatEth(parseFloat(event.price) * ethPriceInUSD)
+    : "0";
 
-  const weiPrice = event.price ? parseEther(event.price) : ''
+  const weiPrice = event.price ? parseEther(event.price) : "";
 
   return {
     address: event.collectionAddress,
@@ -22,8 +28,8 @@ export const buildActivityAsset = (event: ActivityEvent, collectionName: string,
       USDPrice: assetUsdPrice,
       ETHPrice: weiPrice,
       basePrice: weiPrice,
-      baseAsset: 'ETH',
+      baseAsset: "ETH",
     },
     tokenType: event.tokenMetadata?.standard,
-  } as GenieAsset
-}
+  } as GenieAsset;
+};

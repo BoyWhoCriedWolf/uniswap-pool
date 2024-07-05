@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const ClearAllButton = styled.button`
   color: ${({ theme }) => theme.neutral3};
@@ -9,4 +9,4 @@ export const ClearAllButton = styled.button`
   border: none;
   cursor: pointer;
   background: none;
-`
+`;

@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/macro'
-import Column from 'components/Column'
-import { SupportArticleURL } from 'constants/supportArticles'
-import { AlertTriangle } from 'react-feather'
-import styled, { useTheme } from 'styled-components'
-import { ExternalLink, StyledInternalLink, ThemedText } from 'theme/components'
+import { Trans } from "@lingui/macro";
+import Column from "components/Column";
+import { SupportArticleURL } from "constants/supportArticles";
+import { AlertTriangle } from "react-feather";
+import styled, { useTheme } from "styled-components";
+import { ExternalLink, StyledInternalLink, ThemedText } from "theme/components";
 
 const Container = styled(Column)`
   height: 75vh;
@@ -12,12 +12,16 @@ const Container = styled(Column)`
   text-align: center;
   padding: 48px;
   gap: 8px;
-`
+`;
 const StyledExternalLink = styled(ExternalLink)`
   color: ${({ theme }) => theme.neutral2};
-`
-export function UnavailableCollectionPage({ isBlocked }: { isBlocked?: boolean }) {
-  const theme = useTheme()
+`;
+export function UnavailableCollectionPage({
+  isBlocked,
+}: {
+  isBlocked?: boolean;
+}) {
+  const theme = useTheme();
 
   if (isBlocked) {
     return (
@@ -36,11 +40,13 @@ export function UnavailableCollectionPage({ isBlocked }: { isBlocked?: boolean }
         <StyledInternalLink to="/nfts">
           <Trans>Return to NFT Explore</Trans>
         </StyledInternalLink>
-        <StyledExternalLink href={SupportArticleURL.UNSUPPORTED_TOKEN_AND_NFT_POLICY}>
+        <StyledExternalLink
+          href={SupportArticleURL.UNSUPPORTED_TOKEN_AND_NFT_POLICY}
+        >
           <Trans>Learn why</Trans>
         </StyledExternalLink>
       </Container>
-    )
+    );
   }
 
   return (
@@ -52,5 +58,5 @@ export function UnavailableCollectionPage({ isBlocked }: { isBlocked?: boolean }
         <Trans>Return to NFT Explore</Trans>
       </StyledInternalLink>
     </Container>
-  )
+  );
 }

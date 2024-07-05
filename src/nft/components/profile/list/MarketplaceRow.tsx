@@ -1,22 +1,34 @@
-import { t } from '@lingui/macro'
-import Column from 'components/Column'
-import Row from 'components/Row'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { RowsCollpsedIcon, RowsExpandedIcon } from 'nft/components/icons'
-import { getRoyalty, useHandleGlobalPriceToggle, useSyncPriceWithGlobalMethod } from 'nft/components/profile/list/utils'
-import { useSellAsset } from 'nft/hooks'
-import { useNativeUsdPrice } from 'nft/hooks/useUsdPrice'
-import { ListingMarket, WalletAsset } from 'nft/types'
-import { getMarketplaceIcon } from 'nft/utils'
-import { formatEth, formatUsdPrice } from 'nft/utils/currency'
-import { Dispatch, DispatchWithoutAction, useCallback, useEffect, useMemo, useReducer, useState } from 'react'
-import styled from 'styled-components'
-import { BREAKPOINTS } from 'theme'
-import { ThemedText } from 'theme/components'
+import { t } from "@lingui/macro";
+import Column from "components/Column";
+import Row from "components/Row";
+import { MouseoverTooltip } from "components/Tooltip";
+import { RowsCollpsedIcon, RowsExpandedIcon } from "nft/components/icons";
+import {
+  getRoyalty,
+  useHandleGlobalPriceToggle,
+  useSyncPriceWithGlobalMethod,
+} from "nft/components/profile/list/utils";
+import { useSellAsset } from "nft/hooks";
+import { useNativeUsdPrice } from "nft/hooks/useUsdPrice";
+import { ListingMarket, WalletAsset } from "nft/types";
+import { getMarketplaceIcon } from "nft/utils";
+import { formatEth, formatUsdPrice } from "nft/utils/currency";
+import {
+  Dispatch,
+  DispatchWithoutAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
+import styled from "styled-components";
+import { BREAKPOINTS } from "theme";
+import { ThemedText } from "theme/components";
 
-import { PriceTextInput } from './PriceTextInput'
-import { RoyaltyTooltip } from './RoyaltyTooltip'
-import { RemoveIconWrap, SetPriceMethod } from './shared'
+import { PriceTextInput } from "./PriceTextInput";
+import { RoyaltyTooltip } from "./RoyaltyTooltip";
+import { RemoveIconWrap, SetPriceMethod } from "./shared";
 
 const LastPriceInfo = styled(Column)`
   text-align: left;
@@ -26,7 +38,7 @@ const LastPriceInfo = styled(Column)`
   @media screen and (min-width: ${BREAKPOINTS.lg}px) {
     display: flex;
   }
-`
+`;
 
 const FloorPriceInfo = styled(Column)`
   text-align: left;
@@ -36,13 +48,13 @@ const FloorPriceInfo = styled(Column)`
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
     display: flex;
   }
-`
+`;
 
 const RemoveMarketplaceWrap = styled(RemoveIconWrap)`
   top: 8px;
   left: 16px;
   z-index: 3;
-`
+`;
 
 const MarketIconsWrapper = styled(Row)`
   position: relative;
@@ -53,12 +65,12 @@ const MarketIconsWrapper = styled(Row)`
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     display: none;
   }
-`
+`;
 
 const MarketIconWrapper = styled(Column)`
   position: relative;
   cursor: pointer;
-`
+`;
 
 const MarketIcon = styled.div<{ index: number }>`
   width: 20px;
@@ -67,7 +79,7 @@ const MarketIcon = styled.div<{ index: number }>`
   z-index: ${({ index }) => 2 - index};
   margin-left: ${({ index }) => `${index === 0 ? 0 : -8}px`};
   outline: 1px solid ${({ theme }) => theme.surface3};
-`
+`;
 
 const ExpandMarketIconWrapper = styled.div`
   cursor: pointer;
@@ -77,7 +89,7 @@ const ExpandMarketIconWrapper = styled.div`
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     display: none;
   }
-`
+`;
 
 const FeeColumnWrapper = styled(Column)`
   flex: 1;
@@ -87,12 +99,12 @@ const FeeColumnWrapper = styled(Column)`
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
     display: flex;
   }
-`
+`;
 
 const FeeWrapper = styled.div`
   width: min-content;
   white-space: nowrap;
-`
+`;
 
 const ReturnColumn = styled(Column)`
   flex: 1.5;
@@ -101,18 +113,18 @@ const ReturnColumn = styled(Column)`
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
     display: flex;
   }
-`
+`;
 
 interface MarketplaceRowProps {
-  globalPriceMethod?: SetPriceMethod
-  globalPrice?: number
-  setGlobalPrice: Dispatch<number | undefined>
-  selectedMarkets: ListingMarket[]
-  removeMarket?: () => void
-  asset: WalletAsset
-  expandMarketplaceRows?: boolean
-  rowHovered?: boolean
-  toggleExpandMarketplaceRows: DispatchWithoutAction
+  globalPriceMethod?: SetPriceMethod;
+  globalPrice?: number;
+  setGlobalPrice: Dispatch<number | undefined>;
+  selectedMarkets: ListingMarket[];
+  removeMarket?: () => void;
+  asset: WalletAsset;
+  expandMarketplaceRows?: boolean;
+  rowHovered?: boolean;
+  toggleExpandMarketplaceRows: DispatchWithoutAction;
 }
 
 export const MarketplaceRow = ({
@@ -126,42 +138,60 @@ export const MarketplaceRow = ({
   toggleExpandMarketplaceRows,
   rowHovered,
 }: MarketplaceRowProps) => {
-  const setAssetListPrice = useSellAsset((state) => state.setAssetListPrice)
-  const removeAssetMarketplace = useSellAsset((state) => state.removeAssetMarketplace)
-  const [marketIconHovered, toggleMarketIconHovered] = useReducer((s) => !s, false)
-  const [marketRowHovered, toggleMarketRowHovered] = useReducer((s) => !s, false)
+  const setAssetListPrice = useSellAsset((state) => state.setAssetListPrice);
+  const removeAssetMarketplace = useSellAsset(
+    (state) => state.removeAssetMarketplace
+  );
+  const [marketIconHovered, toggleMarketIconHovered] = useReducer(
+    (s) => !s,
+    false
+  );
+  const [marketRowHovered, toggleMarketRowHovered] = useReducer(
+    (s) => !s,
+    false
+  );
   const [listPrice, setListPrice] = useState<number | undefined>(
     () =>
       asset.newListings?.find((listing) =>
-        expandMarketplaceRows ? listing.marketplace.name === selectedMarkets?.[0].name : !!listing.price
+        expandMarketplaceRows
+          ? listing.marketplace.name === selectedMarkets?.[0].name
+          : !!listing.price
       )?.price
-  )
-  const [globalOverride, setGlobalOverride] = useState(false)
+  );
+  const [globalOverride, setGlobalOverride] = useState(false);
 
-  const showGlobalPrice = globalPriceMethod === SetPriceMethod.SAME_PRICE && !globalOverride
-  const price = showGlobalPrice ? globalPrice : listPrice
+  const showGlobalPrice =
+    globalPriceMethod === SetPriceMethod.SAME_PRICE && !globalOverride;
+  const price = showGlobalPrice ? globalPrice : listPrice;
   const setPrice = useCallback(
     (price?: number) => {
-      showGlobalPrice ? setGlobalPrice(price) : setListPrice(price)
-      for (const marketplace of selectedMarkets) setAssetListPrice(asset, price, marketplace)
+      showGlobalPrice ? setGlobalPrice(price) : setListPrice(price);
+      for (const marketplace of selectedMarkets)
+        setAssetListPrice(asset, price, marketplace);
     },
     [asset, selectedMarkets, setAssetListPrice, setGlobalPrice, showGlobalPrice]
-  )
+  );
 
   const fees = useMemo(() => {
-    let maxFee = 0
+    let maxFee = 0;
     for (const selectedMarket of selectedMarkets) {
-      const fee = getRoyalty(selectedMarket, asset) + selectedMarket.fee
-      maxFee = Math.max(fee, maxFee)
+      const fee = getRoyalty(selectedMarket, asset) + selectedMarket.fee;
+      maxFee = Math.max(fee, maxFee);
     }
 
-    return maxFee
-  }, [asset, selectedMarkets])
+    return maxFee;
+  }, [asset, selectedMarkets]);
 
-  const feeInEth = price && (price * fees) / 100
-  const userReceives = price && feeInEth && price - feeInEth
+  const feeInEth = price && (price * fees) / 100;
+  const userReceives = price && feeInEth && price - feeInEth;
 
-  useHandleGlobalPriceToggle(globalOverride, setListPrice, setPrice, listPrice, globalPrice)
+  useHandleGlobalPriceToggle(
+    globalOverride,
+    setListPrice,
+    setPrice,
+    listPrice,
+    globalPrice
+  );
   useSyncPriceWithGlobalMethod(
     asset,
     setListPrice,
@@ -170,44 +200,60 @@ export const MarketplaceRow = ({
     listPrice,
     globalPrice,
     globalPriceMethod
-  )
+  );
 
   // When in Same Price Mode and not overriding, update local price when global price changes
   useEffect(() => {
     if (showGlobalPrice) {
-      setPrice(globalPrice)
+      setPrice(globalPrice);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalPrice])
+  }, [globalPrice]);
 
   return (
-    <Row onMouseEnter={toggleMarketRowHovered} onMouseLeave={toggleMarketRowHovered}>
+    <Row
+      onMouseEnter={toggleMarketRowHovered}
+      onMouseLeave={toggleMarketRowHovered}
+    >
       <FloorPriceInfo>
         <ThemedText.BodyPrimary color="neutral2" lineHeight="24px">
-          {asset.floorPrice ? `${asset.floorPrice.toFixed(3)} ETH` : '-'}
+          {asset.floorPrice ? `${asset.floorPrice.toFixed(3)} ETH` : "-"}
         </ThemedText.BodyPrimary>
       </FloorPriceInfo>
       <LastPriceInfo>
         <ThemedText.BodyPrimary color="neutral2" lineHeight="24px">
-          {asset.lastPrice ? `${asset.lastPrice.toFixed(3)} ETH` : '-'}
+          {asset.lastPrice ? `${asset.lastPrice.toFixed(3)} ETH` : "-"}
         </ThemedText.BodyPrimary>
       </LastPriceInfo>
 
       <Row flex="2">
         {(expandMarketplaceRows || selectedMarkets.length > 1) && (
-          <MarketIconsWrapper onMouseEnter={toggleMarketIconHovered} onMouseLeave={toggleMarketIconHovered}>
+          <MarketIconsWrapper
+            onMouseEnter={toggleMarketIconHovered}
+            onMouseLeave={toggleMarketIconHovered}
+          >
             {selectedMarkets.map((market, index) => (
               <MarketIconWrapper
                 key={market.name + asset.collection?.address + asset.tokenId}
                 onClick={(e) => {
-                  e.stopPropagation()
-                  removeAssetMarketplace(asset, market)
-                  removeMarket && removeMarket()
+                  e.stopPropagation();
+                  removeAssetMarketplace(asset, market);
+                  removeMarket && removeMarket();
                 }}
               >
-                <MarketIcon index={index}>{getMarketplaceIcon(market.name, '20')}</MarketIcon>
-                <RemoveMarketplaceWrap hovered={marketIconHovered && (expandMarketplaceRows ?? false)}>
-                  <img width="20px" src="/nft/svgs/minusCircle.svg" alt="Remove item" />
+                <MarketIcon index={index}>
+                  {getMarketplaceIcon(market.name, "20")}
+                </MarketIcon>
+                <RemoveMarketplaceWrap
+                  hovered={
+                    marketIconHovered && (expandMarketplaceRows ?? false)
+                  }
+                >
+                  <img
+                    width="20px"
+                    src="/nft/svgs/minusCircle.svg"
+                    alt="Remove item"
+                  />
                 </RemoveMarketplaceWrap>
               </MarketIconWrapper>
             ))}
@@ -221,21 +267,37 @@ export const MarketplaceRow = ({
           globalOverride={globalOverride}
           asset={asset}
         />
-        {rowHovered && ((expandMarketplaceRows && marketRowHovered) || selectedMarkets.length > 1) && (
-          <ExpandMarketIconWrapper onClick={toggleExpandMarketplaceRows}>
-            {expandMarketplaceRows ? <RowsExpandedIcon /> : <RowsCollpsedIcon />}
-          </ExpandMarketIconWrapper>
-        )}
+        {rowHovered &&
+          ((expandMarketplaceRows && marketRowHovered) ||
+            selectedMarkets.length > 1) && (
+            <ExpandMarketIconWrapper onClick={toggleExpandMarketplaceRows}>
+              {expandMarketplaceRows ? (
+                <RowsExpandedIcon />
+              ) : (
+                <RowsCollpsedIcon />
+              )}
+            </ExpandMarketIconWrapper>
+          )}
       </Row>
 
       <FeeColumnWrapper>
         <MouseoverTooltip
-          text={<RoyaltyTooltip selectedMarkets={selectedMarkets} asset={asset} fees={feeInEth} />}
+          text={
+            <RoyaltyTooltip
+              selectedMarkets={selectedMarkets}
+              asset={asset}
+              fees={feeInEth}
+            />
+          }
           placement="left"
         >
           <FeeWrapper>
             <ThemedText.BodyPrimary color="neutral2">
-              {fees > 0 ? `${fees.toFixed(2)}${selectedMarkets.length > 1 ? t`% max` : '%'}` : '--%'}
+              {fees > 0
+                ? `${fees.toFixed(2)}${
+                    selectedMarkets.length > 1 ? t`% max` : "%"
+                  }`
+                : "--%"}
             </ThemedText.BodyPrimary>
           </FeeWrapper>
         </MouseoverTooltip>
@@ -245,24 +307,30 @@ export const MarketplaceRow = ({
         <EthPriceDisplay ethPrice={userReceives} />
       </ReturnColumn>
     </Row>
-  )
-}
+  );
+};
 
 const EthPriceDisplay = ({ ethPrice = 0 }: { ethPrice?: number }) => {
-  const ethUsdPrice = useNativeUsdPrice()
+  const ethUsdPrice = useNativeUsdPrice();
 
   return (
     <Row width="100%" justify="flex-end">
-      <ThemedText.BodyPrimary lineHeight="24px" color={ethPrice ? 'neutral1' : 'neutral2'} textAlign="right">
+      <ThemedText.BodyPrimary
+        lineHeight="24px"
+        color={ethPrice ? "neutral1" : "neutral2"}
+        textAlign="right"
+      >
         {ethPrice !== 0 ? (
           <Column>
             <span>{formatEth(ethPrice)} ETH</span>
-            <ThemedText.BodyPrimary color="neutral2">{formatUsdPrice(ethPrice * ethUsdPrice)}</ThemedText.BodyPrimary>
+            <ThemedText.BodyPrimary color="neutral2">
+              {formatUsdPrice(ethPrice * ethUsdPrice)}
+            </ThemedText.BodyPrimary>
           </Column>
         ) : (
-          '- ETH'
+          "- ETH"
         )}
       </ThemedText.BodyPrimary>
     </Row>
-  )
-}
+  );
+};

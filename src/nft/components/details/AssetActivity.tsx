@@ -1,14 +1,14 @@
-import { Trans } from '@lingui/macro'
-import { OpacityHoverState, ScrollBarStyles } from 'components/Common'
-import { LoadingBubble } from 'components/Tokens/loading'
-import { EventCell } from 'nft/components/collection/ActivityCells'
-import { ActivityEvent } from 'nft/types'
-import { getMarketplaceIcon } from 'nft/utils'
-import { formatEth } from 'nft/utils/currency'
-import { getTimeDifference } from 'nft/utils/date'
-import { ReactNode } from 'react'
-import styled from 'styled-components'
-import { shortenAddress } from 'utils'
+import { Trans } from "@lingui/macro";
+import { OpacityHoverState, ScrollBarStyles } from "components/Common";
+import { LoadingBubble } from "components/Tokens/loading";
+import { EventCell } from "nft/components/collection/ActivityCells";
+import { ActivityEvent } from "nft/types";
+import { getMarketplaceIcon } from "nft/utils";
+import { formatEth } from "nft/utils/currency";
+import { getTimeDifference } from "nft/utils/date";
+import { ReactNode } from "react";
+import styled from "styled-components";
+import { shortenAddress } from "utils";
 
 const TR = styled.tr`
   border-bottom: ${({ theme }) => `1px solid ${theme.surface3}`};
@@ -17,7 +17,7 @@ const TR = styled.tr`
   &:last-child {
     border-bottom: none;
   }
-`
+`;
 
 const TH = styled.th`
   color: ${({ theme }) => theme.neutral2};
@@ -37,13 +37,13 @@ const TH = styled.th`
       display: none;
     }
   }
-`
+`;
 
 const Table = styled.table`
   border-collapse: collapse;
   text-align: left;
   width: 100%;
-`
+`;
 
 const TD = styled.td`
   height: 56px;
@@ -63,32 +63,32 @@ const TD = styled.td`
       display: none;
     }
   }
-`
+`;
 
 const PriceContainer = styled.div`
   align-items: center;
   display: flex;
   gap: 8px;
-`
+`;
 
 const Link = styled.a`
   color: ${({ theme }) => theme.neutral1};
   text-decoration: none;
 
   ${OpacityHoverState}
-`
+`;
 
 const ActivityContainer = styled.div`
   max-height: 310px;
   overflow: auto;
 
   ${ScrollBarStyles}
-`
+`;
 
 const LoadingCell = styled(LoadingBubble)`
   height: 20px;
   width: 80px;
-`
+`;
 
 const ActivityTable = ({ children }: { children: ReactNode }) => {
   return (
@@ -116,8 +116,8 @@ const ActivityTable = ({ children }: { children: ReactNode }) => {
         <tbody>{children}</tbody>
       </Table>
     </ActivityContainer>
-  )
-}
+  );
+};
 
 const LoadingAssetActivityRow = ({ cellCount }: { cellCount: number }) => {
   return (
@@ -129,11 +129,11 @@ const LoadingAssetActivityRow = ({ cellCount }: { cellCount: number }) => {
             <TD key={index}>
               <LoadingCell />
             </TD>
-          )
+          );
         })}
     </TR>
-  )
-}
+  );
+};
 
 export const LoadingAssetActivity = ({ rowCount }: { rowCount: number }) => {
   return (
@@ -141,20 +141,30 @@ export const LoadingAssetActivity = ({ rowCount }: { rowCount: number }) => {
       {Array(rowCount)
         .fill(null)
         .map((_, index) => {
-          return <LoadingAssetActivityRow key={index} cellCount={5} />
+          return <LoadingAssetActivityRow key={index} cellCount={5} />;
         })}
     </ActivityTable>
-  )
-}
+  );
+};
 
 const AssetActivity = ({ events }: { events?: ActivityEvent[] }) => {
   return (
     <ActivityTable>
       {events &&
         events.map((event, index) => {
-          const { eventTimestamp, eventType, fromAddress, marketplace, price, toAddress, transactionHash } = event
-          const formattedPrice = price ? formatEth(parseFloat(price ?? '')) : null
-          if (!eventType) return null
+          const {
+            eventTimestamp,
+            eventType,
+            fromAddress,
+            marketplace,
+            price,
+            toAddress,
+            transactionHash,
+          } = event;
+          const formattedPrice = price
+            ? formatEth(parseFloat(price ?? ""))
+            : null;
+          if (!eventType) return null;
           return (
             <TR key={index}>
               <TD>
@@ -168,7 +178,7 @@ const AssetActivity = ({ events }: { events?: ActivityEvent[] }) => {
               <TD>
                 {formattedPrice && (
                   <PriceContainer>
-                    {marketplace && getMarketplaceIcon(marketplace, '16')}
+                    {marketplace && getMarketplaceIcon(marketplace, "16")}
                     {formattedPrice} ETH
                   </PriceContainer>
                 )}
@@ -176,7 +186,11 @@ const AssetActivity = ({ events }: { events?: ActivityEvent[] }) => {
 
               <TD>
                 {fromAddress && (
-                  <Link href={`https://etherscan.io/address/${fromAddress}`} target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href={`https://etherscan.io/address/${fromAddress}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {shortenAddress(fromAddress, 2)}
                   </Link>
                 )}
@@ -184,17 +198,23 @@ const AssetActivity = ({ events }: { events?: ActivityEvent[] }) => {
 
               <TD>
                 {toAddress && (
-                  <Link href={`https://etherscan.io/address/${toAddress}`} target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href={`https://etherscan.io/address/${toAddress}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {shortenAddress(toAddress, 2)}
                   </Link>
                 )}
               </TD>
-              <TD>{eventTimestamp && getTimeDifference(eventTimestamp.toString())}</TD>
+              <TD>
+                {eventTimestamp && getTimeDifference(eventTimestamp.toString())}
+              </TD>
             </TR>
-          )
+          );
         })}
     </ActivityTable>
-  )
-}
+  );
+};
 
-export default AssetActivity
+export default AssetActivity;

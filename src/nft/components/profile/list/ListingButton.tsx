@@ -1,15 +1,19 @@
-import { Plural, t, Trans } from '@lingui/macro'
-import { BaseButton } from 'components/Button'
-import { BelowFloorWarningModal } from 'nft/components/profile/list/Modal/BelowFloorWarningModal'
-import { useIsMobile, useSellAsset } from 'nft/hooks'
-import { useMemo, useState } from 'react'
-import styled from 'styled-components'
-import { BREAKPOINTS } from 'theme'
+import { Plural, t, Trans } from "@lingui/macro";
+import { BaseButton } from "components/Button";
+import { BelowFloorWarningModal } from "nft/components/profile/list/Modal/BelowFloorWarningModal";
+import { useIsMobile, useSellAsset } from "nft/hooks";
+import { useMemo, useState } from "react";
+import styled from "styled-components";
+import { BREAKPOINTS } from "theme";
 
-import { findListingIssues } from './utils'
+import { findListingIssues } from "./utils";
 
-const StyledListingButton = styled(BaseButton)<{ showResolveIssues: boolean; missingPrices: boolean }>`
-  background: ${({ showResolveIssues, theme }) => (showResolveIssues ? theme.critical : theme.accent1)};
+const StyledListingButton = styled(BaseButton)<{
+  showResolveIssues: boolean;
+  missingPrices: boolean;
+}>`
+  background: ${({ showResolveIssues, theme }) =>
+    showResolveIssues ? theme.critical : theme.accent1};
   color: ${({ theme }) => theme.deprecated_accentTextLightPrimary};
   font-weight: 535;
   font-size: 20px;
@@ -18,28 +22,41 @@ const StyledListingButton = styled(BaseButton)<{ showResolveIssues: boolean; mis
   border-radius: 12px;
   width: min-content;
   border: none;
-  cursor: ${({ missingPrices }) => (missingPrices ? 'auto' : 'pointer')};
-  opacity: ${({ showResolveIssues, missingPrices }) => !showResolveIssues && missingPrices && '0.3'};
+  cursor: ${({ missingPrices }) => (missingPrices ? "auto" : "pointer")};
+  opacity: ${({ showResolveIssues, missingPrices }) =>
+    !showResolveIssues && missingPrices && "0.3"};
 
   @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     font-size: 16px;
     line-height: 20px;
     padding: 10px 12px;
   }
-`
+`;
 
 export const ListingButton = ({ onClick }: { onClick: () => void }) => {
-  const { sellAssets, showResolveIssues, toggleShowResolveIssues, issues, setIssues } = useSellAsset(
-    ({ sellAssets, showResolveIssues, toggleShowResolveIssues, issues, setIssues }) => ({
+  const {
+    sellAssets,
+    showResolveIssues,
+    toggleShowResolveIssues,
+    issues,
+    setIssues,
+  } = useSellAsset(
+    ({
+      sellAssets,
+      showResolveIssues,
+      toggleShowResolveIssues,
+      issues,
+      setIssues,
+    }) => ({
       sellAssets,
       showResolveIssues,
       toggleShowResolveIssues,
       issues,
       setIssues,
     })
-  )
-  const [showWarning, setShowWarning] = useState(false)
-  const isMobile = useIsMobile()
+  );
+  const [showWarning, setShowWarning] = useState(false);
+  const isMobile = useIsMobile();
 
   // Find issues with item listing data
   const [listingsMissingPrice, listingsBelowFloor] = useMemo(() => {
@@ -49,28 +66,33 @@ export const ListingButton = ({ onClick }: { onClick: () => void }) => {
       listingsMissingPrice,
       listingsBelowFloor,
       listingsAboveSellOrderFloor,
-    } = findListingIssues(sellAssets)
+    } = findListingIssues(sellAssets);
 
     // set number of issues
     const foundIssues =
       Number(missingExpiration) +
       Number(overMaxExpiration) +
       listingsMissingPrice.length +
-      listingsAboveSellOrderFloor.length
-    setIssues(foundIssues)
-    !foundIssues && showResolveIssues && toggleShowResolveIssues()
+      listingsAboveSellOrderFloor.length;
+    setIssues(foundIssues);
+    !foundIssues && showResolveIssues && toggleShowResolveIssues();
     // Only show Resolve Issue text if there was a user submitted error (ie not when page loads with no prices set)
-    if ((missingExpiration || overMaxExpiration || listingsAboveSellOrderFloor.length) && !showResolveIssues)
-      toggleShowResolveIssues()
+    if (
+      (missingExpiration ||
+        overMaxExpiration ||
+        listingsAboveSellOrderFloor.length) &&
+      !showResolveIssues
+    )
+      toggleShowResolveIssues();
 
-    return [listingsMissingPrice, listingsBelowFloor]
-  }, [sellAssets, setIssues, showResolveIssues, toggleShowResolveIssues])
+    return [listingsMissingPrice, listingsBelowFloor];
+  }, [sellAssets, setIssues, showResolveIssues, toggleShowResolveIssues]);
 
   const warningWrappedClick = () => {
-    if (issues) !showResolveIssues && toggleShowResolveIssues()
-    else if (listingsBelowFloor.length) setShowWarning(true)
-    else onClick()
-  }
+    if (issues) !showResolveIssues && toggleShowResolveIssues();
+    else if (listingsBelowFloor.length) setShowWarning(true);
+    else onClick();
+  };
 
   return (
     <>
@@ -80,7 +102,11 @@ export const ListingButton = ({ onClick }: { onClick: () => void }) => {
         showResolveIssues={showResolveIssues}
       >
         {showResolveIssues ? (
-          <Plural value={issues !== 1 ? 2 : 1} _1="Resolve issue" other={t`Resolve ${issues} issues`} />
+          <Plural
+            value={issues !== 1 ? 2 : 1}
+            _1="Resolve issue"
+            other={t`Resolve ${issues} issues`}
+          />
         ) : listingsMissingPrice.length && !isMobile ? (
           <Trans>Set prices to continue</Trans>
         ) : (
@@ -96,5 +122,5 @@ export const ListingButton = ({ onClick }: { onClick: () => void }) => {
         />
       )}
     </>
-  )
-}
+  );
+};

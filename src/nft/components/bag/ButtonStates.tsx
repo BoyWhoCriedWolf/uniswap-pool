@@ -1,7 +1,7 @@
-import { Trans } from '@lingui/macro'
-import { PriceImpact } from 'nft/hooks/usePriceImpact'
-import { ReactNode } from 'react'
-import { DefaultTheme } from 'styled-components'
+import { Trans } from "@lingui/macro";
+import { PriceImpact } from "nft/hooks/usePriceImpact";
+import { ReactNode } from "react";
+import { DefaultTheme } from "styled-components";
 
 export enum BuyButtonStates {
   WALLET_NOT_CONNECTED,
@@ -23,15 +23,15 @@ export enum BuyButtonStates {
 }
 
 export interface BuyButtonStateData {
-  handleClick: (() => void) | (() => Promise<void>)
-  buttonText: ReactNode
-  disabled: boolean
-  warningText?: ReactNode
-  warningTextColor: string
-  helperText?: ReactNode
-  helperTextColor: string
-  buttonColor: string
-  buttonTextColor: string
+  handleClick: (() => void) | (() => Promise<void>);
+  buttonText: ReactNode;
+  disabled: boolean;
+  warningText?: ReactNode;
+  warningTextColor: string;
+  helperText?: ReactNode;
+  helperTextColor: string;
+  buttonColor: string;
+  buttonTextColor: string;
 }
 
 export function getBuyButtonStateData(
@@ -51,7 +51,7 @@ export function getBuyButtonStateData(
     helperTextColor: theme.neutral2,
     buttonColor: theme.accent1,
     buttonTextColor: theme.deprecated_accentTextLightPrimary,
-  }
+  };
 
   const buyButtonStateData: Record<BuyButtonStates, BuyButtonStateData> = {
     [BuyButtonStates.WALLET_NOT_CONNECTED]: {
@@ -97,7 +97,9 @@ export function getBuyButtonStateData(
       buttonText: <Trans>Insufficient liquidity</Trans>,
       buttonColor: theme.surface3,
       buttonTextColor: theme.neutral1,
-      helperText: <Trans>Insufficient pool liquidity to complete transaction</Trans>,
+      helperText: (
+        <Trans>Insufficient pool liquidity to complete transaction</Trans>
+      ),
     },
     [BuyButtonStates.LOADING_ALLOWANCE]: {
       ...defaultBuyButtonState,
@@ -130,9 +132,13 @@ export function getBuyButtonStateData(
       ...defaultBuyButtonState,
       handleClick: handleClickOverride ?? (() => undefined),
       disabled: false,
-      buttonColor: priceImpact ? priceImpact.priceImpactSeverity.color : defaultBuyButtonState.buttonColor,
+      buttonColor: priceImpact
+        ? priceImpact.priceImpactSeverity.color
+        : defaultBuyButtonState.buttonColor,
       helperText: <Trans>Price impact warning</Trans>,
-      helperTextColor: priceImpact ? priceImpact.priceImpactSeverity.color : defaultBuyButtonState.helperTextColor,
+      helperTextColor: priceImpact
+        ? priceImpact.priceImpactSeverity.color
+        : defaultBuyButtonState.helperTextColor,
       buttonText: <Trans>Pay Anyway</Trans>,
     },
     [BuyButtonStates.PAY]: {
@@ -140,9 +146,11 @@ export function getBuyButtonStateData(
       handleClick: handleClickOverride ?? (() => undefined),
       disabled: false,
       buttonText: <Trans>Pay</Trans>,
-      helperText: usingPayWithAnyToken ? <Trans>Refunds for unavailable items will be given in ETH</Trans> : undefined,
+      helperText: usingPayWithAnyToken ? (
+        <Trans>Refunds for unavailable items will be given in ETH</Trans>
+      ) : undefined,
     },
-  }
+  };
 
-  return buyButtonStateData[buyButtonState]
+  return buyButtonStateData[buyButtonState];
 }

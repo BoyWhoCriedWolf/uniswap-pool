@@ -1,25 +1,32 @@
-import type { TypedDataDomain, TypedDataField } from '@ethersproject/abstract-signer'
-import { _TypedDataEncoder } from '@ethersproject/hash'
-import type { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { getWalletMeta, WalletType } from 'utils/walletMeta'
+import type {
+  TypedDataDomain,
+  TypedDataField,
+} from "@ethersproject/abstract-signer";
+import { _TypedDataEncoder } from "@ethersproject/hash";
+import type { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
+import { getWalletMeta, WalletType } from "utils/walletMeta";
 
 // These are WalletConnect peers which do not implement eth_signTypedData_v4, but *do* implement eth_signTypedData.
 // They are special-cased so that signing will still use EIP-712 (which is safer for the user).
-const WC_PEERS_LACKING_V4_SUPPORT = ['SafePal Wallet', 'Ledger Wallet Connect']
+const WC_PEERS_LACKING_V4_SUPPORT = ["SafePal Wallet", "Ledger Wallet Connect"];
 
 // Assumes v4 support by default, except for known wallets.
 function supportsV4(provider: JsonRpcProvider): boolean {
-  const meta = getWalletMeta(provider)
+  const meta = getWalletMeta(provider);
   if (meta) {
-    const { type, name } = meta
+    const { type, name } = meta;
     if (name) {
-      if (type === WalletType.WALLET_CONNECT && name && WC_PEERS_LACKING_V4_SUPPORT.includes(name)) {
-        return false
+      if (
+        type === WalletType.WALLET_CONNECT &&
+        name &&
+        WC_PEERS_LACKING_V4_SUPPORT.includes(name)
+      ) {
+        return false;
       }
     }
   }
 
-  return true
+  return true;
 }
 
 /**
@@ -37,28 +44,44 @@ export async function signTypedData(
   value: Record<string, any>
 ) {
   // Populate any ENS names (in-place)
-  const populated = await _TypedDataEncoder.resolveNames(domain, types, value, (name: string) => {
-    return signer.provider.resolveName(name) as Promise<string>
-  })
+  const populated = await _TypedDataEncoder.resolveNames(
+    domain,
+    types,
+    value,
+    (name: string) => {
+      return signer.provider.resolveName(name) as Promise<string>;
+    }
+  );
 
-  const method = supportsV4(signer.provider) ? 'eth_signTypedData_v4' : 'eth_signTypedData'
-  const address = (await signer.getAddress()).toLowerCase()
-  const message = JSON.stringify(_TypedDataEncoder.getPayload(populated.domain, types, populated.value))
+  const method = supportsV4(signer.provider)
+    ? "eth_signTypedData_v4"
+    : "eth_signTypedData";
+  const address = (await signer.getAddress()).toLowerCase();
+  const message = JSON.stringify(
+    _TypedDataEncoder.getPayload(populated.domain, types, populated.value)
+  );
 
   try {
-    return await signer.provider.send(method, [address, message])
+    return await signer.provider.send(method, [address, message]);
   } catch (error) {
     // If eth_signTypedData is unimplemented, fall back to eth_sign.
     if (
-      typeof error.message === 'string' &&
+      typeof error.message === "string" &&
       (error.message.match(/not (found|implemented)/i) ||
         error.message.match(/TrustWalletConnect.WCError error 1/) ||
         error.message.match(/Missing or invalid/))
     ) {
-      console.warn('signTypedData: wallet does not implement EIP-712, falling back to eth_sign', error.message)
-      const hash = _TypedDataEncoder.hash(populated.domain, types, populated.value)
-      return await signer.provider.send('eth_sign', [address, hash])
+      console.warn(
+        "signTypedData: wallet does not implement EIP-712, falling back to eth_sign",
+        error.message
+      );
+      const hash = _TypedDataEncoder.hash(
+        populated.domain,
+        types,
+        populated.value
+      );
+      return await signer.provider.send("eth_sign", [address, hash]);
     }
-    throw error
+    throw error;
   }
 }

@@ -1,8 +1,8 @@
 import "@reach/dialog/styles.css";
+import "connection/eagerlyConnect";
 import "inter-ui";
 import "polyfills";
 import "tracing";
-import "connection/eagerlyConnect";
 
 import { ApolloProvider } from "@apollo/client";
 import { FeatureFlagsProvider } from "featureFlags";
@@ -13,12 +13,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
-import { BrowserRouter, HashRouter } from "react-router-dom";
 import {
   SystemThemeUpdater,
   ThemeColorMetaUpdater,
 } from "theme/components/ThemeToggle";
-import { isBrowserRouterEnabled } from "utils/env";
 
 import Web3Provider from "./components/Web3Provider";
 import { LanguageProvider } from "./i18n";
@@ -57,7 +55,7 @@ const queryClient = new QueryClient();
 
 const container = document.getElementById("root") as HTMLElement;
 
-const Router = isBrowserRouterEnabled() ? BrowserRouter : HashRouter;
+// const Router = isBrowserRouterEnabled() ? BrowserRouter : HashRouter;
 
 createRoot(container).render(
   <StrictMode>
@@ -65,19 +63,19 @@ createRoot(container).render(
       <FeatureFlagsProvider>
         <QueryClientProvider client={queryClient}>
           {/* <Router> */}
-            <LanguageProvider>
-              <Web3Provider>
-                <ApolloProvider client={apolloClient}>
-                  <BlockNumberProvider>
-                    <Updaters />
-                    <ThemeProvider>
-                      <ThemedGlobalStyle />
-                      <App />
-                    </ThemeProvider>
-                  </BlockNumberProvider>
-                </ApolloProvider>
-              </Web3Provider>
-            </LanguageProvider>
+          <LanguageProvider>
+            <Web3Provider>
+              <ApolloProvider client={apolloClient}>
+                <BlockNumberProvider>
+                  <Updaters />
+                  <ThemeProvider>
+                    <ThemedGlobalStyle />
+                    <App />
+                  </ThemeProvider>
+                </BlockNumberProvider>
+              </ApolloProvider>
+            </Web3Provider>
+          </LanguageProvider>
           {/* </Router> */}
         </QueryClientProvider>
       </FeatureFlagsProvider>

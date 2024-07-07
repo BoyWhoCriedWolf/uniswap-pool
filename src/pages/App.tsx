@@ -13,12 +13,11 @@ import {
 } from "analytics";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Icons/LoadingSpinner";
-import NavBar, { PageTabs } from "components/NavBar";
+import { PageTabs } from "components/NavBar";
 import {
   UK_BANNER_HEIGHT,
   UK_BANNER_HEIGHT_MD,
   UK_BANNER_HEIGHT_SM,
-  UkBanner,
 } from "components/NavBar/UkBanner";
 import { useFeatureFlagsIsLoaded } from "featureFlags";
 import { useUniswapXDefaultEnabled } from "featureFlags/flags/uniswapXDefault";
@@ -51,7 +50,6 @@ import { StatsigProvider, StatsigUser } from "statsig-react";
 import styled from "styled-components";
 import DarkModeQueryParamReader from "theme/components/DarkModeQueryParamReader";
 import { useIsDarkMode } from "theme/components/ThemeToggle";
-import { flexRowNoWrap } from "theme/styles";
 import { Z_INDEX } from "theme/zIndex";
 import { STATSIG_DUMMY_KEY } from "tracing";
 import { getEnvName } from "utils/env";
@@ -115,35 +113,35 @@ const MobileBottomBar = styled.div`
   }
 `;
 
-const HeaderWrapper = styled.div<{
-  transparent?: boolean;
-  bannerIsVisible?: boolean;
-  scrollY: number;
-}>`
-  ${flexRowNoWrap};
-  background-color: ${({ theme, transparent }) =>
-    !transparent && theme.surface1};
-  border-bottom: ${({ theme, transparent }) =>
-    !transparent && `1px solid ${theme.surface3}`};
-  width: 100%;
-  justify-content: space-between;
-  position: fixed;
-  top: ${({ bannerIsVisible }) =>
-    bannerIsVisible ? Math.max(UK_BANNER_HEIGHT - scrollY, 0) : 0}px;
-  z-index: ${Z_INDEX.dropdown};
+// const HeaderWrapper = styled.div<{
+//   transparent?: boolean;
+//   bannerIsVisible?: boolean;
+//   scrollY: number;
+// }>`
+//   ${flexRowNoWrap};
+//   background-color: ${({ theme, transparent }) =>
+//     !transparent && theme.surface1};
+//   border-bottom: ${({ theme, transparent }) =>
+//     !transparent && `1px solid ${theme.surface3}`};
+//   width: 100%;
+//   justify-content: space-between;
+//   position: fixed;
+//   top: ${({ bannerIsVisible }) =>
+//     bannerIsVisible ? Math.max(UK_BANNER_HEIGHT - scrollY, 0) : 0}px;
+//   z-index: ${Z_INDEX.dropdown};
 
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.md}px`}) {
-    top: ${({ bannerIsVisible }) =>
-      bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_MD - scrollY, 0) : 0}px;
-  }
+//   @media only screen and (max-width: ${({ theme }) =>
+//       `${theme.breakpoint.md}px`}) {
+//     top: ${({ bannerIsVisible }) =>
+//       bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_MD - scrollY, 0) : 0}px;
+//   }
 
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.sm}px`}) {
-    top: ${({ bannerIsVisible }) =>
-      bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_SM - scrollY, 0) : 0}px;
-  }
-`;
+//   @media only screen and (max-width: ${({ theme }) =>
+//       `${theme.breakpoint.sm}px`}) {
+//     top: ${({ bannerIsVisible }) =>
+//       bannerIsVisible ? Math.max(UK_BANNER_HEIGHT_SM - scrollY, 0) : 0}px;
+//   }
+// `;
 
 export default function App() {
   const isLoaded = useFeatureFlagsIsLoaded();
@@ -296,14 +294,14 @@ export default function App() {
             api: process.env.REACT_APP_STATSIG_PROXY_URL,
           }}
         >
-          {renderUkBannner && <UkBanner />}
+          {/* {renderUkBannner && <UkBanner />}
           <HeaderWrapper
             transparent={isHeaderTransparent}
             bannerIsVisible={renderUkBannner}
             scrollY={scrollY}
           >
             <NavBar blur={isHeaderTransparent} />
-          </HeaderWrapper>
+          </HeaderWrapper> */}
           <BodyWrapper bannerIsVisible={renderUkBannner}>
             <Suspense>
               <AppChrome />

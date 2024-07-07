@@ -15,7 +15,7 @@ import {
 } from "@uniswap/sdk-core";
 import { FeeAmount, NonfungiblePositionManager } from "@uniswap/v3-sdk";
 import { useWeb3React } from "@web3-react/core";
-import { sendAnalyticsEvent, TraceEvent, useTrace } from "analytics";
+import { TraceEvent, sendAnalyticsEvent, useTrace } from "analytics";
 import { useToggleAccountDrawer } from "components/AccountDrawer";
 import OwnershipWarning from "components/addLiquidity/OwnershipWarning";
 import UnsupportedCurrencyFooter from "components/swap/UnsupportedCurrencyFooter";
@@ -26,7 +26,7 @@ import { BodyWrapper } from "pages/AppBody";
 import { PositionPageUnsupportedContent } from "pages/Pool/PositionPage";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AlertTriangle } from "react-feather";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Text } from "rebass";
 import {
   useRangeHopCallbacks,
@@ -106,28 +106,62 @@ const StyledBodyWrapper = styled(BodyWrapper)<{
   max-width: 640px;
 `;
 
-export default function AddLiquidityWrapper() {
+interface AddLiquidityProps {
+  currencyIdA?: string;
+  currencyIdB?: string;
+  onChangeCurrencyIdA?: (v?: string) => void;
+  onChangeCurrencyIdB?: (v?: string) => void;
+
+  feeAmount?: FeeAmount;
+  onChangeFeeAmount?: (v?: FeeAmount) => void;
+  tokenId?: string;
+
+  openPools?: () => void;
+}
+
+export default function AddLiquidityWrapper({
+  currencyIdA = "ETH",
+  currencyIdB,
+  onChangeCurrencyIdA = () => null,
+  onChangeCurrencyIdB = () => null,
+
+  feeAmount,
+  onChangeFeeAmount = () => null,
+  tokenId,
+
+  openPools = () => null,
+}: AddLiquidityProps = {}) {
   const { chainId } = useWeb3React();
   if (isSupportedChain(chainId)) {
-    return <AddLiquidity />;
+    return (
+      <AddLiquidity
+        currencyIdA={currencyIdA}
+        onChangeCurrencyIdA={onChangeCurrencyIdA}
+        currencyIdB={currencyIdB}
+        onChangeCurrencyIdB={onChangeCurrencyIdB}
+        feeAmount={feeAmount}
+        onChangeFeeAmount={onChangeFeeAmount}
+        tokenId={tokenId}
+        openPools={openPools}
+      />
+    );
   } else {
     return <PositionPageUnsupportedContent />;
   }
 }
 
-function AddLiquidity() {
-  const navigate = useNavigate();
-  const {
-    currencyIdA,
-    currencyIdB,
-    feeAmount: feeAmountFromUrl,
-    tokenId,
-  } = useParams<{
-    currencyIdA?: string;
-    currencyIdB?: string;
-    feeAmount?: string;
-    tokenId?: string;
-  }>();
+function AddLiquidity({
+  currencyIdA = "ETH",
+  currencyIdB,
+  onChangeCurrencyIdA = () => null,
+  onChangeCurrencyIdB = () => null,
+
+  feeAmount,
+  onChangeFeeAmount = () => null,
+  tokenId,
+
+  openPools = () => null,
+}: AddLiquidityProps = {}) {
   const { account, chainId, provider } = useWeb3React();
   const theme = useTheme();
   const trace = useTrace();
@@ -136,6 +170,10 @@ function AddLiquidity() {
   const addTransaction = useTransactionAdder();
   const positionManager = useV3NFTPositionManagerContract();
 
+  // min price, max price
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
   // check for existing position if tokenId in url
   const { position: existingPositionDetails, loading: positionLoading } =
     useV3PositionFromTokenId(tokenId ? BigNumber.from(tokenId) : undefined);
@@ -143,13 +181,6 @@ function AddLiquidity() {
   const { position: existingPosition } = useDerivedPositionInfo(
     existingPositionDetails
   );
-
-  // fee selection from url
-  const feeAmount: FeeAmount | undefined =
-    feeAmountFromUrl &&
-    Object.values(FeeAmount).includes(parseFloat(feeAmountFromUrl))
-      ? parseFloat(feeAmountFromUrl)
-      : undefined;
 
   const baseCurrency = useCurrency(currencyIdA);
   const currencyB = useCurrency(currencyIdB);
@@ -421,33 +452,41 @@ function AddLiquidity() {
     (currencyANew: Currency) => {
       const [idA, idB] = handleCurrencySelect(currencyANew, currencyIdB);
       if (idB === undefined) {
-        navigate(`/add/${idA}`);
+        // navigate(`/add/${idA}`);
+        onChangeCurrencyIdA(idA);
       } else {
-        navigate(`/add/${idA}/${idB}`);
+        // navigate(`/add/${idA}/${idB}`);
+        onChangeCurrencyIdA(idA);
+        onChangeCurrencyIdB(idB);
       }
     },
-    [handleCurrencySelect, currencyIdB, navigate]
+    [handleCurrencySelect, currencyIdB]
   );
 
   const handleCurrencyBSelect = useCallback(
     (currencyBNew: Currency) => {
       const [idB, idA] = handleCurrencySelect(currencyBNew, currencyIdA);
       if (idA === undefined) {
-        navigate(`/add/${idB}`);
+        // navigate(`/add/${idB}`);
+        onChangeCurrencyIdA(idB);
       } else {
-        navigate(`/add/${idA}/${idB}`);
+        // navigate(`/add/${idA}/${idB}`);
+        onChangeCurrencyIdA(idA);
+        onChangeCurrencyIdB(idB);
       }
     },
-    [handleCurrencySelect, currencyIdA, navigate]
+    [handleCurrencySelect, currencyIdA]
   );
 
   const handleFeePoolSelect = useCallback(
     (newFeeAmount: FeeAmount) => {
       onLeftRangeInput("");
       onRightRangeInput("");
-      navigate(`/add/${currencyIdA}/${currencyIdB}/${newFeeAmount}`);
+      // navigate(`/add/${currencyIdA}/${currencyIdB}/${newFeeAmount}`);
+
+      onChangeFeeAmount(newFeeAmount);
     },
-    [currencyIdA, currencyIdB, navigate, onLeftRangeInput, onRightRangeInput]
+    [currencyIdA, currencyIdB, onLeftRangeInput, onRightRangeInput]
   );
 
   const handleDismissConfirmation = useCallback(() => {
@@ -456,10 +495,11 @@ function AddLiquidity() {
     if (txHash) {
       onFieldAInput("");
       // dont jump to pool page if creating
-      navigate("/pools");
+      // navigate("/pools");
+      openPools();
     }
     setTxHash("");
-  }, [navigate, onFieldAInput, txHash]);
+  }, [openPools, onFieldAInput, txHash]);
 
   const addIsUnsupported = useIsSwapUnsupported(
     currencies?.CURRENCY_A,
@@ -471,9 +511,12 @@ function AddLiquidity() {
     onFieldBInput("");
     onLeftRangeInput("");
     onRightRangeInput("");
-    navigate(`/add`);
+    // navigate(`/add`);
+    onChangeCurrencyIdA(undefined);
+    onChangeCurrencyIdB(undefined);
+    onChangeFeeAmount(undefined);
   }, [
-    navigate,
+    // navigate,
     onFieldAInput,
     onFieldBInput,
     onLeftRangeInput,
@@ -518,52 +561,77 @@ function AddLiquidity() {
     !depositBDisabled ? parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) : ""
   } ${!depositBDisabled ? currencies[Field.CURRENCY_B]?.symbol : ""}`;
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSetFullRange = useCallback(() => {
     getSetFullRange();
 
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) searchParams.set("minPrice", minPrice.toSignificant(5));
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) searchParams.set("maxPrice", maxPrice.toSignificant(5));
-    setSearchParams(searchParams);
-  }, [getSetFullRange, pricesAtLimit, searchParams, setSearchParams]);
+    // const minPrice = pricesAtLimit[Bound.LOWER];
+    // if (minPrice) searchParams.set("minPrice", minPrice.toSignificant(5));
+    // const maxPrice = pricesAtLimit[Bound.UPPER];
+    // if (maxPrice) searchParams.set("maxPrice", maxPrice.toSignificant(5));
+    // setSearchParams(searchParams);
 
-  // START: sync values with query string
-  const oldSearchParams = usePrevious(searchParams);
-  // use query string as an input to onInput handlers
-  useEffect(() => {
-    const minPrice = searchParams.get("minPrice");
-    const oldMinPrice = oldSearchParams?.get("minPrice");
+    const minP = pricesAtLimit[Bound.LOWER];
+    const minPValue = minP?.toSignificant(5) ?? "";
     if (
-      minPrice &&
-      typeof minPrice === "string" &&
-      !isNaN(minPrice as any) &&
-      (!oldMinPrice || oldMinPrice !== minPrice)
+      minPValue &&
+      typeof minPValue === "string" &&
+      !isNaN(minPValue as any) &&
+      (!minPrice || minPrice !== minPValue)
     ) {
-      onLeftRangeInput(minPrice);
+      onLeftRangeInput(minPValue);
     }
-    // disable eslint rule because this hook only cares about the url->input state data flow
-    // input state -> url updates are handled in the input handlers
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
-  useEffect(() => {
-    const maxPrice = searchParams.get("maxPrice");
-    const oldMaxPrice = oldSearchParams?.get("maxPrice");
+    setMinPrice(minPValue);
+
+    const maxP = pricesAtLimit[Bound.UPPER];
+    const maxPValue = maxP?.toSignificant(5) ?? "";
     if (
-      maxPrice &&
-      typeof maxPrice === "string" &&
-      !isNaN(maxPrice as any) &&
-      (!oldMaxPrice || oldMaxPrice !== maxPrice)
+      maxPValue &&
+      typeof maxPValue === "string" &&
+      !isNaN(maxPValue as any) &&
+      (!maxPrice || maxPrice !== maxPValue)
     ) {
-      onRightRangeInput(maxPrice);
+      onRightRangeInput(maxPValue);
     }
-    // disable eslint rule because this hook only cares about the url->input state data flow
-    // input state -> url updates are handled in the input handlers
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
-  // END: sync values with query string
+    setMaxPrice(maxPValue);
+  }, [getSetFullRange, pricesAtLimit]);
+
+  // // START: sync values with query string
+  // const oldSearchParams = usePrevious(searchParams);
+  // // use query string as an input to onInput handlers
+  // useEffect(() => {
+  //   const minPrice = searchParams.get("minPrice");
+  //   const oldMinPrice = oldSearchParams?.get("minPrice");
+  //   if (
+  //     minPrice &&
+  //     typeof minPrice === "string" &&
+  //     !isNaN(minPrice as any) &&
+  //     (!oldMinPrice || oldMinPrice !== minPrice)
+  //   ) {
+  //     onLeftRangeInput(minPrice);
+  //   }
+  //   // disable eslint rule because this hook only cares about the url->input state data flow
+  //   // input state -> url updates are handled in the input handlers
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchParams]);
+
+  // useEffect(() => {
+  //   const maxPrice = searchParams.get("maxPrice");
+  //   const oldMaxPrice = oldSearchParams?.get("maxPrice");
+  //   if (
+  //     maxPrice &&
+  //     typeof maxPrice === "string" &&
+  //     !isNaN(maxPrice as any) &&
+  //     (!oldMaxPrice || oldMaxPrice !== maxPrice)
+  //   ) {
+  //     onRightRangeInput(maxPrice);
+  //   }
+  //   // disable eslint rule because this hook only cares about the url->input state data flow
+  //   // input state -> url updates are handled in the input handlers
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchParams]);
+  // // END: sync values with query string
 
   const Buttons = () =>
     addIsUnsupported ? (
@@ -696,7 +764,7 @@ function AddLiquidity() {
 
   return (
     <>
-      <ScrollablePage>
+      <ScrollablePage noPadding>
         <TransactionConfirmationModal
           isOpen={showConfirm}
           onDismiss={handleDismissConfirmation}
@@ -728,13 +796,17 @@ function AddLiquidity() {
           )}
           pendingText={pendingText}
         />
-        <StyledBodyWrapper $hasExistingPosition={hasExistingPosition}>
+        <StyledBodyWrapper
+          $hasExistingPosition={hasExistingPosition}
+          $margin="0px"
+        >
           <AddRemoveTabs
             creating={false}
             adding={true}
             positionID={tokenId}
             autoSlippage={DEFAULT_ADD_IN_RANGE_SLIPPAGE_TOLERANCE}
             showBackLink={!hasExistingPosition}
+            onBack={openPools}
           >
             {!hasExistingPosition && (
               <Row
@@ -851,11 +923,15 @@ function AddLiquidity() {
                                   formattedAmounts[Field.CURRENCY_B] ?? ""
                                 );
                               }
-                              navigate(
-                                `/add/${currencyIdB as string}/${
-                                  currencyIdA as string
-                                }${feeAmount ? "/" + feeAmount : ""}`
-                              );
+                              // navigate(
+                              //   `/add/${currencyIdB as string}/${
+                              //     currencyIdA as string
+                              //   }${feeAmount ? "/" + feeAmount : ""}`
+                              // );
+
+                              onChangeCurrencyIdA(currencyIdB);
+                              onChangeCurrencyIdB(currencyIdA);
+                              onChangeFeeAmount(feeAmount);
                             }}
                           />
                         </RowFixed>

@@ -76,11 +76,19 @@ const AddLiquidityHeaderContainer = styled(AutoColumn)`
   margin-bottom: 16px;
 `;
 
-export default function AddLiquidity() {
-  const { currencyIdA, currencyIdB } = useParams<{
-    currencyIdA?: string;
-    currencyIdB?: string;
-  }>();
+export default function AddLiquidity({
+  currencyIdA = "ETH",
+  onChangeCurrencyIdA = () => null,
+  currencyIdB,
+  onChangeCurrencyIdB = () => null,
+  isCreate = false,
+}: {
+  currencyIdA?: string;
+  onChangeCurrencyIdA?: (v?: string) => void;
+  currencyIdB?: string;
+  onChangeCurrencyIdB?: (v?: string) => void;
+  isCreate?: boolean;
+} = {}) {
   const navigate = useNavigate();
   const { account, chainId, provider } = useWeb3React();
 
@@ -379,29 +387,39 @@ export default function AddLiquidity() {
     (currencyA: Currency) => {
       const newCurrencyIdA = currencyId(currencyA);
       if (newCurrencyIdA === currencyIdB) {
-        navigate(`/add/v2/${currencyIdB}/${currencyIdA}`);
+        // navigate(`/add/v2/${currencyIdB}/${currencyIdA}`);
+
+        onChangeCurrencyIdA(currencyIdB);
+        onChangeCurrencyIdB(currencyIdA);
       } else {
-        navigate(`/add/v2/${newCurrencyIdA}/${currencyIdB}`);
+        // navigate(`/add/v2/${newCurrencyIdA}/${currencyIdB}`);
+
+        onChangeCurrencyIdB(newCurrencyIdA);
       }
     },
-    [currencyIdB, navigate, currencyIdA]
+    [currencyIdB, currencyIdA]
   );
   const handleCurrencyBSelect = useCallback(
     (currencyB: Currency) => {
       const newCurrencyIdB = currencyId(currencyB);
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          navigate(`/add/v2/${currencyIdB}/${newCurrencyIdB}`);
+          // navigate(`/add/v2/${currencyIdB}/${newCurrencyIdB}`);
+          onChangeCurrencyIdA(currencyIdB);
+          onChangeCurrencyIdB(newCurrencyIdB);
         } else {
-          navigate(`/add/v2/${newCurrencyIdB}`);
+          // navigate(`/add/v2/${newCurrencyIdB}`);
+          onChangeCurrencyIdA(newCurrencyIdB);
         }
       } else {
-        navigate(
-          `/add/v2/${currencyIdA ? currencyIdA : "ETH"}/${newCurrencyIdB}`
-        );
+        // navigate(
+        //   `/add/v2/${currencyIdA ? currencyIdA : "ETH"}/${newCurrencyIdB}`
+        // );
+        onChangeCurrencyIdA(currencyIdA ? currencyIdA : "ETH");
+        onChangeCurrencyIdB(newCurrencyIdB);
       }
     },
-    [currencyIdA, navigate, currencyIdB]
+    [currencyIdA, currencyIdB]
   );
 
   const handleDismissConfirmation = useCallback(() => {
@@ -412,9 +430,6 @@ export default function AddLiquidity() {
     }
     setTxHash("");
   }, [onFieldAInput, txHash]);
-
-  const { pathname } = useLocation();
-  const isCreate = pathname.includes("/create");
 
   const addIsUnsupported = useIsSwapUnsupported(
     currencies?.CURRENCY_A,

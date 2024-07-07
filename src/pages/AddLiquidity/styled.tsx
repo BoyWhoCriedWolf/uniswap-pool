@@ -7,8 +7,8 @@ export const Wrapper = styled.div`
   padding: 26px 16px;
 `;
 
-export const ScrollablePage = styled.div`
-  padding: 20px 8px 0px;
+export const ScrollablePage = styled.div<{ noPadding?: boolean }>`
+  padding: ${({ noPadding = false }) => (noPadding ? "0px" : "20px 8px 0px")};
   position: relative;
   display: flex;
   flex-direction: column;

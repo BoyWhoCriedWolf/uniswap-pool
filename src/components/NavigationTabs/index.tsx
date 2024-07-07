@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import SettingsTab from "components/Settings";
 import { ReactNode } from "react";
 import { ArrowLeft } from "react-feather";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Box } from "rebass";
 import { useAppDispatch } from "state/hooks";
 import { resetMintState } from "state/mint/actions";
@@ -68,6 +68,7 @@ export function AddRemoveTabs({
   creating,
   autoSlippage,
   positionID,
+  onBack,
   children,
 }: {
   adding: boolean;
@@ -75,30 +76,33 @@ export function AddRemoveTabs({
   autoSlippage: Percent;
   positionID?: string;
   showBackLink?: boolean;
+  onBack?: () => void;
   children?: ReactNode;
 }) {
   const { chainId } = useWeb3React();
   const theme = useTheme();
   // reset states on back
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  // const location = useLocation();
 
   // detect if back should redirect to v3 or v2 pool page
-  const poolLink = location.pathname.includes("add/v2")
-    ? "/pools/v2"
-    : "/pools" + (positionID ? `/${positionID.toString()}` : "");
+  // const poolLink = location.pathname.includes("add/v2")
+  //   ? "/pools/v2"
+  //   : "/pools" + (positionID ? `/${positionID.toString()}` : "");
 
   return (
     <Tabs>
       <RowBetween style={{ padding: "1rem 1rem 0 1rem" }} align="center">
         <StyledLink
-          to={poolLink}
+          // to={poolLink}
+          to={""}
           onClick={() => {
             if (adding) {
               // not 100% sure both of these are needed
               dispatch(resetMintState());
               dispatch(resetMintV3State());
             }
+            onBack?.();
           }}
           flex={children ? "1" : undefined}
         >

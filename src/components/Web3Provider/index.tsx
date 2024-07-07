@@ -1,6 +1,7 @@
 import {
   CustomUserProperties,
   InterfaceEventName,
+  InterfacePageName,
   WalletConnectionResult,
 } from "@uniswap/analytics-events";
 import {
@@ -41,8 +42,9 @@ export default function Web3Provider({ children }: { children: ReactNode }) {
 /** A component to run hooks under the Web3ReactProvider context. */
 function Updater() {
   const { account, chainId, connector, provider } = useWeb3React();
-  const { pathname } = useLocation();
-  const currentPage = getCurrentPageFromLocation(pathname);
+  // const { pathname } = useLocation();
+  // const currentPage = getCurrentPageFromLocation(pathname);
+  const currentPage = InterfacePageName.POOL_PAGE;
   const analyticsContext = useTrace();
 
   const providers = useFallbackProviderEnabled()

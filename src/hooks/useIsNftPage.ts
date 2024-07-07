@@ -1,16 +1,17 @@
-import { useLocation } from "react-router-dom";
-
 export function useIsNftPage() {
-  const { pathname } = useLocation();
-  return pathname.startsWith("/nfts");
+  // const { pathname } = useLocation();
+  // return pathname.startsWith("/nfts");
+  return false;
 }
 
 export function useIsNftProfilePage() {
-  const { pathname } = useLocation();
-  return pathname.startsWith("/nfts/profile");
+  // const { pathname } = useLocation();
+  // return pathname.startsWith("/nfts/profile");
+  return false;
 }
 
 export function useIsNftDetailsPage() {
-  const { pathname } = useLocation();
-  return pathname.startsWith("/nfts/asset");
+  // const { pathname } = useLocation();
+  // return pathname.startsWith("/nfts/asset");
+  return false;
 }

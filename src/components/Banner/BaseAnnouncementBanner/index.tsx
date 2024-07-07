@@ -23,9 +23,10 @@ export default function BaseWalletBanner() {
   const { chainId } = useWeb3React();
   const [hideBaseWalletBanner, toggleHideBaseWalletBanner] =
     useHideBaseWalletBanner();
-  const location = useLocation();
-  const isLandingScreen =
-    location.search === "?intro=true" || location.pathname === "/";
+  // const location = useLocation();
+  // const isLandingScreen =
+  //   location.search === "?intro=true" || location.pathname === "/";
+  const isLandingScreen = false;
 
   const shouldDisplay = Boolean(
     !hideBaseWalletBanner && !isLandingScreen && chainId === ChainId.BASE

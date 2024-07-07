@@ -66,19 +66,25 @@ interface RouterConfig {
  * Convenience hook which organizes the router configuration into a single object.
  */
 export function useRouterConfig(): RouterConfig {
-  const browserRouterEnabled = isBrowserRouterEnabled();
-  const { hash } = useLocation();
-  const infoPoolPageEnabled = useInfoPoolPageEnabled();
-  const [shouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
-  return useMemo(
-    () => ({
-      browserRouterEnabled,
-      hash,
-      infoPoolPageEnabled,
-      shouldDisableNFTRoutes: Boolean(shouldDisableNFTRoutes),
-    }),
-    [browserRouterEnabled, hash, infoPoolPageEnabled, shouldDisableNFTRoutes]
-  );
+  return {
+    browserRouterEnabled: false,
+    hash: "",
+    infoPoolPageEnabled: true,
+    shouldDisableNFTRoutes: true,
+  };
+  // const browserRouterEnabled = isBrowserRouterEnabled();
+  // const { hash } = useLocation();
+  // const infoPoolPageEnabled = useInfoPoolPageEnabled();
+  // const [shouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
+  // return useMemo(
+  //   () => ({
+  //     browserRouterEnabled,
+  //     hash,
+  //     infoPoolPageEnabled,
+  //     shouldDisableNFTRoutes: Boolean(shouldDisableNFTRoutes),
+  //   }),
+  //   [browserRouterEnabled, hash, infoPoolPageEnabled, shouldDisableNFTRoutes]
+  // );
 }
 
 export interface RouteDefinition {

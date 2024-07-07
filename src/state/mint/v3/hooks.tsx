@@ -80,30 +80,32 @@ export function useV3MintActionHandlers(noLiquidity: boolean | undefined): {
     [dispatch, noLiquidity]
   );
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const onLeftRangeInput = useCallback(
     (typedValue: string) => {
       dispatch(typeLeftRangeInput({ typedValue }));
-      const paramMinPrice = searchParams.get("minPrice");
-      if (!paramMinPrice || (paramMinPrice && paramMinPrice !== typedValue)) {
-        searchParams.set("minPrice", typedValue);
-        setSearchParams(searchParams);
-      }
+      // const paramMinPrice = searchParams.get("minPrice");
+      // if (!paramMinPrice || (paramMinPrice && paramMinPrice !== typedValue)) {
+      //   searchParams.set("minPrice", typedValue);
+      //   setSearchParams(searchParams);
+      // }
     },
-    [dispatch, searchParams, setSearchParams]
+    // [dispatch, searchParams, setSearchParams]
+    [dispatch]
   );
 
   const onRightRangeInput = useCallback(
     (typedValue: string) => {
       dispatch(typeRightRangeInput({ typedValue }));
-      const paramMaxPrice = searchParams.get("maxPrice");
-      if (!paramMaxPrice || (paramMaxPrice && paramMaxPrice !== typedValue)) {
-        searchParams.set("maxPrice", typedValue);
-        setSearchParams(searchParams);
-      }
+      // const paramMaxPrice = searchParams.get("maxPrice");
+      // if (!paramMaxPrice || (paramMaxPrice && paramMaxPrice !== typedValue)) {
+      //   searchParams.set("maxPrice", typedValue);
+      //   setSearchParams(searchParams);
+      // }
     },
-    [dispatch, searchParams, setSearchParams]
+    // [dispatch, searchParams, setSearchParams]
+    [dispatch]
   );
 
   const onStartPriceInput = useCallback(

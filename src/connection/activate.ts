@@ -1,5 +1,6 @@
 import {
   InterfaceEventName,
+  InterfacePageName,
   WalletConnectionResult,
 } from "@uniswap/analytics-events";
 import { ChainId } from "@uniswap/sdk-core";
@@ -41,8 +42,9 @@ const activationStateAtom = atom<ActivationState>(IDLE_ACTIVATION_STATE);
 function useTryActivation() {
   const dispatch = useAppDispatch();
   const setActivationState = useUpdateAtom(activationStateAtom);
-  const { pathname } = useLocation();
-  const currentPage = getCurrentPageFromLocation(pathname);
+  // const { pathname } = useLocation();
+  // const currentPage = getCurrentPageFromLocation(pathname);
+  const currentPage = InterfacePageName.POOL_PAGE;
 
   return useCallback(
     async (

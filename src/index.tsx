@@ -64,7 +64,7 @@ createRoot(container).render(
     <Provider store={store}>
       <FeatureFlagsProvider>
         <QueryClientProvider client={queryClient}>
-          <Router>
+          {/* <Router> */}
             <LanguageProvider>
               <Web3Provider>
                 <ApolloProvider client={apolloClient}>
@@ -78,7 +78,7 @@ createRoot(container).render(
                 </ApolloProvider>
               </Web3Provider>
             </LanguageProvider>
-          </Router>
+          {/* </Router> */}
         </QueryClientProvider>
       </FeatureFlagsProvider>
     </Provider>

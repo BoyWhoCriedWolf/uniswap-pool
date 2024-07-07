@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { useWeb3React } from "@web3-react/core";
 import { useCallback, useEffect, useState } from "react";
-import { useHref } from "react-router-dom";
 import { useCloseModal, useModalIsOpen } from "state/application/hooks";
 import { ApplicationModal } from "state/application/reducer";
 import styled, { useTheme } from "styled-components";
@@ -72,7 +71,8 @@ export default function FiatOnrampModal() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const swapUrl = useHref("/swap");
+  // const swapUrl = useHref("/swap");
+  const swapUrl = "/swap";
 
   const fetchSignedIframeUrl = useCallback(async () => {
     if (!account) {

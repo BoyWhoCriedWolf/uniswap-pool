@@ -22,10 +22,11 @@ const Tabs = styled.div`
   justify-content: space-evenly;
 `;
 
-const StyledLink = styled(Link)<{ flex?: string }>`
+const StyledLink = styled.a<{ flex?: string }>`
   flex: ${({ flex }) => flex ?? "none"};
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   ${({ theme }) => theme.deprecated_mediaWidth.deprecated_upToMedium`
     flex: none;
@@ -95,7 +96,6 @@ export function AddRemoveTabs({
       <RowBetween style={{ padding: "1rem 1rem 0 1rem" }} align="center">
         <StyledLink
           // to={poolLink}
-          to={""}
           onClick={() => {
             if (adding) {
               // not 100% sure both of these are needed

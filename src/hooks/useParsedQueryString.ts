@@ -14,6 +14,7 @@ export function parsedQueryString(search?: string): ParsedQs {
 }
 
 export default function useParsedQueryString(): ParsedQs {
-  const { search } = useLocation();
-  return useMemo(() => parsedQueryString(search), [search]);
+  return {};
+  // const { search } = useLocation();
+  // return useMemo(() => parsedQueryString(search), [search]);
 }

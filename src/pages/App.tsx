@@ -1,19 +1,17 @@
 import {
   CustomUserProperties,
   getBrowser,
-  SharedEventName,
+  SharedEventName
 } from "@uniswap/analytics-events";
 import { useWeb3React } from "@web3-react/core";
 import {
   getDeviceId,
   sendAnalyticsEvent,
   sendInitializationEvent,
-  Trace,
   user,
 } from "analytics";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Icons/LoadingSpinner";
-import { PageTabs } from "components/NavBar";
 import {
   UK_BANNER_HEIGHT,
   UK_BANNER_HEIGHT_MD,
@@ -21,24 +19,7 @@ import {
 } from "components/NavBar/UkBanner";
 import { useFeatureFlagsIsLoaded } from "featureFlags";
 import { useUniswapXDefaultEnabled } from "featureFlags/flags/uniswapXDefault";
-import { useAtom } from "jotai";
-import { useBag } from "nft/hooks/useBag";
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useSearchParams,
-} from "react-router-dom";
-import { shouldDisableNFTRoutesAtom } from "state/application/atoms";
+import { lazy, useEffect, useMemo } from "react";
 import { useAppSelector } from "state/hooks";
 import { AppState } from "state/reducer";
 import { RouterPreference } from "state/routing/types";
@@ -53,11 +34,9 @@ import { useIsDarkMode } from "theme/components/ThemeToggle";
 import { Z_INDEX } from "theme/zIndex";
 import { STATSIG_DUMMY_KEY } from "tracing";
 import { getEnvName } from "utils/env";
-import { getDownloadAppLink } from "utils/openDownloadApp";
-import { getCurrentPageFromLocation } from "utils/urlRoutes";
 import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
 
-import { RouteDefinition, routes, useRouterConfig } from "./RouteDefinitions";
+import Pool from "./Pool";
 
 const AppChrome = lazy(() => import("./AppChrome"));
 
@@ -145,37 +124,38 @@ const MobileBottomBar = styled.div`
 
 export default function App() {
   const isLoaded = useFeatureFlagsIsLoaded();
-  const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
+  // const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
 
-  const location = useLocation();
-  const { pathname } = location;
-  const currentPage = getCurrentPageFromLocation(pathname);
+  // const location = useLocation();
+  // const { pathname } = location;
+  // const currentPage = getCurrentPageFromLocation(pathname);
+  // const currentPage = InterfacePageName.POOL_PAGE;
   const isDarkMode = useIsDarkMode();
   const [routerPreference] = useRouterPreference();
-  const [scrollY, setScrollY] = useState(0);
-  const scrolledState = scrollY > 0;
+  // const [scrollY, setScrollY] = useState(0);
+  // const scrolledState = scrollY > 0;
   const isUniswapXDefaultEnabled = useUniswapXDefaultEnabled();
   const userOptedOutOfUniswapX = useUserOptedOutOfUniswapX();
-  const routerConfig = useRouterConfig();
+  // const routerConfig = useRouterConfig();
 
   const originCountry = useAppSelector(
     (state: AppState) => state.user.originCountry
   );
   const renderUkBannner = Boolean(originCountry) && originCountry === "GB";
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setScrollY(0);
-  }, [pathname]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   setScrollY(0);
+  // }, []);
 
-  const [searchParams] = useSearchParams();
-  useEffect(() => {
-    if (searchParams.get("disableNFTs") === "true") {
-      setShouldDisableNFTRoutes(true);
-    } else if (searchParams.get("disableNFTs") === "false") {
-      setShouldDisableNFTRoutes(false);
-    }
-  }, [searchParams, setShouldDisableNFTRoutes]);
+  // const [searchParams] = useSearchParams();
+  // useEffect(() => {
+  //   if (searchParams.get("disableNFTs") === "true") {
+  //     setShouldDisableNFTRoutes(true);
+  //   } else if (searchParams.get("disableNFTs") === "false") {
+  //     setShouldDisableNFTRoutes(false);
+  //   }
+  // }, [searchParams, setShouldDisableNFTRoutes]);
 
   useEffect(() => {
     // User properties *must* be set before sending corresponding event properties,
@@ -239,16 +219,16 @@ export default function App() {
     user.set(CustomUserProperties.ROUTER_PREFERENCE, routerPreference);
   }, [routerPreference, isUniswapXDefaultEnabled, userOptedOutOfUniswapX]);
 
-  useEffect(() => {
-    const scrollListener = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", scrollListener);
-    return () => window.removeEventListener("scroll", scrollListener);
-  }, []);
+  // useEffect(() => {
+  //   const scrollListener = () => {
+  //     setScrollY(window.scrollY);
+  //   };
+  //   window.addEventListener("scroll", scrollListener);
+  //   return () => window.removeEventListener("scroll", scrollListener);
+  // }, []);
 
-  const isBagExpanded = useBag((state) => state.bagExpanded);
-  const isHeaderTransparent = !scrolledState && !isBagExpanded;
+  // const isBagExpanded = useBag((state) => state.bagExpanded);
+  // const isHeaderTransparent = !scrolledState && !isBagExpanded;
 
   const { account } = useWeb3React();
   const statsigUser: StatsigUser = useMemo(
@@ -260,41 +240,41 @@ export default function App() {
   );
 
   // redirect address to landing pages until implemented
-  const shouldRedirectToAppInstall = pathname?.startsWith("/address/");
-  useLayoutEffect(() => {
-    if (shouldRedirectToAppInstall) {
-      window.location.href = getDownloadAppLink();
-    }
-  }, [shouldRedirectToAppInstall]);
+  // const shouldRedirectToAppInstall = pathname?.startsWith("/address/");
+  // useLayoutEffect(() => {
+  //   if (shouldRedirectToAppInstall) {
+  //     window.location.href = getDownloadAppLink();
+  //   }
+  // }, [shouldRedirectToAppInstall]);
 
-  if (shouldRedirectToAppInstall) {
-    return null;
-  }
+  // if (shouldRedirectToAppInstall) {
+  //   return null;
+  // }
 
-  const blockedPaths = document
-    .querySelector('meta[property="x:blocked-paths"]')
-    ?.getAttribute("content")
-    ?.split(",");
-  const shouldBlockPath = blockedPaths?.includes(pathname) ?? false;
-  if (shouldBlockPath && pathname !== "/swap") {
-    return <Navigate to="/swap" replace />;
-  }
+  // const blockedPaths = document
+  //   .querySelector('meta[property="x:blocked-paths"]')
+  //   ?.getAttribute("content")
+  //   ?.split(",");
+  // const shouldBlockPath = blockedPaths?.includes(pathname) ?? false;
+  // if (shouldBlockPath && pathname !== "/swap") {
+  //   return <Navigate to="/swap" replace />;
+  // }
 
   return (
     <ErrorBoundary>
       <DarkModeQueryParamReader />
-      <Trace page={currentPage}>
-        <StatsigProvider
-          user={statsigUser}
-          // TODO: replace with proxy and cycle key
-          sdkKey={STATSIG_DUMMY_KEY}
-          waitForInitialization={false}
-          options={{
-            environment: { tier: getEnvName() },
-            api: process.env.REACT_APP_STATSIG_PROXY_URL,
-          }}
-        >
-          {/* {renderUkBannner && <UkBanner />}
+      {/* <Trace page={currentPage}> */}
+      <StatsigProvider
+        user={statsigUser}
+        // TODO: replace with proxy and cycle key
+        sdkKey={STATSIG_DUMMY_KEY}
+        waitForInitialization={false}
+        options={{
+          environment: { tier: getEnvName() },
+          api: process.env.REACT_APP_STATSIG_PROXY_URL,
+        }}
+      >
+        {/* {renderUkBannner && <UkBanner />}
           <HeaderWrapper
             transparent={isHeaderTransparent}
             bannerIsVisible={renderUkBannner}
@@ -302,8 +282,10 @@ export default function App() {
           >
             <NavBar blur={isHeaderTransparent} />
           </HeaderWrapper> */}
-          <BodyWrapper bannerIsVisible={renderUkBannner}>
-            <Suspense>
+        <BodyWrapper bannerIsVisible={renderUkBannner}>
+          <AppChrome />
+          {isLoaded ? <Pool /> : <Loader />}
+          {/* <Suspense>
               <AppChrome />
             </Suspense>
             <Suspense fallback={<Loader />}>
@@ -329,13 +311,13 @@ export default function App() {
               ) : (
                 <Loader />
               )}
-            </Suspense>
-          </BodyWrapper>
-          <MobileBottomBar>
-            <PageTabs />
-          </MobileBottomBar>
-        </StatsigProvider>
-      </Trace>
+            </Suspense> */}
+        </BodyWrapper>
+        {/* <MobileBottomBar>
+          <PageTabs />
+        </MobileBottomBar> */}
+      </StatsigProvider>
+      {/* </Trace> */}
     </ErrorBoundary>
   );
 }

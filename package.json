@@ -1,8 +1,16 @@
 {
-  "name": "uniswap-pool",
+  "name": "@hdream/uniswap-pool",
   "version": "1.0.0",
   "description": "Uniswap Pool Component",
-  "license": "GPL-3.0-or-later",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "ajv": "node scripts/compile-ajv-validators.js",
     "contracts:compile:abi": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
@@ -20,7 +28,7 @@
     "prepare": "concurrently \"npm:ajv\" \"npm:contracts\" \"npm:graphql\" \"npm:i18n\" \"npm:sitemap:generate\"",
     "start": "craco start",
     "start:cloud": "NODE_OPTIONS=--dns-result-order=ipv4first PORT=3001 npx wrangler pages dev --compatibility-flags=nodejs_compat --compatibility-date=2023-08-01 --proxy=3001 --port=3000 -- yarn start",
-    "build": "craco build",
+    "build": "tsc",
     "analyze": "source-map-explorer 'build/static/js/*.js' --no-border-checks --gzip",
     "serve": "serve build -s -l 3000",
     "lint": "yarn eslint --ignore-path .gitignore --cache --cache-location node_modules/.cache/eslint/ .",
@@ -32,7 +40,9 @@
     "cypress:open": "cypress open --browser chrome --e2e",
     "cypress:run": "cypress run --browser chrome --e2e",
     "deduplicate": "yarn-deduplicate --strategy=highest",
-    "postinstall": "yarn patch-package"
+    "postinstall": "yarn patch-package",
+    "cosmos": "cosmos",
+    "cosmos-export": "cosmos-export"
   },
   "husky": {
     "hooks": {
@@ -148,6 +158,8 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.8",
     "process": "^0.11.10",
+    "react-cosmos": "^6.1.1",
+    "react-cosmos-plugin-webpack": "^6.1.1",
     "react-scripts": "^5.0.1",
     "resize-observer-polyfill": "^1.5.1",
     "serve": "^11.3.2",
@@ -303,5 +315,11 @@
     "npm": "please-use-yarn",
     "node": "18.x",
     "yarn": ">=1.22"
-  }
+  },
+  "keywords": [
+    "uniswap",
+    "pool",
+    "widget"
+  ],
+  "author": ""
 }

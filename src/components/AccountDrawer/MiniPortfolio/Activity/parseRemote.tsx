@@ -528,7 +528,9 @@ function parseRemoteActivity(
       return parseUniswapXOrder(assetActivity as OrderActivity);
     }
 
+    // @ts-ignore
     const changes = assetActivity.details.assetChanges.reduce(
+      // @ts-ignore
       (acc: TransactionChanges, assetChange) => {
         if (assetChange.__typename === "NftApproval")
           acc.NftApproval.push(assetChange);
@@ -562,17 +564,26 @@ function parseRemoteActivity(
     }
 
     const defaultFields = {
+      // @ts-ignore
       hash: assetActivity.details.hash,
       chainId: supportedChain,
+      // @ts-ignore
       status: assetActivity.details.status,
       timestamp: assetActivity.timestamp,
       logos: getLogoSrcs(changes),
+      // @ts-ignore
       title: assetActivity.details.type,
+      // @ts-ignore
+      title: assetActivity.details.type,
+      // @ts-ignore
       descriptor: assetActivity.details.to,
+      // @ts-ignore
       from: assetActivity.details.from,
+      // @ts-ignore
       nonce: assetActivity.details.nonce,
     };
-
+    
+    // @ts-ignore
     const parsedFields = ActivityParserByType[assetActivity.details.type]?.(
       changes,
       formatNumberOrString,

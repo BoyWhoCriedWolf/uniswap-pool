@@ -7,6 +7,8 @@
     "composite": true,
     "declarationMap": false,
     "downlevelIteration": true,
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript file */,
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,

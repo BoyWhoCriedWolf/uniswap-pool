@@ -1,4 +1,4 @@
-import { DEFAULT_COLOR } from 'constants/tokenColors'
+import { DEFAULT_COLOR } from "constants/tokenColors";
 import {
   arrayBufferBlackGif,
   arrayBufferBlackJpg,
@@ -7,11 +7,11 @@ import {
   arrayBufferBluePng,
   arrayBufferPinkPng,
   arrayBufferWhitePng,
-} from 'test-utils/images'
+} from "test-utils/images";
 
-import { getColor } from './getColor'
+import { getColor } from "./getColor";
 
-function getMockImageFetch(data: Uint8Array, dataType = 'image/png') {
+function getMockImageFetch(data: Uint8Array, dataType = "image/png") {
   return () =>
     Promise.resolve({
       ok: true,
@@ -20,61 +20,77 @@ function getMockImageFetch(data: Uint8Array, dataType = 'image/png') {
         get: jest.fn().mockReturnValue(dataType),
       },
       arrayBuffer: jest.fn().mockResolvedValue(data),
-    } as unknown as Response)
+    } as unknown as Response);
 }
 
-test('should return the average color of a black PNG image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferBlackPng))
+test("should return the average color of a black PNG image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferBlackPng));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual([0, 0, 0])
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual([0, 0, 0]);
+});
 
-test('should return the average color of a blue PNG image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferBluePng))
+test("should return the average color of a blue PNG image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferBluePng));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual([0, 0, 255])
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual([0, 0, 255]);
+});
 
-test('should return the average color of a white PNG image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferWhitePng))
+test("should return the average color of a white PNG image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferWhitePng));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual([255, 255, 255])
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual([255, 255, 255]);
+});
 
-test('should return the average color of a white PNG image with whiteness dimmed', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferWhitePng))
+test("should return the average color of a white PNG image with whiteness dimmed", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferWhitePng));
 
-  const color = await getColor('fakeUrl', true)
-  expect(color).toEqual(DEFAULT_COLOR)
-})
+  const color = await getColor("fakeUrl", true);
+  expect(color).toEqual(DEFAULT_COLOR);
+});
 
-test('should return the average color of a black JPG image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferBlackJpg, 'image/jpeg'))
+test("should return the average color of a black JPG image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferBlackJpg, "image/jpeg"));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual([0, 0, 0])
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual([0, 0, 0]);
+});
 
-test('should return default color for a GIF image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferBlackGif))
+test("should return default color for a GIF image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferBlackGif));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual(DEFAULT_COLOR)
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual(DEFAULT_COLOR);
+});
 
-test('should return default color for a invalid image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferBlackPngInvalid))
+test("should return default color for a invalid image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferBlackPngInvalid));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual(DEFAULT_COLOR)
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual(DEFAULT_COLOR);
+});
 
-test('should return pink for a pink PNG image', async () => {
-  jest.spyOn(global, 'fetch').mockImplementation(getMockImageFetch(arrayBufferPinkPng))
+test("should return pink for a pink PNG image", async () => {
+  jest
+    .spyOn(global, "fetch")
+    .mockImplementation(getMockImageFetch(arrayBufferPinkPng));
 
-  const color = await getColor('fakeUrl')
-  expect(color).toEqual([230, 52, 140])
-})
+  const color = await getColor("fakeUrl");
+  expect(color).toEqual([230, 52, 140]);
+});

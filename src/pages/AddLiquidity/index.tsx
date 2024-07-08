@@ -15,18 +15,16 @@ import {
 } from "@uniswap/sdk-core";
 import { FeeAmount, NonfungiblePositionManager } from "@uniswap/v3-sdk";
 import { useWeb3React } from "@web3-react/core";
-import { TraceEvent, sendAnalyticsEvent, useTrace } from "analytics";
+import { sendAnalyticsEvent, TraceEvent, useTrace } from "analytics";
 import { useToggleAccountDrawer } from "components/AccountDrawer";
 import OwnershipWarning from "components/addLiquidity/OwnershipWarning";
 import UnsupportedCurrencyFooter from "components/swap/UnsupportedCurrencyFooter";
 import { isSupportedChain } from "constants/chains";
-import usePrevious from "hooks/usePrevious";
 import { useSingleCallResult } from "lib/hooks/multicall";
 import { BodyWrapper } from "pages/AppBody";
 import { PositionPageUnsupportedContent } from "pages/Pool/PositionPage";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AlertTriangle } from "react-feather";
-import { useSearchParams } from "react-router-dom";
 import { Text } from "rebass";
 import {
   useRangeHopCallbacks,
@@ -460,7 +458,12 @@ function AddLiquidity({
         onChangeCurrencyIdB(idB);
       }
     },
-    [handleCurrencySelect, currencyIdB]
+    [
+      handleCurrencySelect,
+      onChangeCurrencyIdA,
+      onChangeCurrencyIdB,
+      currencyIdB,
+    ]
   );
 
   const handleCurrencyBSelect = useCallback(
@@ -475,7 +478,12 @@ function AddLiquidity({
         onChangeCurrencyIdB(idB);
       }
     },
-    [handleCurrencySelect, currencyIdA]
+    [
+      handleCurrencySelect,
+      onChangeCurrencyIdA,
+      onChangeCurrencyIdB,
+      currencyIdA,
+    ]
   );
 
   const handleFeePoolSelect = useCallback(
@@ -486,7 +494,7 @@ function AddLiquidity({
 
       onChangeFeeAmount(newFeeAmount);
     },
-    [currencyIdA, currencyIdB, onLeftRangeInput, onRightRangeInput]
+    [onChangeFeeAmount, onLeftRangeInput, onRightRangeInput]
   );
 
   const handleDismissConfirmation = useCallback(() => {
@@ -521,6 +529,9 @@ function AddLiquidity({
     onFieldBInput,
     onLeftRangeInput,
     onRightRangeInput,
+    onChangeCurrencyIdA,
+    onChangeCurrencyIdB,
+    onChangeFeeAmount,
   ]);
 
   // get value and prices at ticks
@@ -595,7 +606,14 @@ function AddLiquidity({
       onRightRangeInput(maxPValue);
     }
     setMaxPrice(maxPValue);
-  }, [getSetFullRange, pricesAtLimit]);
+  }, [
+    getSetFullRange,
+    pricesAtLimit,
+    maxPrice,
+    minPrice,
+    onLeftRangeInput,
+    onRightRangeInput,
+  ]);
 
   // // START: sync values with query string
   // const oldSearchParams = usePrevious(searchParams);

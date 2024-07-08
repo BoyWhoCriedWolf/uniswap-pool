@@ -68,7 +68,7 @@ export function AddRemoveTabs({
   adding,
   creating,
   autoSlippage,
-  positionID,
+  // positionID,
   onBack,
   children,
 }: {

@@ -9,10 +9,8 @@ import { Connection } from "connection/types";
 import { atom } from "jotai";
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { useCallback } from "react";
-import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "state/hooks";
 import { updateSelectedWallet } from "state/user/reducer";
-import { getCurrentPageFromLocation } from "utils/urlRoutes";
 
 import { didUserReject } from "./utils";
 

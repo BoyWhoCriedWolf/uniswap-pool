@@ -1,4 +1,3 @@
-
 export function useIsPoolsPage() {
   // const { pathname } = useLocation();
   // return (

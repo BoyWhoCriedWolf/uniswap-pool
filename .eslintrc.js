@@ -99,12 +99,13 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       excludedFiles: ['src/analytics/*'],
-      rules: {"prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ]
+      rules: {
+        'prettier/prettier': [
+          'error',
+          {
+            endOfLine: 'auto',
+          },
+        ],
       },
     },
   ],

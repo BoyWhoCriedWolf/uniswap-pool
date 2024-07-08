@@ -1,10 +1,14 @@
-import { connectionMetaKey } from '../../src/connection/meta'
-import { ConnectionType } from '../../src/connection/types'
-import { UserState } from '../../src/state/user/reducer'
+import { connectionMetaKey } from "../../src/connection/meta";
+import { ConnectionType } from "../../src/connection/types";
+import { UserState } from "../../src/state/user/reducer";
 
-export const CONNECTED_WALLET_USER_STATE: Partial<UserState> = { selectedWallet: ConnectionType.INJECTED }
+export const CONNECTED_WALLET_USER_STATE: Partial<UserState> = {
+  selectedWallet: ConnectionType.INJECTED,
+};
 
-export const DISCONNECTED_WALLET_USER_STATE: Partial<UserState> = { selectedWallet: undefined }
+export const DISCONNECTED_WALLET_USER_STATE: Partial<UserState> = {
+  selectedWallet: undefined,
+};
 
 /**
  * This sets the initial value of the "user" slice in IndexedDB.
@@ -19,24 +23,24 @@ export function setInitialUserState(win: Cypress.AUTWindow, state: UserState) {
       JSON.stringify({
         type: state.selectedWallet,
       })
-    )
+    );
   }
 
-  win.indexedDB.deleteDatabase('redux')
-  const dbRequest = win.indexedDB.open('redux')
+  win.indexedDB.deleteDatabase("redux");
+  const dbRequest = win.indexedDB.open("redux");
   dbRequest.onsuccess = function () {
-    const db = dbRequest.result
-    const transaction = db.transaction('keyvaluepairs', 'readwrite')
-    const store = transaction.objectStore('keyvaluepairs')
+    const db = dbRequest.result;
+    const transaction = db.transaction("keyvaluepairs", "readwrite");
+    const store = transaction.objectStore("keyvaluepairs");
     store.put(
       {
         user: state,
       },
-      'persist:interface'
-    )
-  }
+      "persist:interface"
+    );
+  };
   dbRequest.onupgradeneeded = function () {
-    const db = dbRequest.result
-    db.createObjectStore('keyvaluepairs')
-  }
+    const db = dbRequest.result;
+    db.createObjectStore("keyvaluepairs");
+  };
 }

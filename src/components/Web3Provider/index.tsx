@@ -21,9 +21,7 @@ import {
 } from "featureFlags/flags/traceJsonRpc";
 import usePrevious from "hooks/usePrevious";
 import { ReactNode, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useConnectedWallets } from "state/wallets/hooks";
-import { getCurrentPageFromLocation } from "utils/urlRoutes";
 import { getWalletMeta } from "utils/walletMeta";
 
 export default function Web3Provider({ children }: { children: ReactNode }) {

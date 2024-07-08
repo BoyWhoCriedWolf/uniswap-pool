@@ -22,7 +22,6 @@ import { usePool } from "hooks/usePools";
 import JSBI from "jsbi";
 import tryParseCurrencyAmount from "lib/utils/tryParseCurrencyAmount";
 import { ReactNode, useCallback, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "state/hooks";
 import { getTickToPrice } from "utils/getTickToPrice";
 

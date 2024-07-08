@@ -1,9 +1,9 @@
-import { render } from 'test-utils/render'
+import { render } from "test-utils/render";
 
-import { EmptyWalletModule } from './EmptyWalletContent'
+import { EmptyWalletModule } from "./EmptyWalletContent";
 
-describe('EmptyWalletContent.tsx', () => {
-  it('matches base snapshot', () => {
+describe("EmptyWalletContent.tsx", () => {
+  it("matches base snapshot", () => {
     const { asFragment } = render(
       <div>
         <EmptyWalletModule type="nft" />
@@ -11,7 +11,7 @@ describe('EmptyWalletContent.tsx', () => {
         <EmptyWalletModule type="activity" />
         <EmptyWalletModule type="pool" />
       </div>
-    )
-    expect(asFragment()).toMatchSnapshot()
-  })
-})
+    );
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

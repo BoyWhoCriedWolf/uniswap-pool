@@ -2,12 +2,9 @@ import { Trans } from "@lingui/macro";
 import { AutoColumn } from "components/Column";
 import { RowBetween } from "components/Row";
 import { SwitchLocaleLink } from "components/SwitchLocaleLink";
-import {
-  AlertTriangle
-} from "react-feather";
+import { AlertTriangle } from "react-feather";
 import styled, { css, useTheme } from "styled-components";
 import { ThemedText } from "theme/components";
-
 
 const PageWrapper = styled(AutoColumn)`
   padding: 68px 8px 0px;

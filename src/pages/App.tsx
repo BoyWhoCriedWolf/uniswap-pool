@@ -1,7 +1,7 @@
 import {
   CustomUserProperties,
   getBrowser,
-  SharedEventName
+  SharedEventName,
 } from "@uniswap/analytics-events";
 import { useWeb3React } from "@web3-react/core";
 import {
@@ -31,7 +31,6 @@ import { StatsigProvider, StatsigUser } from "statsig-react";
 import styled from "styled-components";
 import DarkModeQueryParamReader from "theme/components/DarkModeQueryParamReader";
 import { useIsDarkMode } from "theme/components/ThemeToggle";
-import { Z_INDEX } from "theme/zIndex";
 import { STATSIG_DUMMY_KEY } from "tracing";
 import { getEnvName } from "utils/env";
 import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
@@ -68,27 +67,6 @@ const BodyWrapper = styled.div<{ bannerIsVisible?: boolean }>`
         ${({ bannerIsVisible }) =>
           bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
     );
-  }
-`;
-
-const MobileBottomBar = styled.div`
-  z-index: ${Z_INDEX.sticky};
-  position: fixed;
-  display: flex;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  width: calc(100vw - 16px);
-  justify-content: space-between;
-  padding: 0px 4px;
-  height: ${({ theme }) => theme.mobileBottomBarHeight}px;
-  background: ${({ theme }) => theme.surface1};
-  border: 1px solid ${({ theme }) => theme.surface3};
-  margin: 8px;
-  border-radius: 20px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoint.md}px) {
-    display: none;
   }
 `;
 

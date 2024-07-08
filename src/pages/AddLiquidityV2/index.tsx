@@ -17,7 +17,6 @@ import { V2Unsupported } from "components/V2Unsupported";
 import { useNetworkSupportsV2 } from "hooks/useNetworkSupportsV2";
 import { useCallback, useState } from "react";
 import { Plus } from "react-feather";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Text } from "rebass";
 import styled, { useTheme } from "styled-components";
 import { ThemedText } from "theme/components";
@@ -89,7 +88,6 @@ export default function AddLiquidity({
   onChangeCurrencyIdB?: (v?: string) => void;
   isCreate?: boolean;
 } = {}) {
-  const navigate = useNavigate();
   const { account, chainId, provider } = useWeb3React();
 
   const theme = useTheme();
@@ -397,7 +395,7 @@ export default function AddLiquidity({
         onChangeCurrencyIdB(newCurrencyIdA);
       }
     },
-    [currencyIdB, currencyIdA]
+    [currencyIdB, currencyIdA, onChangeCurrencyIdA, onChangeCurrencyIdB]
   );
   const handleCurrencyBSelect = useCallback(
     (currencyB: Currency) => {
@@ -419,7 +417,7 @@ export default function AddLiquidity({
         onChangeCurrencyIdB(newCurrencyIdB);
       }
     },
-    [currencyIdA, currencyIdB]
+    [currencyIdA, currencyIdB, onChangeCurrencyIdA, onChangeCurrencyIdB]
   );
 
   const handleDismissConfirmation = useCallback(() => {

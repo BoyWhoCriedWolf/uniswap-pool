@@ -20,7 +20,6 @@ import {
 import Web3Provider from "./components/Web3Provider";
 import { LanguageProvider } from "./i18n";
 import App from "./pages/App";
-// import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import store from "./state";
 import ApplicationUpdater from "./state/application/updater";
 import ListsUpdater from "./state/lists/updater";
@@ -29,6 +28,8 @@ import OrderUpdater from "./state/signatures/updater";
 import TransactionUpdater from "./state/transactions/updater";
 import ThemeProvider, { ThemedGlobalStyle } from "./theme";
 import RadialGradientByChainUpdater from "./theme/components/RadialGradientByChainUpdater";
+// import { createRoot } from "react-dom/client";
+// import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 if (window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;

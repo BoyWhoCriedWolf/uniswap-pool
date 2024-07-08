@@ -1,6 +1,6 @@
-import { MetaTagInjector } from '../components/metaTagInjector'
-import Cache from './cache'
-import { Data } from './cache'
+import { MetaTagInjector } from "../components/metaTagInjector";
+import Cache from "./cache";
+import { Data } from "./cache";
 
 export async function getMetadataRequest(
   res: Promise<Response>,
@@ -8,14 +8,20 @@ export async function getMetadataRequest(
   getData: () => Promise<Data | undefined>
 ) {
   try {
-    const cachedData = await getRequest(request.url, getData, (data): data is Data => true)
+    const cachedData = await getRequest(
+      request.url,
+      getData,
+      (data): data is Data => true
+    );
     if (cachedData) {
-      return new HTMLRewriter().on('head', new MetaTagInjector(cachedData, request)).transform(await res)
+      return new HTMLRewriter()
+        .on("head", new MetaTagInjector(cachedData, request))
+        .transform(await res);
     } else {
-      return res
+      return res;
     }
   } catch (e) {
-    return res
+    return res;
   }
 }
 
@@ -25,18 +31,18 @@ export async function getRequest<T extends Data>(
   validateData: (data: Data) => data is T
 ): Promise<T | undefined> {
   try {
-    const cachedData = await Cache.match(url)
+    const cachedData = await Cache.match(url);
     if (cachedData && validateData(cachedData)) {
-      return cachedData
+      return cachedData;
     } else {
-      const data = await getData()
+      const data = await getData();
       if (!data) {
-        return undefined
+        return undefined;
       }
-      await Cache.put(data, url)
-      return data
+      await Cache.put(data, url);
+      return data;
     }
   } catch (e) {
-    return undefined
+    return undefined;
   }
 }

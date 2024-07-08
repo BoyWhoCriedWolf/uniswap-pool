@@ -582,7 +582,7 @@ function parseRemoteActivity(
       // @ts-ignore
       nonce: assetActivity.details.nonce,
     };
-    
+
     // @ts-ignore
     const parsedFields = ActivityParserByType[assetActivity.details.type]?.(
       changes,

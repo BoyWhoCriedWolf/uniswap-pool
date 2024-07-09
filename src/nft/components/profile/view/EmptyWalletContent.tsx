@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { headlineMedium } from "nft/css/common.css";
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThemedText } from "theme/components";
 
@@ -101,23 +100,24 @@ const EMPTY_WALLET_CONTENT: {
 
 interface EmptyWalletContentProps {
   type?: EmptyWalletContentType;
-  onNavigateClick?: () => void;
+  onNavigateClick?: (v?: string) => void;
+  onOpen?: (v?: string) => void;
 }
 
 const EmptyWalletContent = ({
   type = "nft",
   onNavigateClick,
+  onOpen = () => null,
 }: EmptyWalletContentProps) => {
-  const navigate = useNavigate();
-
   const content = EMPTY_WALLET_CONTENT[type];
 
   const actionButtonClick = useCallback(() => {
     if (content.urlPath) {
       onNavigateClick?.();
-      navigate(content.urlPath);
+      // navigate(content.urlPath);
+      onOpen(content.urlPath);
     }
-  }, [content.urlPath, navigate, onNavigateClick]);
+  }, [content.urlPath, onOpen, onNavigateClick]);
 
   return (
     <>
@@ -143,7 +143,7 @@ const EmptyWalletContent = ({
 export const EmptyWalletModule = (props?: EmptyWalletContentProps) => {
   return (
     <EmptyWalletContainer>
-      <EmptyWalletContent {...props} />
+      <EmptyWalletContent {...props} onOpen={props?.onOpen} />
     </EmptyWalletContainer>
   );
 };

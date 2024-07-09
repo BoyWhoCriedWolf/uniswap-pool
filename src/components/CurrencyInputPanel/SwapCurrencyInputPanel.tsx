@@ -34,6 +34,7 @@ import { Input as NumericalInput } from "../NumericalInput";
 import { RowBetween, RowFixed } from "../Row";
 import CurrencySearchModal from "../SearchModal/CurrencySearchModal";
 import { FiatValue } from "./FiatValue";
+import { colors } from "theme/colors";
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${flexColumnNoWrap};
@@ -62,7 +63,7 @@ const Container = styled.div<{ hideInput: boolean }>`
   width: ${({ hideInput }) => (hideInput ? "100%" : "initial")};
 `;
 
-const CurrencySelect = styled(ButtonGray)<{
+const CurrencySelect = styled.div<{
   visible: boolean;
   selected: boolean;
   hideInput?: boolean;
@@ -70,8 +71,6 @@ const CurrencySelect = styled(ButtonGray)<{
   animateShake?: boolean;
 }>`
   align-items: center;
-  background-color: ${({ selected, theme }) =>
-    selected ? theme.surface1 : theme.accent1};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
   color: ${({ selected, theme }) => (selected ? theme.neutral1 : theme.white)};
   cursor: pointer;
@@ -79,10 +78,8 @@ const CurrencySelect = styled(ButtonGray)<{
   border-radius: 18px;
   outline: none;
   user-select: none;
-  border: 1px solid
-    ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent1)};
-  font-size: 24px;
-  font-weight: 485;
+  font-size: 18px;
+  font-weight: 500;
   width: ${({ hideInput }) => (hideInput ? "100%" : "initial")};
   padding: ${({ selected }) =>
     selected ? "4px 8px 4px 4px" : "6px 6px 6px 8px"};
@@ -90,33 +87,6 @@ const CurrencySelect = styled(ButtonGray)<{
   justify-content: space-between;
   margin-left: ${({ hideInput }) => (hideInput ? "0" : "12px")};
   box-shadow: ${({ theme }) => theme.deprecated_shallowShadow};
-
-  &:hover,
-  &:active {
-    background-color: ${({ theme, selected }) =>
-      selected ? theme.surface2 : theme.accent1};
-  }
-
-  &:before {
-    background-size: 100%;
-    border-radius: inherit;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-    content: "";
-  }
-
-  &:hover:before {
-    background-color: ${({ theme }) => theme.deprecated_stateOverlayHover};
-  }
-
-  &:active:before {
-    background-color: ${({ theme }) => theme.deprecated_stateOverlayPressed};
-  }
 
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
 
@@ -154,6 +124,9 @@ const InputRow = styled.div`
   ${flexRowNoWrap};
   align-items: center;
   justify-content: space-between;
+  background-color: ${colors.black_blue};
+  padding: 8px;
+  border-radius: 16px;
 `;
 
 const LabelRow = styled.div`
@@ -226,9 +199,9 @@ const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
 const StyledNumericalInput = styled(NumericalInput)<{ $loading: boolean }>`
   ${loadingOpacityMixin};
   text-align: left;
-  font-size: 36px;
-  font-weight: 485;
-  max-height: 44px;
+  font-size: 28px;
+  font-weight: 500;
+  max-height: 36px;
 `;
 
 interface SwapCurrencyInputPanelProps {
@@ -340,30 +313,73 @@ const SwapCurrencyInputPanel = forwardRef<
         )}
 
         <Container hideInput={hideInput}>
-          <ThemedText.SubHeaderSmall style={{ userSelect: "none" }}>
-            {label}
-          </ThemedText.SubHeaderSmall>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginLeft: 8,
+              marginRight: 8,
+              marginBottom: 8,
+            }}
+          >
+            <ThemedText.SubHeader style={{ userSelect: "none" }}>
+              {label}
+            </ThemedText.SubHeader>
+            <ThemedText.SubHeader style={{ color: colors.primary_dark }}>
+              {showMaxButton && selectedCurrencyBalance ? (
+                <TraceEvent
+                  events={[BrowserEvent.onClick]}
+                  name={SwapEventName.SWAP_MAX_TOKEN_AMOUNT_SELECTED}
+                  element={InterfaceElementName.MAX_TOKEN_AMOUNT_BUTTON}
+                >
+                  <StyledBalanceMax onClick={onMax}>
+                    <Trans>Max</Trans>
+                  </StyledBalanceMax>
+                </TraceEvent>
+              ) : null}
+            </ThemedText.SubHeader>
+          </div>
           <InputRow
             style={hideInput ? { padding: "0", borderRadius: "8px" } : {}}
           >
             {!hideInput && (
               <div
-                style={{ display: "flex", flexGrow: "1" }}
+                style={{ display: "flex", alignItems: "center", flexGrow: "1" }}
                 onClick={handleDisabledNumericalInputClick}
               >
-                <StyledNumericalInput
-                  className="token-amount-input"
-                  value={value}
-                  onUserInput={onUserInput}
-                  disabled={
-                    !chainAllowed ||
-                    disabled ||
-                    numericalInputSettings?.disabled
-                  }
-                  $loading={loading}
-                  id={id}
-                  ref={ref}
-                />
+                {pair ? (
+                  <span style={{ marginRight: "0.5rem" }}>
+                    <DoubleCurrencyLogo
+                      currency0={pair.token0}
+                      currency1={pair.token1}
+                      size={32}
+                      margin={true}
+                    />
+                  </span>
+                ) : currency ? (
+                  <CurrencyLogo
+                    style={{ marginRight: "2px" }}
+                    currency={currency}
+                    size="32px"
+                  />
+                ) : null}
+
+                <div style={{ flexGrow: 1, display: "flex", paddingLeft: 8 }}>
+                  <StyledNumericalInput
+                    className="token-amount-input"
+                    value={value}
+                    onUserInput={onUserInput}
+                    disabled={
+                      !chainAllowed ||
+                      disabled ||
+                      numericalInputSettings?.disabled
+                    }
+                    $loading={loading}
+                    id={id}
+                    ref={ref}
+                  />
+                </div>
               </div>
             )}
             <PrefetchBalancesWrapper shouldFetchOnAccountUpdate={modalOpen}>
@@ -388,22 +404,6 @@ const SwapCurrencyInputPanel = forwardRef<
                 >
                   <Aligner>
                     <RowFixed>
-                      {pair ? (
-                        <span style={{ marginRight: "0.5rem" }}>
-                          <DoubleCurrencyLogo
-                            currency0={pair.token0}
-                            currency1={pair.token1}
-                            size={24}
-                            margin={true}
-                          />
-                        </span>
-                      ) : currency ? (
-                        <CurrencyLogo
-                          style={{ marginRight: "2px" }}
-                          currency={currency}
-                          size="24px"
-                        />
-                      ) : null}
                       {pair ? (
                         <StyledTokenName className="pair-name-container">
                           {pair?.token0.symbol}:{pair?.token1.symbol}
@@ -468,17 +468,6 @@ const SwapCurrencyInputPanel = forwardRef<
                         )
                       ) : null}
                     </ThemedText.DeprecatedBody>
-                    {showMaxButton && selectedCurrencyBalance ? (
-                      <TraceEvent
-                        events={[BrowserEvent.onClick]}
-                        name={SwapEventName.SWAP_MAX_TOKEN_AMOUNT_SELECTED}
-                        element={InterfaceElementName.MAX_TOKEN_AMOUNT_BUTTON}
-                      >
-                        <StyledBalanceMax onClick={onMax}>
-                          <Trans>Max</Trans>
-                        </StyledBalanceMax>
-                      </TraceEvent>
-                    ) : null}
                   </RowFixed>
                 ) : (
                   <span />

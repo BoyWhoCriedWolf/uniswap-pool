@@ -34,7 +34,6 @@ import { useIsNftClaimAvailable } from "nft/hooks/useIsNftClaimAvailable";
 import { ProfilePageStateType } from "nft/types";
 import { useCallback, useState } from "react";
 import { CreditCard, Info } from "react-feather";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "state/hooks";
 import { updateSelectedWallet } from "state/user/reducer";
 import styled from "styled-components";
@@ -42,6 +41,7 @@ import { CopyHelper, ExternalLink, ThemedText } from "theme/components";
 import { shortenAddress } from "utils";
 import { NumberType, useFormatter } from "utils/formatNumbers";
 
+import { useToggleAccountDrawer } from ".";
 import {
   useCloseModal,
   useFiatOnrampAvailability,
@@ -55,7 +55,6 @@ import {
 } from "../../state/claim/hooks";
 import StatusIcon from "../Identicon/StatusIcon";
 import { useCachedPortfolioBalancesQuery } from "../PrefetchBalancesWrapper/PrefetchBalancesWrapper";
-import { useToggleAccountDrawer } from ".";
 import IconButton, {
   IconHoverText,
   IconWithConfirmTextButton,
@@ -178,14 +177,15 @@ const PortfolioDrawerContainer = styled(Column)`
 export default function AuthenticatedHeader({
   account,
   openSettings,
+  onShowNftProfile = () => null,
 }: {
   account: string;
   openSettings: () => void;
+  onShowNftProfile?: () => void;
 }) {
   const { connector } = useWeb3React();
   const { ENSName } = useENSName(account);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const closeModal = useCloseModal();
   const setSellPageState = useProfilePageState(
     (state) => state.setProfilePageState
@@ -225,12 +225,14 @@ export default function AuthenticatedHeader({
     resetSellAssets();
     setSellPageState(ProfilePageStateType.VIEWING);
     clearCollectionFilters();
-    navigate("/nfts/profile");
+    // navigate("/nfts/profile");
+    onShowNftProfile();
     closeModal();
   }, [
     clearCollectionFilters,
     closeModal,
-    navigate,
+    // navigate,
+    onShowNftProfile,
     resetSellAssets,
     setSellPageState,
     toggleWalletDrawer,

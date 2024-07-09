@@ -21,7 +21,13 @@ enum MenuState {
   LOCAL_CURRENCY_SETTINGS,
 }
 
-function DefaultMenu({ drawerOpen }: { drawerOpen: boolean }) {
+function DefaultMenu({
+  drawerOpen,
+  onShowNftProfile = () => null,
+}: {
+  drawerOpen: boolean;
+  onShowNftProfile?: () => void;
+}) {
   const { account } = useWeb3React();
   const isAuthenticated = !!account;
 
@@ -52,7 +58,11 @@ function DefaultMenu({ drawerOpen }: { drawerOpen: boolean }) {
     switch (menu) {
       case MenuState.DEFAULT:
         return isAuthenticated ? (
-          <AuthenticatedHeader account={account} openSettings={openSettings} />
+          <AuthenticatedHeader
+            account={account}
+            openSettings={openSettings}
+            onShowNftProfile={onShowNftProfile}
+          />
         ) : (
           <WalletModal openSettings={openSettings} />
         );

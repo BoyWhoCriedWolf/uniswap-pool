@@ -1,3 +1,8 @@
 {
-  "staticPath": "public"
+  "staticPath": "public",
+  "watchDirs": ["src", "src/cosmos"],
+  "webpack": {
+    "overridePath": "webpack.cosmos.js"
+  },
+  "port": 3000
 }

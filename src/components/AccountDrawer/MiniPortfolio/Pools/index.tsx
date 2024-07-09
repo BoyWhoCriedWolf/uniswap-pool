@@ -68,7 +68,13 @@ function useFilterPossiblyMaliciousPositionInfo(
   );
 }
 
-export default function Pools({ account }: { account: string }) {
+export default function Pools({
+  account,
+  onOpen,
+}: {
+  account: string;
+  onOpen?: (v?: string) => void;
+}) {
   const { positions, loading } = useMultiChainPositions(account);
   const filteredPositions = useFilterPossiblyMaliciousPositionInfo(positions);
   const [showClosed, toggleShowClosed] = useReducer(
@@ -98,7 +104,11 @@ export default function Pools({ account }: { account: string }) {
 
   if (filteredPositions.length === 0) {
     return (
-      <EmptyWalletModule type="pool" onNavigateClick={toggleWalletDrawer} />
+      <EmptyWalletModule
+        type="pool"
+        onNavigateClick={toggleWalletDrawer}
+        onOpen={onOpen}
+      />
     );
   }
 

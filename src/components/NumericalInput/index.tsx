@@ -42,7 +42,8 @@ const StyledInput = styled.input<{
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.neutral3};
+    color: ${({ theme }) => theme.neutral1};
+    opacity: 0.3;
   }
 `;
 
@@ -54,7 +55,7 @@ function localeUsesComma(locale: SupportedLocale): boolean {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`); // match escaped "." characters via in a non-capturing group
 
-interface InputProps
+export interface InputProps
   extends Omit<React.HTMLProps<HTMLInputElement>, "ref" | "onChange" | "as"> {
   value: string | number;
   onUserInput: (input: string) => void;

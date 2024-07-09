@@ -63,18 +63,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { ArrowDown } from "react-feather";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowDown, Repeat } from "react-feather";
 import { Text } from "rebass";
 import { useAppSelector } from "state/hooks";
 import { InterfaceTrade, TradeState } from "state/routing/types";
 import { isClassicTrade, isPreviewTrade } from "state/routing/utils";
 import { Field, forceExactInput, replaceSwapState } from "state/swap/actions";
-import {
-  useDefaultsFromURLSearch,
-  useDerivedSwapInfo,
-  useSwapActionHandlers,
-} from "state/swap/hooks";
+import { useDerivedSwapInfo, useSwapActionHandlers } from "state/swap/hooks";
 import swapReducer, {
   initialState as initialSwapState,
   SwapState,
@@ -92,6 +87,7 @@ import { useScreenSize } from "../../hooks/useScreenSize";
 import { useIsDarkMode } from "../../theme/components/ThemeToggle";
 import { OutputTaxTooltipBody } from "./TaxTooltipBody";
 import { UniswapXOptIn } from "./UniswapXOptIn";
+import { colors } from "theme/colors";
 
 export const ArrowContainer = styled.div`
   display: inline-flex;
@@ -103,39 +99,15 @@ export const ArrowContainer = styled.div`
 `;
 
 const SwapSection = styled.div`
-  background-color: ${({ theme }) => theme.surface2};
+  // background-color: ${({ theme }) => theme.surface2};
+
   border-radius: 16px;
   color: ${({ theme }) => theme.neutral2};
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
   height: 120px;
   line-height: 20px;
-  padding: 16px;
   position: relative;
-
-  &:before {
-    box-sizing: border-box;
-    background-size: 100%;
-    border-radius: inherit;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    content: "";
-    border: 1px solid ${({ theme }) => theme.surface2};
-  }
-
-  &:hover:before {
-    border-color: ${({ theme }) => theme.deprecated_stateOverlayHover};
-  }
-
-  &:focus-within:before {
-    border-color: ${({ theme }) => theme.deprecated_stateOverlayPressed};
-  }
 `;
 
 const OutputSwapSection = styled(SwapSection)`
@@ -167,9 +139,9 @@ function largerPercentValue(a?: Percent, b?: Percent) {
 
 export default function SwapPage({ className }: { className?: string }) {
   const { chainId: connectedChainId } = useWeb3React();
-  const loadedUrlParams = useDefaultsFromURLSearch();
+  // const loadedUrlParams = useDefaultsFromURLSearch();
 
-  const location = useLocation();
+  // const location = useLocation();
 
   const supportedChainId = asSupportedChain(connectedChainId);
 
@@ -179,13 +151,14 @@ export default function SwapPage({ className }: { className?: string }) {
         <Swap
           className={className}
           chainId={supportedChainId ?? ChainId.MAINNET}
-          initialInputCurrencyId={loadedUrlParams?.[Field.INPUT]?.currencyId}
-          initialOutputCurrencyId={loadedUrlParams?.[Field.OUTPUT]?.currencyId}
+          // initialInputCurrencyId={loadedUrlParams?.[Field.INPUT]?.currencyId}
+          // initialOutputCurrencyId={loadedUrlParams?.[Field.OUTPUT]?.currencyId}
           disableTokenInputs={supportedChainId === undefined}
         />
         <NetworkAlert />
       </PageWrapper>
-      {location.pathname === "/swap" && <SwitchLocaleLink />}
+      <SwitchLocaleLink />
+      {/* {location.pathname === "/swap" && <SwitchLocaleLink />} */}
     </Trace>
   );
 }
@@ -466,7 +439,7 @@ export function Swap({
     [onUserInput, trace]
   );
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const swapIsUnsupported = useIsSwapUnsupported(
     currencies[Field.INPUT],
     currencies[Field.OUTPUT]
@@ -475,8 +448,9 @@ export function Swap({
   // reset if they close warning without tokens in params
   const handleDismissTokenWarning = useCallback(() => {
     setDismissTokenWarning(true);
-    navigate("/swap/");
-  }, [navigate]);
+  }, []);
+  //   navigate("/swap/");
+  // }, [navigate]);
 
   // modal and loading
   const [{ showConfirm, tradeToConfirm, swapError, swapResult }, setSwapState] =
@@ -746,7 +720,7 @@ export function Swap({
         onCancel={handleDismissTokenWarning}
         showCancel={true}
       />
-      <SwapHeader trade={trade} autoSlippage={autoSlippage} chainId={chainId} />
+      {/* <SwapHeader trade={trade} autoSlippage={autoSlippage} chainId={chainId} /> */}
       {trade && showConfirm && (
         <ConfirmSwapModal
           trade={trade}
@@ -780,7 +754,7 @@ export function Swap({
         <SwapSection>
           <Trace section={InterfaceSectionName.CURRENCY_INPUT_PANEL}>
             <SwapCurrencyInputPanel
-              label={<Trans>You pay</Trans>}
+              label={<Trans>Sell</Trans>}
               disabled={disableTokenInputs}
               value={formattedAmounts[Field.INPUT]}
               showMaxButton={showMaxButton}
@@ -813,9 +787,8 @@ export function Swap({
                 );
                 maybeLogFirstSwapAction(trace);
               }}
-              color={theme.neutral1}
             >
-              <ArrowDown size="16" color={theme.neutral1} />
+              <Repeat size="24" color={colors.light_blue} />
             </ArrowContainer>
           </TraceEvent>
         </ArrowWrapper>
@@ -828,7 +801,7 @@ export function Swap({
                 value={formattedAmounts[Field.OUTPUT]}
                 disabled={disableTokenInputs}
                 onUserInput={handleTypeOutput}
-                label={<Trans>You receive</Trans>}
+                label={<Trans>Buy</Trans>}
                 showMaxButton={false}
                 hideBalance={false}
                 fiatValue={showFiatValueOutput ? fiatValueOutput : undefined}

@@ -4,6 +4,8 @@ import "inter-ui";
 import "polyfills";
 import "tracing";
 
+import "./index.css"
+
 import { ApolloProvider } from "@apollo/client";
 import { FeatureFlagsProvider } from "featureFlags";
 import { apolloClient } from "graphql/data/apollo";
@@ -28,8 +30,8 @@ import OrderUpdater from "./state/signatures/updater";
 import TransactionUpdater from "./state/transactions/updater";
 import ThemeProvider, { ThemedGlobalStyle } from "./theme";
 import RadialGradientByChainUpdater from "./theme/components/RadialGradientByChainUpdater";
-// import { createRoot } from "react-dom/client";
-// import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { createRoot } from "react-dom/client";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 if (window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;
@@ -55,7 +57,7 @@ const queryClient = new QueryClient();
 
 // const Router = isBrowserRouterEnabled() ? BrowserRouter : HashRouter;
 
-export default function UniswapPool() {
+export default function UniswapWidget() {
   return (
     <StrictMode>
       <Provider store={store}>
@@ -83,10 +85,10 @@ export default function UniswapPool() {
   );
 }
 
-// const container = document.getElementById("root") as HTMLElement;
+const container = document.getElementById("root") as HTMLElement;
 
-// createRoot(container).render(<UniswapPool />);
+createRoot(container).render(<UniswapWidget />);
 
-// if (process.env.REACT_APP_SERVICE_WORKER !== "false") {
-//   serviceWorkerRegistration.register();
-// }
+if (process.env.REACT_APP_SERVICE_WORKER !== "false") {
+  serviceWorkerRegistration.register();
+}

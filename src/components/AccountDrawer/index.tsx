@@ -176,7 +176,9 @@ const CloseDrawer = styled.div`
   }
 `;
 
-function AccountDrawer() {
+function AccountDrawer({
+  onShowNftProfile = () => null,
+}: { onShowNftProfile?: () => void } = {}) {
   const [walletDrawerOpen, toggleWalletDrawer] = useAccountDrawer();
   const wasWalletDrawerOpen = usePrevious(walletDrawerOpen);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -282,7 +284,10 @@ function AccountDrawer() {
           ref={scrollRef}
           id="wallet-dropdown-scroll-wrapper"
         >
-          <DefaultMenu drawerOpen={walletDrawerOpen} />
+          <DefaultMenu
+            drawerOpen={walletDrawerOpen}
+            onShowNftProfile={onShowNftProfile}
+          />
         </AccountDrawerScrollWrapper>
       </AccountDrawerWrapper>
     </Container>

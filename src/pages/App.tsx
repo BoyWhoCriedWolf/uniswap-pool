@@ -19,9 +19,7 @@ import {
 } from "components/NavBar/UkBanner";
 import { useFeatureFlagsIsLoaded } from "featureFlags";
 import { useUniswapXDefaultEnabled } from "featureFlags/flags/uniswapXDefault";
-import { lazy, useEffect, useMemo } from "react";
-import { useAppSelector } from "state/hooks";
-import { AppState } from "state/reducer";
+import { lazy, useEffect, useMemo, useState } from "react";
 import { RouterPreference } from "state/routing/types";
 import {
   useRouterPreference,
@@ -35,40 +33,14 @@ import { STATSIG_DUMMY_KEY } from "tracing";
 import { getEnvName } from "utils/env";
 import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
 
+import Modal from "components/Modal";
+import Tabs from "components/Tabs";
+import Profile from "nft/pages/profile";
 import Pool from "./Pool";
+import SwapPage from "./Swap";
+import { BodyWrapper } from "./AppBody";
 
 const AppChrome = lazy(() => import("./AppChrome"));
-
-const BodyWrapper = styled.div<{ bannerIsVisible?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: calc(
-    100vh -
-      ${({ bannerIsVisible }) => (bannerIsVisible ? UK_BANNER_HEIGHT : 0)}px
-  );
-  padding: ${({ theme }) => theme.navHeight}px 0px 5rem 0px;
-  align-items: center;
-  flex: 1;
-
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.md}px`}) {
-    min-height: calc(
-      100vh -
-        ${({ bannerIsVisible }) =>
-          bannerIsVisible ? UK_BANNER_HEIGHT_MD : 0}px
-    );
-  }
-
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.sm}px`}) {
-    min-height: calc(
-      100vh -
-        ${({ bannerIsVisible }) =>
-          bannerIsVisible ? UK_BANNER_HEIGHT_SM : 0}px
-    );
-  }
-`;
 
 // const HeaderWrapper = styled.div<{
 //   transparent?: boolean;
@@ -110,16 +82,23 @@ export default function App() {
   // const currentPage = InterfacePageName.POOL_PAGE;
   const isDarkMode = useIsDarkMode();
   const [routerPreference] = useRouterPreference();
+
+  const [isNftProfile, setIsNftProfile] = useState(false);
+  const [isPool, setIsPool] = useState(false);
+
   // const [scrollY, setScrollY] = useState(0);
   // const scrolledState = scrollY > 0;
   const isUniswapXDefaultEnabled = useUniswapXDefaultEnabled();
   const userOptedOutOfUniswapX = useUserOptedOutOfUniswapX();
   // const routerConfig = useRouterConfig();
 
-  const originCountry = useAppSelector(
-    (state: AppState) => state.user.originCountry
-  );
-  const renderUkBannner = Boolean(originCountry) && originCountry === "GB";
+  // const originCountry = useAppSelector(
+  //   (state: AppState) => state.user.originCountry
+  // );
+  // const renderUkBannner = Boolean(originCountry) && originCountry === "GB";
+
+  const handleShowNftProfile = () => setIsNftProfile(true);
+  const handleCloseNftProfile = () => setIsNftProfile(false);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);
@@ -260,9 +239,24 @@ export default function App() {
           >
             <NavBar blur={isHeaderTransparent} />
           </HeaderWrapper> */}
-        <BodyWrapper bannerIsVisible={renderUkBannner}>
-          <AppChrome />
-          {isLoaded ? <Pool /> : <Loader />}
+        {/* <BodyWrapper bannerIsVisible={renderUkBannner}> */}
+        <BodyWrapper>
+          <AppChrome onShowNftProfile={handleShowNftProfile} />
+          {isLoaded ? (
+            <>
+              <Modal isOpen={isNftProfile} onDismiss={handleCloseNftProfile}>
+                <Profile />
+              </Modal>
+              <Tabs
+                data={[
+                  { label: "Trade", content: <SwapPage /> },
+                  { label: "Pool", content: <Pool /> },
+                ]}
+              />
+            </>
+          ) : (
+            <Loader />
+          )}
           {/* <Suspense>
               <AppChrome />
             </Suspense>

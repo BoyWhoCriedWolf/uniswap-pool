@@ -8,28 +8,15 @@ import { useIsDarkMode } from "../../theme/components/ThemeToggle";
 import { AutoColumn } from "../Column";
 
 export const PageWrapper = styled.div`
-  padding: 68px 8px 0px;
-  max-width: 480px;
+  padding: 8px;
   width: 100%;
-
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.md}px`}) {
-    padding-top: 48px;
-  }
-
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.sm}px`}) {
-    padding-top: 20px;
-  }
 `;
 
 // Mostly copied from `AppBody` but it was getting too hard to maintain backwards compatibility.
 const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
   position: relative;
   z-index: ${Z_INDEX.default};
-  border: 1px solid ${({ theme }) => theme.surface3};
   transition: transform 250ms ease;
-  border-radius: 24px;
 
   &:before {
     content: " ";
@@ -40,10 +27,6 @@ const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
     filter: blur(50px);
     background-color: rgba(252, 114, 255, 0.075);
     z-index: -2;
-  }
-
-  &:hover {
-    border: 1px solid ${({ theme }) => theme.surface3};
   }
 `;
 
@@ -59,7 +42,6 @@ export const SwapWrapper = (
 
 const SwapWrapperInner = styled.div`
   border-radius: 24px;
-  background: ${({ theme }) => theme.surface1};
   z-index: -1;
   padding: 8px;
   padding-top: 12px;
@@ -187,17 +169,17 @@ export const SwapMustacheShadow = styled.main`
 `;
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
-  border-radius: 12px;
-  height: 40px;
-  width: 40px;
+  // border-radius: 12px;
+  height: 32px;
+  width: 32px;
   position: relative;
   margin-top: -18px;
   margin-bottom: -18px;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${({ theme }) => theme.surface2};
-  border: 4px solid;
-  border-color: ${({ theme }) => theme.surface1};
+  // background-color: ${({ theme }) => theme.surface2};
+  // border: 4px solid;
+  // border-color: ${({ theme }) => theme.surface1};
 
   z-index: 2;
   ${({ clickable }) =>

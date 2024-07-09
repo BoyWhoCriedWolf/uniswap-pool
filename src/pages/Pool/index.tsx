@@ -30,19 +30,8 @@ import PositionsLoadingPlaceholder from "./PositionLoadingPlaceHolder";
 import WrongNetworkCard from "./WrongNetworkCard";
 
 const PageWrapper = styled(AutoColumn)`
-  padding: 68px 8px 0px;
-  max-width: 870px;
+  padding: 8px;
   width: 100%;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
-    max-width: 800px;
-    padding-top: 48px;
-  }
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
-    max-width: 500px;
-    padding-top: 20px;
-  }
 `;
 const TitleRow = styled(RowBetween)`
   color: ${({ theme }) => theme.neutral2};

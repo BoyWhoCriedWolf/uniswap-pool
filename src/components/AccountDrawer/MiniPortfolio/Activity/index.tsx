@@ -20,7 +20,13 @@ const ActivityGroupWrapper = styled(Column)`
 
 const lastFetchedAtom = atom<number | undefined>(0);
 
-export function ActivityTab({ account }: { account: string }) {
+export function ActivityTab({
+  account,
+  onOpen,
+}: {
+  account: string;
+  onOpen?: (v?: string) => void;
+}) {
   const [drawerOpen, toggleWalletDrawer] = useAccountDrawer();
   const [lastFetched, setLastFetched] = useAtom(lastFetchedAtom);
 
@@ -52,7 +58,11 @@ export function ActivityTab({ account }: { account: string }) {
     );
   } else if (!activityGroups || activityGroups?.length === 0) {
     return (
-      <EmptyWalletModule type="activity" onNavigateClick={toggleWalletDrawer} />
+      <EmptyWalletModule
+        type="activity"
+        onNavigateClick={toggleWalletDrawer}
+        onOpen={onOpen}
+      />
     );
   } else {
     return (

@@ -31,7 +31,13 @@ import PortfolioRow, {
   PortfolioTabWrapper,
 } from "../PortfolioRow";
 
-export default function Tokens({ account }: { account: string }) {
+export default function Tokens({
+  account,
+  onOpen,
+}: {
+  account: string;
+  onOpen?: (v?: string) => void;
+}) {
   const toggleWalletDrawer = useToggleAccountDrawer();
   const hideSmallBalances = useAtomValue(hideSmallBalancesAtom);
   const [showHiddenTokens, setShowHiddenTokens] = useState(false);
@@ -54,7 +60,11 @@ export default function Tokens({ account }: { account: string }) {
   if (tokenBalances?.length === 0) {
     // TODO: consider launching moonpay here instead of just closing the drawer
     return (
-      <EmptyWalletModule type="token" onNavigateClick={toggleWalletDrawer} />
+      <EmptyWalletModule
+        type="token"
+        onNavigateClick={toggleWalletDrawer}
+        onOpen={onOpen}
+      />
     );
   }
 

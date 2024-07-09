@@ -9,7 +9,13 @@ import { useAccountDrawer } from "../..";
 import { DEFAULT_NFT_QUERY_AMOUNT } from "../constants";
 import { NFT } from "./NFTItem";
 
-export default function NFTs({ account }: { account: string }) {
+export default function NFTs({
+  account,
+  onOpen,
+}: {
+  account: string;
+  onOpen?: (v?: string) => void;
+}) {
   const [walletDrawerOpen, toggleWalletDrawer] = useAccountDrawer();
   const { walletAssets, loading, hasNext, loadMore } = useNftBalance(
     account,
@@ -34,7 +40,9 @@ export default function NFTs({ account }: { account: string }) {
     );
 
   if (!walletAssets || walletAssets?.length === 0) {
-    return <EmptyWalletModule onNavigateClick={toggleWalletDrawer} />;
+    return (
+      <EmptyWalletModule onNavigateClick={toggleWalletDrawer} onOpen={onOpen} />
+    );
   }
 
   return (

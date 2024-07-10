@@ -41,7 +41,6 @@ import { CopyHelper, ExternalLink, ThemedText } from "theme/components";
 import { shortenAddress } from "utils";
 import { NumberType, useFormatter } from "utils/formatNumbers";
 
-import { useToggleAccountDrawer } from ".";
 import {
   useCloseModal,
   useFiatOnrampAvailability,
@@ -55,6 +54,7 @@ import {
 } from "../../state/claim/hooks";
 import StatusIcon from "../Identicon/StatusIcon";
 import { useCachedPortfolioBalancesQuery } from "../PrefetchBalancesWrapper/PrefetchBalancesWrapper";
+import { useToggleAccountDrawer } from ".";
 import IconButton, {
   IconHoverText,
   IconWithConfirmTextButton,

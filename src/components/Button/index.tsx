@@ -565,6 +565,7 @@ const BaseThemeButton = styled.button<BaseThemeButtonProps>`
   }
 `;
 
+// eslint-disable
 export interface ThemeButtonProps
   extends React.ComponentPropsWithoutRef<"button">,
     BaseThemeButtonProps {}

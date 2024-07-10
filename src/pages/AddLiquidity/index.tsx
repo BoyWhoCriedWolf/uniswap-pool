@@ -15,7 +15,7 @@ import {
 } from "@uniswap/sdk-core";
 import { FeeAmount, NonfungiblePositionManager } from "@uniswap/v3-sdk";
 import { useWeb3React } from "@web3-react/core";
-import { TraceEvent, sendAnalyticsEvent, useTrace } from "analytics";
+import { sendAnalyticsEvent, TraceEvent, useTrace } from "analytics";
 import { useToggleAccountDrawer } from "components/AccountDrawer";
 import OwnershipWarning from "components/addLiquidity/OwnershipWarning";
 import UnsupportedCurrencyFooter from "components/swap/UnsupportedCurrencyFooter";

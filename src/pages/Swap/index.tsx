@@ -74,6 +74,7 @@ import swapReducer, {
   SwapState,
 } from "state/swap/reducer";
 import styled, { useTheme } from "styled-components";
+import { colors } from "theme/colors";
 import { LinkStyledButton, ThemedText } from "theme/components";
 import { maybeLogFirstSwapAction } from "tracing/swapFlowLoggers";
 import { computeFiatValuePriceImpact } from "utils/computeFiatValuePriceImpact";
@@ -82,7 +83,6 @@ import { maxAmountSpend } from "utils/maxAmountSpend";
 import { computeRealizedPriceImpact, warningSeverity } from "utils/prices";
 import { didUserReject } from "utils/swapErrorToUserReadableMessage";
 
-import { colors } from "theme/colors";
 import { useScreenSize } from "../../hooks/useScreenSize";
 import { useIsDarkMode } from "../../theme/components/ThemeToggle";
 import { OutputTaxTooltipBody } from "./TaxTooltipBody";
@@ -147,14 +147,14 @@ export default function SwapPage({ className }: { className?: string }) {
   return (
     <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
       {/* <PageWrapper> */}
-        <Swap
-          className={className}
-          chainId={supportedChainId ?? ChainId.MAINNET}
-          // initialInputCurrencyId={loadedUrlParams?.[Field.INPUT]?.currencyId}
-          // initialOutputCurrencyId={loadedUrlParams?.[Field.OUTPUT]?.currencyId}
-          disableTokenInputs={supportedChainId === undefined}
-        />
-        <NetworkAlert />
+      <Swap
+        className={className}
+        chainId={supportedChainId ?? ChainId.MAINNET}
+        // initialInputCurrencyId={loadedUrlParams?.[Field.INPUT]?.currencyId}
+        // initialOutputCurrencyId={loadedUrlParams?.[Field.OUTPUT]?.currencyId}
+        disableTokenInputs={supportedChainId === undefined}
+      />
+      <NetworkAlert />
       {/* </PageWrapper> */}
       <SwitchLocaleLink />
       {/* {location.pathname === "/swap" && <SwitchLocaleLink />} */}
@@ -308,7 +308,7 @@ export function Swap({
   const {
     trade: { state: tradeState, trade, swapQuoteLatency },
     allowedSlippage,
-    autoSlippage,
+    // autoSlippage,
     currencyBalances,
     parsedAmount,
     currencies,

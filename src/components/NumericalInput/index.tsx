@@ -55,6 +55,7 @@ function localeUsesComma(locale: SupportedLocale): boolean {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`); // match escaped "." characters via in a non-capturing group
 
+// eslint-disable
 export interface InputProps
   extends Omit<React.HTMLProps<HTMLInputElement>, "ref" | "onChange" | "as"> {
   value: string | number;

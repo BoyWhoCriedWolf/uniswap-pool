@@ -12,8 +12,11 @@ import {
 } from "analytics";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Icons/LoadingSpinner";
+import Modal from "components/Modal";
+import Tabs from "components/Tabs";
 import { useFeatureFlagsIsLoaded } from "featureFlags";
 import { useUniswapXDefaultEnabled } from "featureFlags/flags/uniswapXDefault";
+import Profile from "nft/pages/profile";
 import { lazy, useEffect, useMemo, useState } from "react";
 import { RouterPreference } from "state/routing/types";
 import {
@@ -21,16 +24,13 @@ import {
   useUserOptedOutOfUniswapX,
 } from "state/user/hooks";
 import { StatsigProvider, StatsigUser } from "statsig-react";
+import { colors } from "theme/colors";
 import DarkModeQueryParamReader from "theme/components/DarkModeQueryParamReader";
 import { useIsDarkMode } from "theme/components/ThemeToggle";
 import { STATSIG_DUMMY_KEY } from "tracing";
 import { getEnvName } from "utils/env";
 import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
 
-import Modal from "components/Modal";
-import Tabs from "components/Tabs";
-import Profile from "nft/pages/profile";
-import { colors } from "theme/colors";
 import { BodyWrapper } from "./AppBody";
 import Pool from "./Pool";
 import SwapPage from "./Swap";
@@ -79,7 +79,7 @@ export default function App() {
   const [routerPreference] = useRouterPreference();
 
   const [isNftProfile, setIsNftProfile] = useState(false);
-  const [isPool, setIsPool] = useState(false);
+  // const [isPool, setIsPool] = useState(false);
 
   // const [scrollY, setScrollY] = useState(0);
   // const scrolledState = scrollY > 0;

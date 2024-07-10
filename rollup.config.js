@@ -1,9 +1,9 @@
+/* eslint-disable */
+
 /**
  * Bundles the widgets library, which is released independently of the interface application.
  * This library lives in src/lib, but shares code with the interface application.
  */
-
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { babel } = require('@rollup/plugin-babel')
 const commonjs = require('@rollup/plugin-commonjs')
 const inject = require('@rollup/plugin-inject')

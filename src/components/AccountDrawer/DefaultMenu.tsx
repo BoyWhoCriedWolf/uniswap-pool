@@ -87,6 +87,7 @@ function DefaultMenu({
     openLanguageSettings,
     openLocalCurrencySettings,
     openSettings,
+    onShowNftProfile,
   ]);
 
   return <DefaultMenuWrap>{SubMenu}</DefaultMenuWrap>;

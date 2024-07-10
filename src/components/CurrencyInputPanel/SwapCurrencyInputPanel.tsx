@@ -22,19 +22,18 @@ import { darken } from "polished";
 import { forwardRef, ReactNode, useCallback, useEffect, useState } from "react";
 import { Lock } from "react-feather";
 import styled, { useTheme } from "styled-components";
+import { colors } from "theme/colors";
 import { ThemedText } from "theme/components";
 import { flexColumnNoWrap, flexRowNoWrap } from "theme/styles";
 import { NumberType, useFormatter } from "utils/formatNumbers";
 
 import { ReactComponent as DropDown } from "../../assets/images/dropdown.svg";
 import { useCurrencyBalance } from "../../state/connection/hooks";
-import { ButtonGray } from "../Button";
 import DoubleCurrencyLogo from "../DoubleLogo";
 import { Input as NumericalInput } from "../NumericalInput";
 import { RowBetween, RowFixed } from "../Row";
 import CurrencySearchModal from "../SearchModal/CurrencySearchModal";
 import { FiatValue } from "./FiatValue";
-import { colors } from "theme/colors";
 
 const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${flexColumnNoWrap};

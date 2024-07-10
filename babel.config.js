@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const isDevelopment =
   process.env.NODE_ENV === 'test' || // jest
   process.env.NODE_ENV === 'cosmos' // cosmos

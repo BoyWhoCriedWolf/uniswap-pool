@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable */
 const EventEmitter = require('events')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const rollup = require('rollup')

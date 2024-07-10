@@ -339,7 +339,7 @@ export function CurrencySearch({
           isLoading ? (
           <div style={{ flex: "1" }}>
             <AutoSizer disableWidth>
-              {({ height }) => (
+              {({ height }: { height: number }) => (
                 <CurrencyList
                   height={height}
                   currencies={searchCurrencies}

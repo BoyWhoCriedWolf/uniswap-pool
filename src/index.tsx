@@ -10,8 +10,8 @@ import { FeatureFlagsProvider } from "featureFlags";
 import { apolloClient } from "graphql/data/apollo";
 import { BlockNumberProvider } from "lib/hooks/useBlockNumber";
 import { MulticallUpdater } from "lib/state/multicall";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { FC, StrictMode } from "react";
+// import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import {
@@ -22,7 +22,7 @@ import {
 import Web3Provider from "./components/Web3Provider";
 import { LanguageProvider } from "./i18n";
 import App from "./pages/App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+// import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import store from "./state";
 import ApplicationUpdater from "./state/application/updater";
 import ListsUpdater from "./state/lists/updater";
@@ -84,10 +84,10 @@ export default function UniswapWidget() {
   );
 }
 
-const container = document.getElementById("root") as HTMLElement;
+// const container = document.getElementById("root") as HTMLElement;
 
-createRoot(container).render(<UniswapWidget />);
+// createRoot(container).render(<UniswapWidget />);
 
-if (process.env.REACT_APP_SERVICE_WORKER !== "false") {
-  serviceWorkerRegistration.register();
-}
+// if (process.env.REACT_APP_SERVICE_WORKER !== "false") {
+//   serviceWorkerRegistration.register();
+// }

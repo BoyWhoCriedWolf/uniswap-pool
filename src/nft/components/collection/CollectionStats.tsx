@@ -387,8 +387,8 @@ const CollectionDescription = ({ description }: { description: string }) => {
         className={isMobile ? bodySmall : body}
       >
         <ReactMarkdown
-          source={description}
-          allowedTypes={[
+          children={description}
+          allowedElements={[
             "link",
             "paragraph",
             "strong",
@@ -396,7 +396,7 @@ const CollectionDescription = ({ description }: { description: string }) => {
             "emphasis",
             "text",
           ]}
-          renderers={{ paragraph: "span" }}
+          components={{ p: "span" }}
         />
       </CollectionDescriptionText>
       {showReadMore && (

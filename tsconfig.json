@@ -1,36 +1,10 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
-    "baseUrl": "src",
-    "composite": true,
-    "declarationMap": false,
-    "downlevelIteration": true,
-    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript file */,
-    "outDir": "dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "target": "ESNext",
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo/build", // avoid clobbering the cypress tsbuildinfo
-    "types": ["jest"],
-    "useUnknownInCatchVariables": false
+    "paths": {
+      "@hdream/uniswap-pool": ["index"]
+    },
+    "types": ["jest", "jest-extended"]
   },
-  "include": ["src/**/*", "src/**/*.json"],
+  "include": ["src/", "test/", "e2e/"]
 }

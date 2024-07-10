@@ -227,7 +227,7 @@ export const TraitSelect = ({
         }}
       >
         <AutoSizer disableWidth>
-          {({ height }) => (
+          {({ height }: { height: number }) => (
             <FixedSizeList
               height={height}
               width="100%"

@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { isActive } from "nock";
-import React, { FC, PropsWithChildren, ReactNode, useState } from "react";
-import { colors, darkTheme } from "theme/colors";
+import { FC, PropsWithChildren, ReactNode, useState } from "react";
+import { colors } from "theme/colors";
 
 const Tabs: FC<
   PropsWithChildren<{
@@ -42,7 +41,7 @@ const Tabs: FC<
           );
         })}
       </div>
-      <div style={{ background: colors.dark_blue }}>
+      <div>
         {data.map((item, itemIndex) => {
           const isCurrent = itemIndex === currentIndex;
 

@@ -43,8 +43,6 @@ export const SwapWrapper = (
 const SwapWrapperInner = styled.div`
   border-radius: 24px;
   z-index: -1;
-  padding: 8px;
-  padding-top: 12px;
 `;
 
 export const UniswapPopoverContainer = styled.div`

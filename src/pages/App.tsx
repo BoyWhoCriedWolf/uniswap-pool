@@ -12,11 +12,6 @@ import {
 } from "analytics";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Icons/LoadingSpinner";
-import {
-  UK_BANNER_HEIGHT,
-  UK_BANNER_HEIGHT_MD,
-  UK_BANNER_HEIGHT_SM,
-} from "components/NavBar/UkBanner";
 import { useFeatureFlagsIsLoaded } from "featureFlags";
 import { useUniswapXDefaultEnabled } from "featureFlags/flags/uniswapXDefault";
 import { lazy, useEffect, useMemo, useState } from "react";
@@ -26,7 +21,6 @@ import {
   useUserOptedOutOfUniswapX,
 } from "state/user/hooks";
 import { StatsigProvider, StatsigUser } from "statsig-react";
-import styled from "styled-components";
 import DarkModeQueryParamReader from "theme/components/DarkModeQueryParamReader";
 import { useIsDarkMode } from "theme/components/ThemeToggle";
 import { STATSIG_DUMMY_KEY } from "tracing";
@@ -36,9 +30,10 @@ import { getCLS, getFCP, getFID, getLCP, Metric } from "web-vitals";
 import Modal from "components/Modal";
 import Tabs from "components/Tabs";
 import Profile from "nft/pages/profile";
+import { colors } from "theme/colors";
+import { BodyWrapper } from "./AppBody";
 import Pool from "./Pool";
 import SwapPage from "./Swap";
-import { BodyWrapper } from "./AppBody";
 
 const AppChrome = lazy(() => import("./AppChrome"));
 
@@ -250,7 +245,14 @@ export default function App() {
               <Tabs
                 data={[
                   { label: "Trade", content: <SwapPage /> },
-                  { label: "Pool", content: <Pool /> },
+                  {
+                    label: "Pool",
+                    content: (
+                      <div style={{ backgroundColor: colors.dark_blue }}>
+                        <Pool />
+                      </div>
+                    ),
+                  },
                 ]}
               />
             </>

@@ -1,27 +1,26 @@
+import { ApolloProvider } from "@apollo/client";
 import "@reach/dialog/styles.css";
 import "connection/eagerlyConnect";
-import "inter-ui";
-import "polyfills";
-import "tracing";
-
-import "./index.css"
-
-import { ApolloProvider } from "@apollo/client";
 import { FeatureFlagsProvider } from "featureFlags";
 import { apolloClient } from "graphql/data/apollo";
+import "inter-ui";
 import { BlockNumberProvider } from "lib/hooks/useBlockNumber";
 import { MulticallUpdater } from "lib/state/multicall";
+import "polyfills";
 import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import {
   SystemThemeUpdater,
   ThemeColorMetaUpdater,
 } from "theme/components/ThemeToggle";
-
+import "tracing";
 import Web3Provider from "./components/Web3Provider";
 import { LanguageProvider } from "./i18n";
+import "./index.css";
 import App from "./pages/App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import store from "./state";
 import ApplicationUpdater from "./state/application/updater";
 import ListsUpdater from "./state/lists/updater";
@@ -30,8 +29,6 @@ import OrderUpdater from "./state/signatures/updater";
 import TransactionUpdater from "./state/transactions/updater";
 import ThemeProvider, { ThemedGlobalStyle } from "./theme";
 import RadialGradientByChainUpdater from "./theme/components/RadialGradientByChainUpdater";
-import { createRoot } from "react-dom/client";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 if (window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;

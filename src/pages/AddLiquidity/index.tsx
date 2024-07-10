@@ -15,13 +15,12 @@ import {
 } from "@uniswap/sdk-core";
 import { FeeAmount, NonfungiblePositionManager } from "@uniswap/v3-sdk";
 import { useWeb3React } from "@web3-react/core";
-import { sendAnalyticsEvent, TraceEvent, useTrace } from "analytics";
+import { TraceEvent, sendAnalyticsEvent, useTrace } from "analytics";
 import { useToggleAccountDrawer } from "components/AccountDrawer";
 import OwnershipWarning from "components/addLiquidity/OwnershipWarning";
 import UnsupportedCurrencyFooter from "components/swap/UnsupportedCurrencyFooter";
 import { isSupportedChain } from "constants/chains";
 import { useSingleCallResult } from "lib/hooks/multicall";
-import { BodyWrapper } from "pages/AppBody";
 import { PositionPageUnsupportedContent } from "pages/Pool/PositionPage";
 import { useCallback, useMemo, useState } from "react";
 import { AlertTriangle } from "react-feather";
@@ -32,7 +31,7 @@ import {
   useV3MintActionHandlers,
   useV3MintState,
 } from "state/mint/v3/hooks";
-import styled, { useTheme } from "styled-components";
+import { useTheme } from "styled-components";
 import { ThemedText } from "theme/components";
 import { addressesAreEquivalent } from "utils/addressesAreEquivalent";
 import { WrongChainError } from "utils/errors";

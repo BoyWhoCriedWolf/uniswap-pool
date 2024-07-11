@@ -1,6 +1,6 @@
 {
   "name": "@hdream/uniswap-pool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Uniswap Pool Component",
   "license": "ISC",
   "main": "dist/index.js",
@@ -92,7 +92,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.7",
     "@babel/runtime": ">=7.17.0",
     "@cloudflare/workers-types": "^4.20230710.1",
     "@craco/craco": "^7.1.0",
@@ -186,7 +185,6 @@
   "dependencies": {
     "@apollo/client": "^3.7.2",
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@coinbase/wallet-sdk": "^3.6.4",

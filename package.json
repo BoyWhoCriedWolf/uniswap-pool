@@ -1,7 +1,7 @@
 {
-  "name": "@hdream/uniswap-pool",
-  "version": "1.0.2",
-  "description": "Uniswap Pool Component",
+  "name": "@hdream/uniswap-widget",
+  "version": "1.0.0",
+  "description": "Uniswap Component",
   "license": "ISC",
   "types": "dist/index.d.ts",
   "main": "dist/cjs/index.cjs",

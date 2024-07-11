@@ -1,6 +1,6 @@
 {
   "name": "@hdream/uniswap-pool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uniswap Pool Component",
   "license": "ISC",
   "main": "dist/index.js",
@@ -99,6 +99,7 @@
     "@ethersproject/experimental": "^5.4.0",
     "@lingui/cli": "^4.3.0",
     "@lingui/swc-plugin": "^4.0.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@swc/core": "^1.3.72",
     "@swc/jest": "^0.2.27",
     "@swc/plugin-styled-components": "^1.5.70",

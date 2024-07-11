@@ -10,7 +10,7 @@ import { FeatureFlagsProvider } from "featureFlags";
 import { apolloClient } from "graphql/data/apollo";
 import { BlockNumberProvider } from "lib/hooks/useBlockNumber";
 import { MulticallUpdater } from "lib/state/multicall";
-import { FC, StrictMode } from "react";
+import { StrictMode } from "react";
 // import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";

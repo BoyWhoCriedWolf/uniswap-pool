@@ -6,6 +6,7 @@
  */
 const { babel } = require('@rollup/plugin-babel')
 const commonjs = require('@rollup/plugin-commonjs')
+const typescript = require('@rollup/plugin-typescript')
 const inject = require('@rollup/plugin-inject')
 const json = require('@rollup/plugin-json')
 const { nodeResolve: resolve } = require('@rollup/plugin-node-resolve')
@@ -64,6 +65,7 @@ const transpile = {
       extensions: EXTENSIONS,
     }),
     inject({ React: 'react' }), // imports React (on the top-level, un-renamed), for the classic runtime
+    // typescript()
   ],
   onwarn: (warning, warn) => {
     // This pipeline is for transpilation - checking is done through tsc.

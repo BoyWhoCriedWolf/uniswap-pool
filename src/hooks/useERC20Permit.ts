@@ -58,7 +58,7 @@ const PERMITTABLE_TOKENS: {
   },
 };
 
-enum UseERC20PermitState {
+export enum UseERC20PermitState {
   // returned for any reason, e.g. it is an argent wallet, or the currency does not support it
   NOT_APPLICABLE,
   LOADING,
@@ -79,11 +79,11 @@ interface BaseSignatureData {
   permitType: PermitType;
 }
 
-interface StandardSignatureData extends BaseSignatureData {
+export interface StandardSignatureData extends BaseSignatureData {
   amount: string;
 }
 
-interface AllowedSignatureData extends BaseSignatureData {
+export interface AllowedSignatureData extends BaseSignatureData {
   allowed: true;
 }
 

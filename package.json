@@ -43,7 +43,7 @@
     "cypress:open": "cypress open --browser chrome --e2e",
     "cypress:run": "cypress run --browser chrome --e2e",
     "deduplicate": "yarn-deduplicate --strategy=highest",
-    "postinstall": "yarn patch-package",
+    "postinstall": "npm patch-package",
     "cosmos": "cosmos",
     "cosmos-export": "cosmos-export"
   },

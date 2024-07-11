@@ -1,5 +1,5 @@
 import { Percent, Token, V2_FACTORY_ADDRESSES } from "@uniswap/sdk-core";
-import { computePairAddress, Pair } from "@uniswap/v2-sdk";
+import { Pair, computePairAddress } from "@uniswap/v2-sdk";
 import { useWeb3React } from "@web3-react/core";
 import { L2_CHAIN_IDS } from "constants/chains";
 import { SupportedLocale } from "constants/locales";
@@ -8,8 +8,8 @@ import JSBI from "jsbi";
 import { useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "state/hooks";
 import { RouterPreference } from "state/routing/types";
+import { deserializeToken } from "state/user/deserializeToken";
 import { UserAddedToken } from "types/tokens";
-
 import {
   BASES_TO_TRACK_LIQUIDITY_FOR,
   PINNED_PAIRS,
@@ -35,19 +35,6 @@ export function serializeToken(token: Token): SerializedToken {
     symbol: token.symbol,
     name: token.name,
   };
-}
-
-export function deserializeToken(
-  serializedToken: SerializedToken,
-  Class: typeof Token = Token
-): Token {
-  return new Class(
-    serializedToken.chainId,
-    serializedToken.address,
-    serializedToken.decimals,
-    serializedToken.symbol,
-    serializedToken.name
-  );
 }
 
 export function useUserLocale(): SupportedLocale | null {
@@ -202,27 +189,6 @@ export function useAddUserToken(): (token: Token) => void {
     [dispatch]
   );
 }
-
-function useUserAddedTokensOnChain(
-  chainId: number | undefined | null
-): Token[] {
-  const serializedTokensMap = useAppSelector(({ user: { tokens } }) => tokens);
-
-  return useMemo(() => {
-    if (!chainId) return [];
-    const tokenMap: Token[] = serializedTokensMap?.[chainId]
-      ? Object.values(serializedTokensMap[chainId]).map((value) =>
-          deserializeToken(value, UserAddedToken)
-        )
-      : [];
-    return tokenMap;
-  }, [serializedTokensMap, chainId]);
-}
-
-export function useUserAddedTokens(): Token[] {
-  return useUserAddedTokensOnChain(useWeb3React().chainId);
-}
-
 function serializePair(pair: Pair): SerializedPair {
   return {
     token0: serializeToken(pair.token0),

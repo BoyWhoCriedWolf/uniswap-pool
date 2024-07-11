@@ -7,7 +7,7 @@ import { mocked } from "test-utils/mocked";
 import { render, screen } from "test-utils/render";
 
 import { ConfirmModalState } from "../ConfirmSwapModal";
-import { PendingModalContent } from ".";
+import { PendingModalContent } from "./index";
 import { ErrorModalContent, PendingModalError } from "./ErrorModalContent";
 
 jest.mock("state/transactions/hooks");

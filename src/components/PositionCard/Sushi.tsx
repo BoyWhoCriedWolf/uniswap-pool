@@ -15,7 +15,7 @@ import DoubleCurrencyLogo from "../DoubleLogo";
 import { CardNoise } from "../earn/styled";
 import { AutoRow, RowFixed } from "../Row";
 import { Dots } from "../swap/styled";
-import { FixedHeightRow } from ".";
+import { FixedHeightRow } from "./index";
 
 const StyledPositionCard = styled(LightCard)<{ bgColor: any }>`
   border: none;

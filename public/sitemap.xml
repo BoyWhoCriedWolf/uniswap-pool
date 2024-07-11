@@ -825,4 +825,8 @@
   <url loc="https://app.uniswap.org/tokens/base/0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85" lastmod="2024-07-11T12:04:30.652Z" priority="0.8"/>
   <url loc="https://app.uniswap.org/tokens/base/0x2c9ab600d71967ff259c491ad51f517886740cbc" lastmod="2024-07-11T12:04:30.652Z" priority="0.8"/>
   <url loc="https://app.uniswap.org/tokens/celo/0x9995cc8f20db5896943afc8ee0ba463259c931ed" lastmod="2024-07-11T12:04:30.652Z" priority="0.8"/>
+  <url loc="https://app.uniswap.org/tokens/ethereum/0xf1376bcef0f78459c0ed0ba5ddce976f1ddf51f4" lastmod="2024-07-11T13:55:45.774Z" priority="0.8"/>
+  <url loc="https://app.uniswap.org/tokens/ethereum/0xf944e35f95e819e752f3ccb5faf40957d311e8c5" lastmod="2024-07-11T13:55:45.774Z" priority="0.8"/>
+  <url loc="https://app.uniswap.org/tokens/polygon/0xfcb54da3f4193435184f3f647467e12b50754575" lastmod="2024-07-11T13:55:45.774Z" priority="0.8"/>
+  <url loc="https://app.uniswap.org/tokens/base/0x4379c13143eb91148ff9282cfb2f93536687a45b" lastmod="2024-07-11T13:55:45.774Z" priority="0.8"/>
 </urlset>

@@ -4,7 +4,7 @@ import { mocked } from "test-utils/mocked";
 import { validParams, validPoolDataResponse } from "test-utils/pools/fixtures";
 import { render, screen, waitFor } from "test-utils/render";
 
-import PoolDetails from ".";
+import PoolDetails from "./index";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

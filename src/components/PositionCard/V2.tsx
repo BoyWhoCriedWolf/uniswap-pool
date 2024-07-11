@@ -24,7 +24,7 @@ import { CardNoise } from "../earn/styled";
 import CurrencyLogo from "../Logo/CurrencyLogo";
 import { AutoRow, RowBetween, RowFixed } from "../Row";
 import { Dots } from "../swap/styled";
-import { FixedHeightRow } from ".";
+import { FixedHeightRow } from "./index";
 
 const StyledPositionCard = styled(LightCard)<{ bgColor: any }>`
   border: none;

@@ -54,7 +54,7 @@ import {
 } from "../../state/claim/hooks";
 import StatusIcon from "../Identicon/StatusIcon";
 import { useCachedPortfolioBalancesQuery } from "../PrefetchBalancesWrapper/PrefetchBalancesWrapper";
-import { useToggleAccountDrawer } from ".";
+import { useToggleAccountDrawer } from "./index";
 import IconButton, {
   IconHoverText,
   IconWithConfirmTextButton,

@@ -1,6 +1,6 @@
 import { ChainId } from "@uniswap/sdk-core";
 
-import { DynamicConfigName, useDynamicConfig } from ".";
+import { DynamicConfigName, useDynamicConfig } from "./index";
 
 // eslint-disable-next-line import/no-unused-modules
 export function useQuickRouteChains(): ChainId[] {

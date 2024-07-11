@@ -1,7 +1,6 @@
 import { TokenInfo } from "@uniswap/token-lists";
-import { ListsState } from "state/lists/reducer";
+import { ListsState, initialState } from "state/lists/reducer";
 
-import store from "../state";
 import { UNI_EXTENDED_LIST, UNI_LIST, UNSUPPORTED_LIST_URLS } from "./lists";
 import { COMMON_BASES } from "./routing";
 import brokenTokenList from "./tokenLists/broken.tokenlist.json";
@@ -48,7 +47,7 @@ class TokenSafetyLookupTable {
   }
 
   checkToken(address: string, chainId?: number | null) {
-    if (!this.initialized) this.update(store.getState().lists);
+    if (!this.initialized) this.update(initialState);
 
     if (address === NATIVE_CHAIN_ID.toLowerCase()) {
       return TOKEN_LIST_TYPES.UNI_DEFAULT;

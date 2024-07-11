@@ -13,15 +13,15 @@ import { getTokenFilter } from "lib/hooks/useTokenList/filtering";
 import { TokenAddressMap } from "lib/hooks/useTokenList/utils";
 import { useMemo } from "react";
 import { useAppSelector } from "state/hooks";
+import { useUserAddedTokens } from "state/user/useUserAddedTokens";
 import { isL2ChainId } from "utils/chains";
-
 import {
   useAllLists,
   useCombinedActiveList,
   useCombinedTokenMapFromUrls,
 } from "../state/lists/hooks";
 import { WrappedTokenInfo } from "../state/lists/wrappedTokenInfo";
-import { deserializeToken, useUserAddedTokens } from "../state/user/hooks";
+import { deserializeToken } from "../state/user/deserializeToken";
 import { useUnsupportedTokenList } from "./../state/lists/hooks";
 
 type Maybe<T> = T | null | undefined;

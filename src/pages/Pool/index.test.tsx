@@ -3,7 +3,7 @@ import { useV3Positions } from "hooks/useV3Positions";
 import { mocked } from "test-utils/mocked";
 import { render, screen } from "test-utils/render";
 
-import Pool from ".";
+import Pool from "./index";
 
 jest.mock("constants/chains");
 jest.mock("hooks/useV3Positions");

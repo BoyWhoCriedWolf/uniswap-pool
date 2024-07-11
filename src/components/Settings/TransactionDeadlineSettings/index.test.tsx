@@ -3,7 +3,7 @@ import store from "state";
 import { updateUserDeadline } from "state/user/reducer";
 import { fireEvent, render, screen } from "test-utils/render";
 
-import TransactionDeadlineSettings from ".";
+import TransactionDeadlineSettings from "./index";
 
 const renderTransactionDeadlineSettings = () => {
   render(<TransactionDeadlineSettings />);

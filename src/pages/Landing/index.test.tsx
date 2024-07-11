@@ -4,7 +4,7 @@ import { setOriginCountry } from "state/user/reducer";
 import { mocked } from "test-utils/mocked";
 import { render } from "test-utils/render";
 
-import Landing from ".";
+import Landing from "./index";
 
 jest.mock("hooks/useDisableNFTRoutes");
 

@@ -8,7 +8,7 @@ import { usePool } from "hooks/usePools";
 import { mocked } from "test-utils/mocked";
 import { render } from "test-utils/render";
 
-import PositionListItem from ".";
+import PositionListItem from "./index";
 
 jest.mock("components/DoubleLogo");
 jest.mock("hooks/Tokens");

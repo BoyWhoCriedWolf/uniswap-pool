@@ -5,7 +5,7 @@ import {
 } from "test-utils/pools/fixtures";
 import { render } from "test-utils/render";
 
-import Pools from ".";
+import Pools from "./index";
 import useMultiChainPositions from "./useMultiChainPositions";
 
 jest.mock("./useMultiChainPositions");

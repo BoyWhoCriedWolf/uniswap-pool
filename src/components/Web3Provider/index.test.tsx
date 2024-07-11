@@ -13,7 +13,7 @@ import { HashRouter } from "react-router-dom";
 import store from "state";
 import { mocked } from "test-utils/mocked";
 
-import Web3Provider from ".";
+import Web3Provider from "./index";
 
 jest.mock("analytics", () => ({
   useTrace: jest.fn(),

@@ -6,7 +6,7 @@ import { render, screen } from "test-utils/render";
 import { lightDeprecatedTheme } from "theme/deprecatedColors";
 import noop from "utils/noop";
 
-import MenuButton from ".";
+import MenuButton from "./index";
 
 jest.mock("state/user/hooks");
 

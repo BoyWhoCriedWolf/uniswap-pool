@@ -4,7 +4,7 @@ import { updateUserSlippageTolerance } from "state/user/reducer";
 import { SlippageTolerance } from "state/user/types";
 import { fireEvent, render, screen } from "test-utils/render";
 
-import MaxSlippageSettings from ".";
+import MaxSlippageSettings from "./index";
 
 const AUTO_SLIPPAGE = new Percent(5, 10_000);
 

@@ -3,7 +3,7 @@ import { RouterPreference } from "state/routing/types";
 import { updateUserRouterPreference } from "state/user/reducer";
 import { fireEvent, render, screen } from "test-utils/render";
 
-import RouterPreferenceSettings from ".";
+import RouterPreferenceSettings from "./index";
 
 describe("RouterPreferenceSettings", () => {
   // Restore to default router preference before each unit test

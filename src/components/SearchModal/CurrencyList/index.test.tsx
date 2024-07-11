@@ -10,7 +10,7 @@ import * as mockJSBI from "jsbi";
 import { mocked } from "test-utils/mocked";
 import { render } from "test-utils/render";
 
-import CurrencyList from ".";
+import CurrencyList from "./index";
 
 const noOp = function () {
   // do nothing

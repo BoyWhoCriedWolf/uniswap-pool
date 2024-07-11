@@ -1,7 +1,7 @@
 import { render, screen } from "test-utils/render";
 import noop from "utils/noop";
 
-import { ConfirmationModalContent } from ".";
+import { ConfirmationModalContent } from "./index";
 
 describe("ConfirmationModalContent", () => {
   it("should render the L2 icon for optimism", () => {

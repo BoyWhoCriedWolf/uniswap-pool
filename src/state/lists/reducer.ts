@@ -30,7 +30,7 @@ export interface ListsState {
 
 type ListState = ListsState["byUrl"][string];
 
-const NEW_LIST_STATE: ListState = {
+export const NEW_LIST_STATE: ListState = {
   error: null,
   current: null,
   loadingRequestId: null,

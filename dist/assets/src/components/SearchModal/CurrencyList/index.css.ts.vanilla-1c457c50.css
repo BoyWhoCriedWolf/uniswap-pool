@@ -1,0 +1,13 @@
+.CurrencyList_scrollbarStyle__1u1z84k0 {
+  scrollbar-width: thin;
+  scrollbar-color: var(--genie-colors-surface3) transparent;
+  height: 100%;
+}
+.CurrencyList_scrollbarStyle__1u1z84k0::-webkit-scrollbar {
+  background: transparent;
+  width: 4px;
+}
+.CurrencyList_scrollbarStyle__1u1z84k0::-webkit-scrollbar-thumb {
+  background: var(--genie-colors-surface3);
+  border-radius: 8px;
+}

@@ -1,0 +1,32 @@
+.ProfilePage_section__14f31ft1 {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.ProfilePage_ethIcon__14f31ft2 {
+  margin-bottom: -3px;
+}
+.ProfilePage_subRowHover__14f31ft3:hover {
+  background: var(--genie-colors-surface3);
+}
+.ProfilePage_verifiedBadge__14f31ft4 {
+  height: 12px;
+  width: 12px;
+  margin-left: 2px;
+  margin-bottom: -2px;
+  box-sizing: border-box;
+}
+.ProfilePage_dropDown__14f31ft5 {
+  width: 190px;
+}
+.ProfilePage_activeDropDown__14f31ft6 {
+  box-shadow: var(--color-dropShadow__hgmsymj);
+}
+.ProfilePage_activeDropDownItems__14f31ft7 {
+  box-shadow: 0 14px 16px 0 rgba(70, 115, 250, 0.4);
+}
+.ProfilePage_collectionFilterBubbleText__14f31ft8 {
+  white-space: nowrap;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

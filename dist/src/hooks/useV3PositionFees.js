@@ -1,0 +1,20 @@
+import '@babel/runtime/helpers/asyncToGenerator';
+import '@babel/runtime/helpers/slicedToArray';
+import '@babel/runtime/regenerator';
+import { BigNumber } from '@ethersproject/bignumber';
+import '@uniswap/sdk-core';
+import '@web3-react/core';
+import 'react';
+import '../constants/providers.js';
+import '../featureFlags/index.js';
+import '../lib/state/multicall.js';
+import '@uniswap/redux-multicall';
+import '../constants/chains.js';
+import '../constants/tokens.js';
+import '@uniswap/analytics-events';
+import '../analytics/index.js';
+import '@ethersproject/address';
+import '@ethersproject/constants';
+import '@ethersproject/contracts';
+
+BigNumber.from(2).pow(128).sub(1);

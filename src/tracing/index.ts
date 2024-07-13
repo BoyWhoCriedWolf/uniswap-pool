@@ -22,7 +22,8 @@ export const STATSIG_DUMMY_KEY =
   "client-0000000000000000000000000000000000000000000";
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
+  // dsn: process.env.REACT_APP_SENTRY_DSN,
+  dsn: "https://a3c62e400b8748b5a8d007150e2f38b7@o1037921.ingest.sentry.io/4504255148851200",
   release: process.env.REACT_APP_GIT_COMMIT_HASH,
   environment: getEnvName(),
   enabled: isSentryEnabled(),
@@ -45,7 +46,8 @@ if (!sentryUserId) {
 Sentry.setUser({ id: sentryUserId });
 
 initializeAnalytics(AMPLITUDE_DUMMY_KEY, OriginApplication.INTERFACE, {
-  proxyUrl: process.env.REACT_APP_AMPLITUDE_PROXY_URL,
+  // proxyUrl: process.env.REACT_APP_AMPLITUDE_PROXY_URL,
+  proxyUrl: "https://api.uniswap.org/v1/amplitude-proxy",
   defaultEventName: SharedEventName.PAGE_VIEWED,
   commitHash: process.env.REACT_APP_GIT_COMMIT_HASH,
   isProductionEnv: isProductionEnv(),

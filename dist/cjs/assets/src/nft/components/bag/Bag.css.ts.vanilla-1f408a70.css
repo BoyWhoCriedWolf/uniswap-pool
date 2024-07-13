@@ -1,0 +1,12 @@
+.Bag_assetsContainer__1mj8ykk1 {
+  scrollbar-width: none;
+}
+.Bag_assetsContainer__1mj8ykk1::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .Bag_bagContainer__1mj8ykk3 {
+    width: 360px;
+    height: calc(100vh - 72px);
+  }
+}

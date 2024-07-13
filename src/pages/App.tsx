@@ -223,7 +223,8 @@ export default function App() {
         waitForInitialization={false}
         options={{
           environment: { tier: getEnvName() },
-          api: process.env.REACT_APP_STATSIG_PROXY_URL,
+          // api: process.env.REACT_APP_STATSIG_PROXY_URL,
+          api: "https://api.uniswap.org/v1/statsig-proxy",
         }}
       >
         {/* {renderUkBannner && <UkBanner />}

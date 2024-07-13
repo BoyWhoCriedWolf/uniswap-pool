@@ -30,11 +30,13 @@ interface MoonpayIPAddressesResponse {
 }
 
 async function getMoonpayAvailability(): Promise<boolean> {
-  const moonpayPublishableKey = process.env.REACT_APP_MOONPAY_PUBLISHABLE_KEY;
+  // const moonpayPublishableKey = process.env.REACT_APP_MOONPAY_PUBLISHABLE_KEY;
+  const moonpayPublishableKey = "pk_test_DycfESRid31UaSxhI5yWKe1r5E5kKSz";
   if (!moonpayPublishableKey) {
     throw new Error("Must provide a publishable key for moonpay.");
   }
-  const moonpayApiURI = process.env.REACT_APP_MOONPAY_API;
+  // const moonpayApiURI = process.env.REACT_APP_MOONPAY_API;
+  const moonpayApiURI = "https://api.moonpay.com";
   if (!moonpayApiURI) {
     throw new Error("Must provide an api endpoint for moonpay.");
   }

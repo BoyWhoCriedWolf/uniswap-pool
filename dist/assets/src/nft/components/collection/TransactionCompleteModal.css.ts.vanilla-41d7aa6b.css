@@ -1,0 +1,165 @@
+.TransactionCompleteModal_modalContainer__dt9si1 {
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  scrollbar-width: none;
+}
+.TransactionCompleteModal_modalContainer__dt9si1::-webkit-scrollbar {
+  display: none;
+}
+.TransactionCompleteModal_successModal__dt9si3 {
+  box-shadow: var(--color-dropShadow__hgmsymj);
+  box-sizing: border-box;
+}
+.TransactionCompleteModal_title__dt9si7 {
+  line-height: 25px;
+}
+.TransactionCompleteModal_walletAddress__dt9si9 {
+  bottom: 42px;
+  margin-top: -2px;
+  line-height: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.TransactionCompleteModal_addressHash__dt9sib {
+  line-height: 13px;
+  letter-spacing: 0.04em;
+}
+.TransactionCompleteModal_subHeading__dt9sid {
+  line-height: 18px;
+}
+.TransactionCompleteModal_successAssetsContainer__dt9sif {
+  height: min;
+  scrollbar-width: none;
+}
+.TransactionCompleteModal_successAssetsContainer__dt9sif::-webkit-scrollbar {
+  display: none;
+}
+.TransactionCompleteModal_successAssetImage__dt9sih {
+  height: auto;
+  width: auto;
+  box-sizing: border-box;
+  object-fit: contain;
+}
+.TransactionCompleteModal_overflowFade__dt9sik {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--genie-colors-surface1) 100%);
+  width: 576px;
+  height: 20px;
+  margin-left: 32px;
+  margin-top: -20px;
+}
+.TransactionCompleteModal_totalEthCost__dt9sim {
+  line-height: 18px;
+}
+.TransactionCompleteModal_button__dt9siq {
+  left: calc(50% - 107px);
+  width: 214px;
+  line-height: 18px;
+  border-radius: 100px;
+  margin-top: 15px;
+}
+.TransactionCompleteModal_mixedRefundModal__dt9sis {
+  box-shadow: var(--color-dropShadow__hgmsymj);
+  padding-bottom: 68px;
+}
+.TransactionCompleteModal_subtitle__dt9siu {
+  line-height: 20px;
+  margin-top: 2px;
+}
+.TransactionCompleteModal_interStd__dt9siw {
+  line-height: 18px;
+}
+.TransactionCompleteModal_totalUsdRefund__dt9siy {
+  line-height: 15px;
+  margin-top: 3px;
+  margin-bottom: 2px;
+}
+.TransactionCompleteModal_refundAssetsContainer__dt9si10 {
+  max-height: 152px;
+  scrollbar-width: none;
+}
+.TransactionCompleteModal_refundAssetsContainer__dt9si10::-webkit-scrollbar {
+  display: none;
+}
+.TransactionCompleteModal_refundAssetImage__dt9si12 {
+  box-sizing: border-box;
+  border: 2px solid var(--genie-colors-surface1);
+  filter: grayscale(100%);
+}
+.TransactionCompleteModal_refundOverflowFade__dt9si14 {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--genie-colors-surface1) 100%);
+  height: 30px;
+  margin-right: 18px;
+  margin-top: -20px;
+}
+.TransactionCompleteModal_fullRefundModal__dt9si16 {
+  box-shadow: var(--color-dropShadow__hgmsymj);
+  width: 344px;
+}
+.TransactionCompleteModal_returnButton__dt9si18 {
+  width: 276px;
+  line-height: 18px;
+  border-radius: 100px;
+}
+.TransactionCompleteModal_bodySmall__dt9si1c {
+  margin-bottom: 22px;
+  line-height: 18px;
+}
+.TransactionCompleteModal_allUnavailableAssets__dt9si1e {
+  overflow: auto;
+  max-height: 210px;
+  min-height: 58px;
+}
+.TransactionCompleteModal_fullRefundOverflowFade__dt9si1f {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--genie-colors-surface1) 100%);
+  width: 266px;
+  height: 20px;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.TransactionCompleteModal_unavailableAssetPreview__dt9si1j {
+  box-sizing: border-box;
+  border: 2px solid var(--genie-colors-surface1);
+  margin-left: -16px;
+  filter: grayscale(100%);
+}
+.TransactionCompleteModal_unavailableText__dt9si1l {
+  font-style: normal;
+  line-height: 18px;
+}
+.TransactionCompleteModal_unavailableItems__dt9si1n {
+  font-style: normal;
+  line-height: 15px;
+}
+.TransactionCompleteModal_assetContainer__dt9si1o {
+  height: 48px;
+  width: 48px;
+  flex-shrink: 0;
+  margin-right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.TransactionCompleteModal_fullRefundImage__dt9si1q {
+  box-sizing: border-box;
+  filter: grayscale(100%);
+}
+.TransactionCompleteModal_chevron__dt9si1s {
+  margin-top: 7px;
+}
+.TransactionCompleteModal_chevronDown__dt9si1t {
+  transform: rotate(180deg);
+}
+@media screen and (min-width: 656px) {
+  .TransactionCompleteModal_modalContainer__dt9si1 {
+    margin-left: -320px;
+  }
+  .TransactionCompleteModal_successModal__dt9si3 {
+    min-width: 640px;
+  }
+  .TransactionCompleteModal_mixedRefundModal__dt9sis {
+    min-width: 640px;
+    padding-bottom: 32px;
+  }
+}

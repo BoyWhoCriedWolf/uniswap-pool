@@ -1,0 +1,16 @@
+.BagRow_bagRow__1kkb4f51 {
+  margin-left: -4px;
+  margin-right: -4px;
+}
+.BagRow_bagRow__1kkb4f51:hover {
+  background: var(--genie-colors-deprecated_stateOverlayHover);
+}
+.BagRow_grayscaleImage__1kkb4f57 {
+  filter: grayscale(100%);
+}
+.BagRow_bagRowPrice__1kkb4f59 {
+  line-height: 24px;
+}
+.BagRow_assetName__1kkb4f5b {
+  line-height: 24px;
+}

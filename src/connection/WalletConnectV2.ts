@@ -35,7 +35,8 @@ export class WalletConnectV2 extends WalletConnect {
     super({
       actions,
       options: {
-        projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
+        // projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
+        projectId: "c6c9bacd35afa3eb9e6cccf6d8464395",
         chains: [defaultChainId],
         optionalChains: [...L1_CHAIN_IDS, ...L2_CHAIN_IDS],
         showQrModal: qrcode,

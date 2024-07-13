@@ -7,7 +7,8 @@ export const X2Y2_TRANSFER_CONTRACT_1155 =
 
 export const newX2Y2Order = async (payload: OrderPayload): Promise<boolean> => {
   const body = JSON.stringify(payload);
-  const url = `${process.env.REACT_APP_TEMP_API_URL}/nft/postX2Y2SellOrderWithApiKey`;
+  // const url = `${process.env.REACT_APP_TEMP_API_URL}/nft/postX2Y2SellOrderWithApiKey`;
+  const url = `${"https://temp.api.uniswap.org/v1"}/nft/postX2Y2SellOrderWithApiKey`;
   const ac = new AbortController();
   const req = new Request(url, {
     method: "POST",
@@ -33,7 +34,8 @@ export const getX2Y2OrderId = async (
   collectionAddress: string,
   tokenId: string
 ): Promise<number | undefined> => {
-  const url = `${process.env.REACT_APP_TEMP_API_URL}/nft/getX2Y2OrderId?collectionAddress=${collectionAddress}&tokenId=${tokenId}`;
+  // const url = `${process.env.REACT_APP_TEMP_API_URL}/nft/getX2Y2OrderId?collectionAddress=${collectionAddress}&tokenId=${tokenId}`;
+  const url = `${"https://temp.api.uniswap.org/v1"}/nft/getX2Y2OrderId?collectionAddress=${collectionAddress}&tokenId=${tokenId}`;
   const r = await fetch(url, {
     method: "GET",
     headers: {

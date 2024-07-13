@@ -27,7 +27,8 @@ const isErrorResponse = (
   order: DutchAuctionOrderResponse
 ): order is DutchAuctionOrderError => res.status < 200 || res.status > 202;
 
-const UNISWAP_API_URL = process.env.REACT_APP_UNISWAP_API_URL;
+// const UNISWAP_API_URL = process.env.REACT_APP_UNISWAP_API_URL;
+const UNISWAP_API_URL = "https://api.uniswap.org/v2";
 if (UNISWAP_API_URL === undefined) {
   throw new Error(`UNISWAP_API_URL must be a defined environment variable`);
 }

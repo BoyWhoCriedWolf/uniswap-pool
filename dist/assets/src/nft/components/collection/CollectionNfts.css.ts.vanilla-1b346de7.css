@@ -1,0 +1,28 @@
+.CollectionNfts_assetList__raq3t81 {
+  grid-template-columns: repeat(auto-fill, minmax(calc(100%/2 - 8px), 1fr) );
+}
+@media screen and (min-width: 768px) {
+  .CollectionNfts_assetList__raq3t81 {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100%/3 - 8px), 1fr) );
+  }
+}
+@media screen and (min-width: 1024px) {
+  .CollectionNfts_assetList__raq3t81 {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100%/3 - 12px), 1fr) );
+  }
+}
+@media screen and (min-width: 1280px) {
+  .CollectionNfts_assetList__raq3t81 {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100%/4 - 16px), 1fr) );
+  }
+}
+@media screen and (min-width: 1536px) {
+  .CollectionNfts_assetList__raq3t81 {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100%/5 - 16px), 1fr) );
+  }
+}
+@media screen and (min-width: 1920px) {
+  .CollectionNfts_assetList__raq3t81 {
+    grid-template-columns: repeat(auto-fill, minmax(calc(100%/7 - 16px), 1fr) );
+  }
+}

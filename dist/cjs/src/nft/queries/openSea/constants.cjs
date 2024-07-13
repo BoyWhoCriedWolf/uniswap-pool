@@ -1,0 +1,23 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _defineProperty = require('@babel/runtime/helpers/defineProperty');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
+
+var OPENSEA_FEE_ADDRESS = "0x0000a26b00c1F0DF003000390027140000fAa719";
+var OPENSEA_DEFAULT_CROSS_CHAIN_CONDUIT_KEY = "0x0000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f0000";
+var OPENSEA_CROSS_CHAIN_CONDUIT = "0x1e0049783f008a0085193e00003d00cd54003c71";
+var OPENSEA_SEAPORT_V1_5_CONTRACT = "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC";
+var OPENSEA_KEY_TO_CONDUIT = _defineProperty__default["default"]({}, OPENSEA_DEFAULT_CROSS_CHAIN_CONDUIT_KEY, OPENSEA_CROSS_CHAIN_CONDUIT);
+var INVERSE_BASIS_POINTS = 10000;
+
+exports.INVERSE_BASIS_POINTS = INVERSE_BASIS_POINTS;
+exports.OPENSEA_CROSS_CHAIN_CONDUIT = OPENSEA_CROSS_CHAIN_CONDUIT;
+exports.OPENSEA_DEFAULT_CROSS_CHAIN_CONDUIT_KEY = OPENSEA_DEFAULT_CROSS_CHAIN_CONDUIT_KEY;
+exports.OPENSEA_FEE_ADDRESS = OPENSEA_FEE_ADDRESS;
+exports.OPENSEA_KEY_TO_CONDUIT = OPENSEA_KEY_TO_CONDUIT;
+exports.OPENSEA_SEAPORT_V1_5_CONTRACT = OPENSEA_SEAPORT_V1_5_CONTRACT;

@@ -15,6 +15,7 @@ import { useMemo } from "react";
 import { useAppSelector } from "state/hooks";
 import { useUserAddedTokens } from "state/user/useUserAddedTokens";
 import { isL2ChainId } from "utils/chains";
+
 import {
   useAllLists,
   useCombinedActiveList,

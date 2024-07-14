@@ -24,7 +24,7 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "es5",
+    "target": "ESNext",
     "useUnknownInCatchVariables": false
   },
   "exclude": ["node_modules"],

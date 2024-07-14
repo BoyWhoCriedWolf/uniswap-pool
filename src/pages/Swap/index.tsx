@@ -882,7 +882,7 @@ export function Swap({
               >
                 <ButtonLight
                   onClick={toggleWalletDrawer}
-                  fontWeight={535}
+                  fontWeight={500}
                   $borderRadius="16px"
                 >
                   <Trans>Connect wallet</Trans>

@@ -54,7 +54,7 @@ const transpile = {
       deps: true,
       peerDeps: true,
     }),
-    resolve({ extensions: EXTENSIONS, preferBuiltins: false }), // resolves third-party modules within node_modules/
+    resolve({ extensions: EXTENSIONS }), // resolves third-party modules within node_modules/
 
     // Source code transformation
     json(), // imports json as ES6; doing so enables module resolution
@@ -86,7 +86,6 @@ const esm = {
     dir: "dist",
     format: "esm",
     sourcemap: false,
-    preserveModules: true,
   },
 };
 
@@ -98,7 +97,6 @@ const cjs = {
     chunkFileNames: "[name]-[hash].cjs",
     format: "cjs",
     sourcemap: false,
-    preserveModules: true,
   },
   watch: false,
 };
@@ -119,12 +117,10 @@ const locales = {
       dir: "dist",
       format: "esm",
       sourcemap: false,
-      preserveModules: true,
     },
     {
       dir: "dist/cjs",
       sourcemap: false,
-      preserveModules: true,
     },
   ],
   watch: false,
@@ -138,12 +134,19 @@ const assets = [
       dir: "dist",
       format: "esm",
       sourcemap: false,
-      preserveModules: true,
     },
   },
 ];
 
 const config = [esm, cjs, types, locales];
-config.config = { ...esm, output: { ...esm.output, sourcemap: false } };
+config.config = {
+  ...esm,
+  output: {
+    ...esm.output,
+    sourcemap: false,
+    preserveModules: true,
+    exports: "default",
+  },
+};
 config.assets = assets;
 module.exports = config;

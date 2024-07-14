@@ -25,13 +25,12 @@ import styled, { css, useTheme } from "styled-components";
 import { HideSmall, ThemedText } from "theme/components";
 import { PositionDetails } from "types/position";
 
-import CTACards from "./CTACards";
+// import CTACards from "./CTACards";
 import PositionsLoadingPlaceholder from "./PositionLoadingPlaceHolder";
 import WrongNetworkCard from "./WrongNetworkCard";
 
 const PageWrapper = styled(AutoColumn)`
   padding: 8px;
-  width: 100%;
 `;
 const TitleRow = styled(RowBetween)`
   color: ${({ theme }) => theme.neutral2};
@@ -230,9 +229,9 @@ export default function Pool() {
                   </ErrorContainer>
                 )}
               </MainContentWrapper>
-              <HideSmall>
+              {/* <HideSmall>
                 <CTACards />
-              </HideSmall>
+              </HideSmall> */}
             </AutoColumn>
           </AutoColumn>
         )}

@@ -1,5 +1,5 @@
 import { TokenInfo } from "@uniswap/token-lists";
-import { ListsState, initialState } from "state/lists/reducer";
+import { initialState, ListsState } from "state/lists/reducer";
 
 import { UNI_EXTENDED_LIST, UNI_LIST, UNSUPPORTED_LIST_URLS } from "./lists";
 import { COMMON_BASES } from "./routing";

@@ -54,11 +54,11 @@ import {
 } from "../../state/claim/hooks";
 import StatusIcon from "../Identicon/StatusIcon";
 import { useCachedPortfolioBalancesQuery } from "../PrefetchBalancesWrapper/PrefetchBalancesWrapper";
-import { useToggleAccountDrawer } from "./index";
 import IconButton, {
   IconHoverText,
   IconWithConfirmTextButton,
 } from "./IconButton";
+import { useToggleAccountDrawer } from "./index";
 import MiniPortfolio from "./MiniPortfolio";
 import { portfolioFadeInAnimation } from "./MiniPortfolio/PortfolioRow";
 

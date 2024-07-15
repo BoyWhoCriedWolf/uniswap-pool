@@ -102,8 +102,8 @@ const SwapSection = styled.div`
 
   border-radius: 16px;
   color: ${({ theme }) => theme.neutral2};
-  font-size: 16px;
-  font-weight: 700;
+  // font-size: 16px;
+  // font-weight: 700;
   height: 120px;
   line-height: 20px;
   position: relative;

@@ -75,7 +75,6 @@ const InboxIcon = styled(Inbox)`
 const ResponsiveButtonPrimary = styled(ButtonPrimary)`
   border-radius: 12px;
   font-size: 16px;
-  padding: 6px 8px;
   width: fit-content;
   @media (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
     flex: 1 1 auto;
@@ -157,9 +156,9 @@ export default function Pool() {
           <AutoColumn gap="lg" justify="center">
             <AutoColumn gap="lg" style={{ width: "100%" }}>
               <TitleRow padding="0">
-                <ThemedText.LargeHeader>
+                <ThemedText.SubHeader>
                   <Trans>Pools</Trans>
-                </ThemedText.LargeHeader>
+                </ThemedText.SubHeader>
                 <ButtonRow>
                   <ResponsiveButtonPrimary
                     data-cy="join-pool-button"
@@ -167,6 +166,7 @@ export default function Pool() {
                     // as={Link}
                     // to="/add/ETH"
                     onClick={handleOpenAdd}
+                    padding={"8px 16px"}
                   >
                     + <Trans>New position</Trans>
                   </ResponsiveButtonPrimary>
@@ -214,16 +214,16 @@ export default function Pool() {
                         properties={{ received_swap_quote: false }}
                         element={InterfaceElementName.CONNECT_WALLET_BUTTON}
                       >
-                        <ButtonPrimary
+                        <ResponsiveButtonPrimary
                           style={{
                             marginTop: "2em",
                             marginBottom: "2em",
-                            padding: "8px 16px",
                           }}
                           onClick={toggleWalletDrawer}
+                          padding={"8px 16px"}
                         >
                           <Trans>Connect a wallet</Trans>
-                        </ButtonPrimary>
+                        </ResponsiveButtonPrimary>
                       </TraceEvent>
                     )}
                   </ErrorContainer>

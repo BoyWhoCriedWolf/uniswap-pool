@@ -33,7 +33,7 @@ type BaseButtonProps = {
   altDisabledStyle?: boolean;
 } & ButtonProps;
 
-export const BaseButton = styled(RebassButton)<BaseButtonProps>`
+export const BaseButton = styled.button<BaseButtonProps>`
   padding: ${({ padding }) => padding ?? "16px"} !important;
   width: ${({ width }) => width ?? "100%"};
   line-height: 24px;
@@ -116,43 +116,43 @@ export const SmallButtonPrimary = styled(ButtonPrimary)`
 `;
 
 const BaseButtonLight = styled(BaseButton)`
-  background-color: ${({ theme }) => theme.accent2};
-  color: ${({ theme }) => theme.accent1};
-  font-size: 20px;
-  font-weight: 535;
+  background-color: ${({ theme }) => theme.accent2} !important;
+  color: ${({ theme }) => theme.accent1} !important;
+  font-size: 20px !important;
+  font-weight: 535 !important;
 
   &:focus {
-    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2} !important;
+    background-color: ${({ theme, disabled }) => !disabled && theme.accent2} !important;
   }
   &:hover {
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    background-color: ${({ theme, disabled }) => !disabled && theme.accent2} !important;
   }
   &:active {
-    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2} !important;
+    background-color: ${({ theme, disabled }) => !disabled && theme.accent2} !important;
   }
 
   :hover {
     ${ButtonOverlay} {
-      background-color: ${({ theme }) => theme.deprecated_stateOverlayHover};
+      background-color: ${({ theme }) => theme.deprecated_stateOverlayHover} !important;
     }
   }
 
   :active {
     ${ButtonOverlay} {
-      background-color: ${({ theme }) => theme.deprecated_stateOverlayPressed};
+      background-color: ${({ theme }) => theme.deprecated_stateOverlayPressed} !important;
     }
   }
 
   :disabled {
-    opacity: 0.4;
+    opacity: 0.4 !important;
     :hover {
-      cursor: auto;
-      background-color: transparent;
-      box-shadow: none;
-      border: 1px solid transparent;
-      outline: none;
+      cursor: auto !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border: 1px solid transparent !important;
+      outline: none !important;
     }
   }
 `;

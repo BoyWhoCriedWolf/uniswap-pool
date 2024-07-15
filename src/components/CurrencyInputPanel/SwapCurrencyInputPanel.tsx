@@ -73,7 +73,7 @@ const CurrencySelect = styled.div<{
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
   color: ${({ selected, theme }) => (selected ? theme.neutral1 : theme.white)};
   cursor: pointer;
-  height: 36px;
+  // height: 36px;
   border-radius: 18px;
   outline: none;
   user-select: none;
